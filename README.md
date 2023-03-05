@@ -8,6 +8,14 @@ a truly censorship-resistant alternative to GitHub that has a chance of working
 
 # Roadmap
 
-- [ ] UI
-- [ ] Nostr Login
+UI
+- [ ] Code
+- [ ] Issues
+- [ ] Pull Requests
+- [ ] Discussions
+- [ ] Insights
+- [ ] Settings
+
+Nostr
+- [ ] Login
 - [ ] Figure out decentralised data storage
