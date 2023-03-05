@@ -37,7 +37,7 @@ const Home: NextPage = () => {
         <title>NostrGit</title>
         <meta
           name="description"
-          content="a truly censorship-resistant alternative to GitHub that has a chance of working"
+          content="A truly censorship-resistant alternative to GitHub that has a chance of working."
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
