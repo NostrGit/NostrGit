@@ -28,6 +28,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/ui/header";
 import { Contributors } from "@/components/ui/contributors";
+import Banner from "@/components/banner";
 
 const Home: NextPage = () => {
   return (
@@ -45,6 +46,10 @@ const Home: NextPage = () => {
         className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]"
       >
         <Header />
+        <Banner
+          title="Contribute"
+          description="Join our GitHub project (until NostrGit is ready)"
+        />
 
         <section className="px-8 py-6">
           <div className="flex justify-between">
