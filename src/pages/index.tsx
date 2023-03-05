@@ -38,7 +38,10 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]">
+      <div
+        style={{ minWidth: 1050 /* until we have mobile ready */ }}
+        className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]"
+      >
         <header className="flex h-14 w-full justify-between bg-[#171B21] px-8">
           <div className="flex items-center gap-3">
             <Image src="/logo.svg" alt="NostrGit" width={32} height={32} />
