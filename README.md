@@ -7,7 +7,8 @@ a truly censorship-resistant alternative to GitHub that has a chance of working
 - [tRPC](https://trpc.io)
 - [ui.shadcn.com](https://ui.shadcn.com)
 
-![frontpage](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/documentation/resources/frontpage.png)
+
+<a href="https://nostrgit.com"><img src="https://user-images.githubusercontent.com/8019099/222984779-5afbd000-680f-42ee-9b99-2ae7f562d17d.jpg" alt="NostrGit"></a>
 
 # Development
 
@@ -20,9 +21,31 @@ $ npm i
 $ npm run dev
 ```
 
+or
+
+
+```bash
+# install npm packages
+$ yarn
+# run in development mode (localhost:3000)
+$ yarn dev
+```
+
+# Contributing
+
+For core members: always open an issue first, and then the branch:
+
+<img src="https://user-images.githubusercontent.com/8019099/222988401-6528471b-8490-4ddf-b54c-4e8b7675a6a8.jpg" alt="Create Branch" width="450px" height="auto" />
+
+- Be sure to [check the "Allow edits from maintainers" option](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/allowing-changes-to-a-pull-request-branch-created-from-a-fork) while creating you PR.
+- If your PR refers to or fixes an issue, be sure to add `refs #XXX` or `fixes #XXX` to the PR description. Replacing `XXX` with the respective issue number. See more about [Linking a pull request to an issue
+  ](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
+- Be sure to fill the PR Template accordingly.
+
 # Roadmap
 
 UI
+- [ ] Mobile Breakpoints 
 - [ ] Code
     - [ ] Clone with HTTPS
     - [ ] Clone with SSH
