@@ -8,7 +8,7 @@ a truly censorship-resistant alternative to GitHub that has a chance of working
 - [ui.shadcn.com](https://ui.shadcn.com)
 
 
-<a href="https://nostrgit.com"><img src="https://user-images.githubusercontent.com/8019099/222984779-5afbd000-680f-42ee-9b99-2ae7f562d17d.jpg" alt="NostrGit"></a>
+<a href="https://nostrgit.com"><img src="https://raw.githubusercontent.com/NostrGit/NostrGit/main/documentation/resources/frontpage.png" alt="NostrGit"></a>
 
 # Development
 
