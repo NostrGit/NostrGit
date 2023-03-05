@@ -43,15 +43,12 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div
-        style={{ minWidth: 1050 /* until we have mobile ready */ }}
-        className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]"
-      >
+      <div className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]">
         <Header />
 
         <section className="px-8 py-6">
-          <div className="flex justify-between">
-            <div className="flex items-center text-lg">
+          <div className="justify-between lg:flex">
+            <div className="mb-4 flex items-center text-lg">
               <Book className="mr-2 inline h-4 w-4 text-gray-400" />
               <Link className="text-purple-500" href="#">
                 nostr-protocol
@@ -104,7 +101,7 @@ const Home: NextPage = () => {
             </div>
           </div>
 
-          <Tabs defaultValue="code" className="my-4 -ml-2 w-full">
+          <Tabs defaultValue="code" className="mb-4 -ml-2 w-full">
             <TabsList>
               <TabsTrigger value="code">
                 <Code className="mr-2 h-4 w-4" />

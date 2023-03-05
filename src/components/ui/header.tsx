@@ -7,7 +7,13 @@ export const Header = () => {
   return (
     <header className="flex h-14 w-full justify-between bg-[#171B21] px-8">
       <div className="flex items-center gap-3">
-        <Image src="/logo.svg" alt="NostrGit" width={32} height={32} />
+        <Image
+          src="/logo.svg"
+          alt="NostrGit"
+          width={32}
+          height={32}
+          className="h-8 w-8"
+        />
         <div className="max-h-12 ">
           <Input
             className=" w-[272px] bg-[#0E1116] transition-all ease-in-out focus:w-[600px]"
