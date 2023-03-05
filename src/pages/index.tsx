@@ -49,6 +49,7 @@ const Home: NextPage = () => {
         <Banner
           title="Contribute"
           description="Join our GitHub project (until NostrGit is ready)"
+          link="https://github.com/NostrGit/NostrGit/discussions/5"
         />
 
         <section className="px-8 py-6">
