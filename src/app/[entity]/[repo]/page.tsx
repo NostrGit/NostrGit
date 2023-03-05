@@ -1,4 +1,3 @@
-import { type NextPage } from "next";
 import Link from "next/link";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -32,11 +31,9 @@ import DemoReadme from "@/components/demo-readme";
 
 
 export default function RepoPage({
-  params,
-  searchParams,
+  params
 }: {
   params: { entity: string; repo: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
 }) {
   return (
     <>
@@ -45,11 +42,11 @@ export default function RepoPage({
           <div className="flex items-center text-lg">
             <Book className="mr-2 inline h-4 w-4 text-gray-400" />
             <Link className="text-purple-500" href="#">
-              nostr-protocol
+              { params.entity }
             </Link>
             <span className="px-2 text-gray-400">/</span>
             <Link className="text-purple-500" href="#">
-              nostr
+              { params.repo }
             </Link>
             <span className="ml-1.5 mt-px rounded-full border border-gray-200/40 px-1.5 text-xs text-gray-400">
               Public

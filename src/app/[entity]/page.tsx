@@ -1,11 +1,11 @@
-import { type NextPage } from "next";
-
-const EntityPage: NextPage = () => {
+export default function EntityPage({
+  params,
+}: {
+  params: { entity: string }
+}) {
   return (
     <>
-      <h1>Entity</h1>
+      <h1>{ params.entity }</h1>
     </>
   );
-};
-
-export default EntityPage;
+}
