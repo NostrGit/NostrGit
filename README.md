@@ -34,6 +34,7 @@ $ yarn dev
 # Roadmap
 
 UI
+- [ ] Mobile Breakpoints 
 - [ ] Code
     - [ ] Clone with HTTPS
     - [ ] Clone with SSH
