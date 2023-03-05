@@ -21,6 +21,16 @@ $ npm i
 $ npm run dev
 ```
 
+or
+
+
+```bash
+# install npm packages
+$ yarn
+# run in development mode (localhost:3000)
+$ yarn dev
+```
+
 # Roadmap
 
 UI
