@@ -7,7 +7,7 @@ a truly censorship-resistant alternative to GitHub that has a chance of working
 - [tRPC](https://trpc.io)
 - [ui.shadcn.com](https://ui.shadcn.com)
 
-![frontpage](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/frontpage.png)
+![frontpage](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/documentation/resources/frontpage.png)
 
 # Development
 
