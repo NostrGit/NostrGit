@@ -1,7 +1,6 @@
 import { type NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -26,10 +25,9 @@ import {
 } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Contributors } from "@/components/Contributors";
-import { Header } from "@/components/header";
+import { Header } from "@/components/ui/header";
+import { Contributors } from "@/components/ui/contributors";
 
 const Home: NextPage = () => {
   return (
