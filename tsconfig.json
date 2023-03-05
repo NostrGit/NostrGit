@@ -39,8 +39,7 @@
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts",
-    "/Users/ghost/Code/NostrGit/.next/types/**/*.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": [
     "node_modules"
