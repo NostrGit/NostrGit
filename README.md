@@ -25,18 +25,47 @@ Implement the UI similar to the reference pictures.
 
 UI
 - [ ] Code
-    - ![code](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/git_clone.png) 
+    - [ ] Clone with HTTPS
+    - [ ] Clone with SSH
+    - [ ] Download ZIP
 - [ ] Issues
-    - [ ] Issues list ![issues list](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/issues_list.png)
-    - [ ] Single issue ![single issue](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/issue.png)
+    - [ ] Issues list
+        - [ ] Filter by open / closed issues
+    - [ ] Single issue
+        - [ ] Show details about the issue
+        - [ ] Commenting / comment threads
+    - [ ] New issue page
 - [ ] Pull Requests
-    - [ ] PR list ![PR list](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/pr_list.png)
+    - [ ] Pull requests list
+    - [ ] Single pull request page
+    - [ ] New pull request page
 - [ ] Discussions
-    - Filter nostr events of tag[?] discussing the repo
 - [ ] Insights
-    - ![Insights](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/insights.png)
+    - [ ] Repo statistics
+        - Merged pull requests
+        - Open pull requests
+        - Closed issues
+        - New issues
+    - [ ] Tabs
+        - [ ] Contributors
+        - [ ] Commits
+        - [ ] Code frequency
+        - [ ] Dependency graph
+        - [ ] Forks
 - [ ] Settings
     - [ ] Edit repository name
+    - [ ] Toggle features
+        - Wikis
+        - Issues
+        - Discussions
+        - Pull requests
+            - Allow merge commits
+            - Allow squash merging
+            - Allow rebase merging
+    - [ ] Danger zone
+        - Change repo visibility
+        - Transfer ownership
+        - Delete repo
     - [ ] Settings tabs
         - [ ] General
         - [ ] Access (collaborators)
