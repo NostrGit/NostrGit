@@ -6,7 +6,7 @@ a truly censorship-resistant alternative to GitHub that has a chance of working
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
 
-![frontpage](https://github.com/cypherhoodlum/NostrGit/blob/src/resources/frontend.png)
+![frontpage](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/frontpage.png)
 
 # Development
 
@@ -21,10 +21,14 @@ $ npm run dev
 
 # Roadmap
 
+Implement the UI similar to the reference pictures.
+
 UI
 - [ ] Code
-    - [ ] ![code](https://github.com/cypherhoodlum/NostrGit/blob/src/resources/git_clone.png) 
+    - [ ] ![code](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/git_clone.png) 
 - [ ] Issues
+    - [ ] ![issues list](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/issues_list.png)
+    - [ ] ![single issue](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/issue.png)
 - [ ] Pull Requests
 - [ ] Discussions
 - [ ] Insights
