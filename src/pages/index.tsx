@@ -17,6 +17,7 @@ import {
   GitFork,
   GitPullRequest,
   Globe2,
+  History,
   List,
   MessageCircle,
   Settings,
@@ -31,6 +32,7 @@ import { Header } from "@/components/ui/header";
 import { Contributors } from "@/components/ui/contributors";
 import Banner from "@/components/banner";
 import DemoReadme from "@/components/demo-readme";
+import { ListHeader } from "@/components/ui/list-header";
 
 const Home: NextPage = () => {
   return (
@@ -43,7 +45,10 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]">
+      <div
+        style={{ minWidth: 1080 }}
+        className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]"
+      >
         <Header />
 
         <section className="px-8 py-6">
@@ -181,23 +186,39 @@ const Home: NextPage = () => {
               </div>
 
               <main className="mt-4">
-                <div className="inline-flex h-14 w-full items-center rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 text-sm font-medium dark:border-[#383B42] dark:text-slate-100">
-                  <div className="flex items-center space-x-2">
-                    <a href="/FlannelDipole">
+                <ListHeader
+                  icon={
+                    <Link href="/FlannelDipole">
                       <Avatar className="h-6 w-6">
                         <AvatarImage src="https://avatars.githubusercontent.com/u/50970165?s=48&amp;v=4" />
                         <AvatarFallback>CN</AvatarFallback>
                       </Avatar>
-                    </a>
-                    <strong>FlannelDipole</strong>
-                    <span className="text-gray-400">
-                      Fixed grammatical and sentence structure issues.
-                    </span>{" "}
-                    <a className="text-purple-500" href="#">
-                      (#112)
-                    </a>
-                  </div>
-                </div>
+                    </Link>
+                  }
+                  title={
+                    <>
+                      <strong>FlannelDipole</strong>
+                      <span className="text-gray-400">
+                        Fixed grammatical and sentence structure issues.{" "}
+                        <Link href="#" className="text-purple-500">
+                          (#112)
+                        </Link>
+                      </span>
+                    </>
+                  }
+                  actionArea={
+                    <div className="text-gray-400">
+                      <Link href="#">cdcc98f last month</Link>{" "}
+                      <Link
+                        href="#"
+                        className="text-white hover:text-purple-500"
+                      >
+                        <History className="ml-2 mr-1 -mt-0.5 inline h-4 w-4" />{" "}
+                        128 commits
+                      </Link>
+                    </div>
+                  }
+                />
                 <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-[#383B42]">
                   <ul className="divide-y dark:divide-[#383B42]">
                     <li className="grid grid-cols-4 p-2 text-sm text-gray-400 hover:bg-[#171B21]">
