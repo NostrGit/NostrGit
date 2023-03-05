@@ -29,5 +29,5 @@ export default function Head() {
       <meta name="msapplication-TileColor" content="#181b20" />
       <meta name="theme-color" content="#181b20" />
     </>
-  )
+  );
 }
