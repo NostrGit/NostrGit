@@ -32,8 +32,23 @@ UI
 - [ ] Pull Requests
     - [ ] PR list ![PR list](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/pr_list.png)
 - [ ] Discussions
+    - Filter nostr events of tag[?] discussing the repo
 - [ ] Insights
+    - ![Insights](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/insights.png)
 - [ ] Settings
+    - [ ] Edit repository name
+    - [ ] Settings tabs
+        - [ ] General
+        - [ ] Access (collaborators)
+            - [ ] View collaborators
+            - [ ] Add collaborators
+            - [ ] Remove collaborators
+        - [ ] Branches
+            - [ ] Branch protection rules
+        - [ ] Tags
+        - [ ] Actions
+        - [ ] Secrets and variables
+    
 
 Nostr
 - [ ] Login
