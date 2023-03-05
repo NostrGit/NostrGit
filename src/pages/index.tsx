@@ -275,12 +275,15 @@ const Home: NextPage = () => {
                     <List className="ml-2 h-4 w-4 text-gray-400" />{" "}
                     <a
                       className="hover:text-purple-500 hover:underline"
-                      href="#"
+                      href="#readme"
                     >
                       README.md
                     </a>
                   </div>
-                  <article className="prose max-w-full p-4 text-white dark:prose-invert prose-a:text-purple-500">
+                  <article
+                    id="readme"
+                    className="prose max-w-full p-4 text-white dark:prose-invert prose-a:text-purple-500"
+                  >
                     <DemoReadme /> {/* TODO: use next-markdown here */}
                   </article>
                 </div>
