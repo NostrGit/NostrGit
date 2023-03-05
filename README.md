@@ -22,8 +22,6 @@ $ npm run dev
 
 # Roadmap
 
-Implement the UI similar to the reference pictures.
-
 UI
 - [ ] Code
     - [ ] Clone with HTTPS
