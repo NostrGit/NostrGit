@@ -17,6 +17,7 @@ import {
   GitFork,
   GitPullRequest,
   Globe2,
+  List,
   MessageCircle,
   Settings,
   Star,
@@ -29,6 +30,7 @@ import { Badge } from "@/components/ui/badge";
 import { Header } from "@/components/ui/header";
 import { Contributors } from "@/components/ui/contributors";
 import Banner from "@/components/banner";
+import DemoReadme from "@/components/demo-readme";
 
 const Home: NextPage = () => {
   return (
@@ -46,11 +48,6 @@ const Home: NextPage = () => {
         className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]"
       >
         <Header />
-        <Banner
-          title="Contribute"
-          description="Join our GitHub project (until NostrGit is ready)"
-          link="https://github.com/NostrGit/NostrGit/discussions/5"
-        />
 
         <section className="px-8 py-6">
           <div className="flex justify-between">
@@ -243,12 +240,9 @@ const Home: NextPage = () => {
                           href="#"
                         >
                           Fixed grammatical and sentence structure issues. (
-                          <a
-                            className="text-purple-500 hover:underline"
-                            href="#"
-                          >
+                          <span className="text-purple-500 hover:underline">
                             #112
-                          </a>
+                          </span>
                           )
                         </a>
                       </div>
@@ -256,6 +250,21 @@ const Home: NextPage = () => {
                       <div className="text-right">last year</div>
                     </li>
                   </ul>
+                </div>
+
+                <div className="mt-4 overflow-hidden rounded-md border dark:border-[#383B42]">
+                  <div className="flex items-center gap-2 border-b p-2 dark:border-[#383B42]">
+                    <List className="ml-2 h-4 w-4 text-gray-400" />{" "}
+                    <a
+                      className="hover:text-purple-500 hover:underline"
+                      href="#"
+                    >
+                      README.md
+                    </a>
+                  </div>
+                  <article className="prose max-w-full p-4 text-white dark:prose-invert prose-a:text-purple-500">
+                    <DemoReadme /> {/* TODO: use next-markdown here */}
+                  </article>
                 </div>
               </main>
             </div>
@@ -302,6 +311,11 @@ const Home: NextPage = () => {
             </aside>
           </div>
         </section>
+        <Banner
+          title="Contribute"
+          description="Join our GitHub project (until NostrGit is ready)"
+          link="https://github.com/NostrGit/NostrGit/discussions/5"
+        />
       </div>
     </>
   );
