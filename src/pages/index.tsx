@@ -12,6 +12,8 @@ import {
   CircleDot,
   Code,
   Eye,
+  File,
+  Folder,
   GitBranch,
   GitFork,
   GitPullRequest,
@@ -26,6 +28,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
+import { Contributors } from "@/components/Contributors";
+import { Header } from "@/components/header";
 
 const Home: NextPage = () => {
   return (
@@ -42,35 +46,8 @@ const Home: NextPage = () => {
         style={{ minWidth: 1050 /* until we have mobile ready */ }}
         className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]"
       >
-        <header className="flex h-14 w-full justify-between bg-[#171B21] px-8">
-          <div className="flex items-center gap-3">
-            <Image src="/logo.svg" alt="NostrGit" width={32} height={32} />
-            <div className="max-h-12 ">
-              <Input
-                className=" w-[272px] bg-[#0E1116] transition-all ease-in-out focus:w-[600px]"
-                type="text"
-                placeholder="Search or jump to…"
-              />
-            </div>
-            <nav className="flex gap-3 text-sm text-white">
-              <Link className="hover:text-gray-400" href="#">
-                Pull Requests
-              </Link>
-              <Link className="hover:text-gray-400" href="#">
-                Issues
-              </Link>
-              <Link className="hover:text-gray-400" href="#">
-                Explore
-              </Link>
-            </nav>
-          </div>
-          <div className="flex items-center">
-            <Avatar className="h-6 w-6">
-              <AvatarImage src="https://github.com/peerrich.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
-        </header>
+        <Header />
+
         <section className="px-8 py-6">
           <div className="flex justify-between">
             <div className="flex items-center text-lg">
@@ -86,6 +63,7 @@ const Home: NextPage = () => {
                 Public
               </span>
             </div>
+
             <div className="flex gap-2">
               <Button
                 className="h-7 !border-[#383B42] bg-[#22262C] text-xs"
@@ -124,6 +102,7 @@ const Home: NextPage = () => {
               </Button>
             </div>
           </div>
+
           <Tabs defaultValue="code" className="my-4 -ml-2 w-full">
             <TabsList>
               <TabsTrigger value="code">
@@ -204,7 +183,7 @@ const Home: NextPage = () => {
               </div>
 
               <main className="mt-4">
-                <div className="inline-flex h-14 w-full items-center rounded-md border bg-[#171B21] py-2 px-4 text-sm font-medium dark:border-[#383B42] dark:text-slate-100">
+                <div className="inline-flex h-14 w-full items-center rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 text-sm font-medium dark:border-[#383B42] dark:text-slate-100">
                   <div className="flex items-center space-x-2">
                     <a href="/FlannelDipole">
                       <Avatar className="h-6 w-6">
@@ -220,6 +199,53 @@ const Home: NextPage = () => {
                       (#112)
                     </a>
                   </div>
+                </div>
+                <div className="rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-[#383B42]">
+                  <ul className="divide-y dark:divide-[#383B42]">
+                    <li className="grid grid-cols-4 p-2 text-sm text-gray-400 hover:bg-[#171B21]">
+                      <div className="flex items-center gap-2">
+                        <Folder className="ml-2 h-4 w-4 text-gray-400" />{" "}
+                        <a
+                          className="hover:text-purple-500 hover:underline"
+                          href="#"
+                        >
+                          nips
+                        </a>
+                      </div>
+                      <div className="col-span-2">
+                        <a
+                          className="hover:text-purple-500 hover:underline"
+                          href="#"
+                        >
+                          move nips to the dedicated nips repo and update
+                          readme.
+                        </a>
+                      </div>
+                      <div className="text-right">last year</div>
+                    </li>
+                    <li className="grid grid-cols-4 p-2 text-sm text-gray-400 hover:bg-[#171B21]">
+                      <div className="flex items-center gap-2 ">
+                        <File className="ml-2 h-4 w-4 text-gray-400" />{" "}
+                        <a
+                          className="hover:text-purple-500 hover:underline"
+                          href="#"
+                        >
+                          README.md
+                        </a>
+                      </div>
+                      <div className="col-span-2">
+                        <a
+                          className="hover:text-purple-500 hover:underline"
+                          href="#"
+                        >
+                          Fixed grammatical and sentence structure issues.
+                          (#112)
+                        </a>
+                      </div>
+
+                      <div className="text-right">last year</div>
+                    </li>
+                  </ul>
                 </div>
               </main>
             </div>
@@ -261,162 +287,7 @@ const Home: NextPage = () => {
                   Contributors <Badge className="ml-2">19</Badge>
                 </h3>
 
-                <div>
-                  <a
-                    href="https://github.com/fiatjaf"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/fiatjaf/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/1653275?s=64&amp;v=4"
-                      alt="@fiatjaf"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/scsibug"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/scsibug/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/57707?s=64&amp;v=4"
-                      alt="@scsibug"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/melvincarvalho"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/melvincarvalho/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/65864?s=64&amp;v=4"
-                      alt="@melvincarvalho"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/hieblmi"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/hieblmi/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/18631614?s=64&amp;v=4"
-                      alt="@hieblmi"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/srid"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/srid/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/3998?s=64&amp;v=4"
-                      alt="@srid"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/asoltys"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/asoltys/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/7641?s=64&amp;v=4"
-                      alt="@asoltys"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/jb55"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/jb55/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/45598?s=64&amp;v=4"
-                      alt="@jb55"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/schulterklopfer"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/schulterklopfer/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/397451?s=64&amp;v=4"
-                      alt="@schulterklopfer"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/GlenCooper"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/GlenCooper/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/967793?s=64&amp;v=4"
-                      alt="@GlenCooper"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/Kukks"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/Kukks/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/1818366?s=64&amp;v=4"
-                      alt="@Kukks"
-                      className="rounded-full"
-                    />
-                  </a>
-                  <a
-                    href="https://github.com/verretor"
-                    className="mr-2 inline-block h-8 w-8 rounded-full"
-                    data-hovercard-type="user"
-                    data-hovercard-url="/users/verretor/hovercard"
-                    data-octo-click="hovercard-link-click"
-                    data-octo-dimensions="link_type:self"
-                  >
-                    <img
-                      src="https://avatars.githubusercontent.com/u/10324237?s=64&amp;v=4"
-                      alt="@verretor"
-                      className="rounded-full"
-                    />
-                  </a>
-                </div>
+                <Contributors />
               </div>
             </aside>
           </div>
