@@ -1,4 +1,4 @@
-# Contributing to NostrHub
+# Contributing to NostrGit
 
 The NostrHub project operates an open contributor model where anyone is welcome to contribute towards development in the form of peer review, documentation, testing and patches.
 Anyone is invited to contribute without regard to technical experience, "expertise", OSS experience, age, or other concern.
