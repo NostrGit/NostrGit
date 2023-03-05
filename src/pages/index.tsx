@@ -200,7 +200,7 @@ const Home: NextPage = () => {
                     </a>
                   </div>
                 </div>
-                <div className="rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-[#383B42]">
+                <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-[#383B42]">
                   <ul className="divide-y dark:divide-[#383B42]">
                     <li className="grid grid-cols-4 p-2 text-sm text-gray-400 hover:bg-[#171B21]">
                       <div className="flex items-center gap-2">
@@ -238,8 +238,14 @@ const Home: NextPage = () => {
                           className="hover:text-purple-500 hover:underline"
                           href="#"
                         >
-                          Fixed grammatical and sentence structure issues.
-                          (#112)
+                          Fixed grammatical and sentence structure issues. (
+                          <a
+                            className="text-purple-500 hover:underline"
+                            href="#"
+                          >
+                            #112
+                          </a>
+                          )
                         </a>
                       </div>
 
