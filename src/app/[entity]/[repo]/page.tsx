@@ -15,6 +15,7 @@ import {
   GitFork,
   GitPullRequest,
   Globe2,
+  History,
   List,
   MessageCircle,
   Settings,
@@ -28,6 +29,7 @@ import { Badge } from "@/components/ui/badge";
 import { Contributors } from "@/components/ui/contributors";
 import Banner from "@/components/banner";
 import DemoReadme from "@/components/demo-readme";
+import { ListHeader } from "@/components/ui/list-header";
 
 
 export default function RepoPage({
@@ -92,7 +94,7 @@ export default function RepoPage({
           </div>
         </div>
 
-        <Tabs defaultValue="code" className="my-4 -ml-2 w-full">
+        <Tabs defaultValue="code" className="mb-4 -ml-2 w-full">
           <TabsList>
             <TabsTrigger value="code">
               <Code className="mr-2 h-4 w-4" />
@@ -127,7 +129,6 @@ export default function RepoPage({
             <p className="text-sm text-slate-500 dark:text-slate-400"></p>
           </TabsContent>
         </Tabs>
-
         <div className="grid grid-cols-4 gap-6">
           <div className="col-span-3">
             <div className="flex justify-between">
@@ -172,26 +173,52 @@ export default function RepoPage({
             </div>
 
             <main className="mt-4">
-              <div className="inline-flex h-14 w-full items-center rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 text-sm font-medium dark:border-[#383B42] dark:text-slate-100">
-                <div className="flex items-center space-x-2">
-                  <a href="/FlannelDipole">
+              <ListHeader
+                icon={
+                  <Link href="/FlannelDipole">
                     <Avatar className="h-6 w-6">
                       <AvatarImage src="https://avatars.githubusercontent.com/u/50970165?s=48&amp;v=4" />
                       <AvatarFallback>CN</AvatarFallback>
                     </Avatar>
-                  </a>
-                  <strong>FlannelDipole</strong>
-                  <span className="text-gray-400">
-                    Fixed grammatical and sentence structure issues.
-                  </span>{" "}
-                  <a className="text-purple-500" href="#">
-                    (#112)
-                  </a>
-                </div>
-              </div>
+                  </Link>
+                }
+                title={
+                  <>
+                    <strong>FlannelDipole</strong>
+                    <span className="text-gray-400">
+                      Fixed grammatical and sentence structure issues.{" "}
+                      <Link href="#" className="text-purple-500">
+                        (#112)
+                      </Link>
+                    </span>
+                  </>
+                }
+                actionArea={
+                  <div className="text-gray-400">
+                    <Link href="#">cdcc98f last month</Link>{" "}
+                    <Link
+                      href="#"
+                      className="text-white hover:text-purple-500"
+                    >
+                      <History className="ml-2 mr-1 -mt-0.5 inline h-4 w-4" />{" "}
+                      128 commits
+                    </Link>
+                  </div>
+                }
+              />
               <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-[#383B42]">
                 <ul className="divide-y dark:divide-[#383B42]">
                   <li className="grid grid-cols-4 p-2 text-sm text-gray-400 hover:bg-[#171B21]">
+
+  
+        
+          
+  
+
+        
+  
+  
+
                     <div className="flex items-center gap-2">
                       <Folder className="ml-2 h-4 w-4 text-gray-400" />{" "}
                       <a
@@ -234,29 +261,29 @@ export default function RepoPage({
                         )
                       </a>
                     </div>
-
                     <div className="text-right">last year</div>
                   </li>
                 </ul>
               </div>
-
               <div className="mt-4 overflow-hidden rounded-md border dark:border-[#383B42]">
                 <div className="flex items-center gap-2 border-b p-2 dark:border-[#383B42]">
                   <List className="ml-2 h-4 w-4 text-gray-400" />{" "}
                   <a
                     className="hover:text-purple-500 hover:underline"
-                    href="#"
+                    href="#readme"
                   >
                     README.md
                   </a>
                 </div>
-                <article className="prose max-w-full p-4 text-white dark:prose-invert prose-a:text-purple-500">
+                <article
+                    id="readme"
+                    className="prose max-w-full p-4 text-white dark:prose-invert prose-a:text-purple-500"
+                  >
                   <DemoReadme /> {/* TODO: use next-markdown here */}
                 </article>
               </div>
             </main>
           </div>
-
           <aside className="col-span-1 space-y-2">
             <div className="flex justify-between">
               <h3 className="font-bold">About</h3>
@@ -266,10 +293,8 @@ export default function RepoPage({
               a truly censorship-resistant alternative to Twitter that has a
               chance of working
             </p>
-
             <Badge className="mr-2">nostr</Badge>
             <Badge className="mr-2">git</Badge>
-
             <ul className="space-y-2 border-b border-gray-400/20 pt-4 pb-8 text-sm text-gray-400">
               <li>
                 <BookOpen className="mr-2 inline h-4 w-4" />
@@ -288,12 +313,10 @@ export default function RepoPage({
                 <strong>209</strong> forks
               </li>
             </ul>
-
             <div className="">
               <h3 className="mb-4 font-bold">
                 Contributors <Badge className="ml-2">19</Badge>
               </h3>
-
               <Contributors />
             </div>
           </aside>
