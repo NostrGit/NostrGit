@@ -25,11 +25,12 @@ Implement the UI similar to the reference pictures.
 
 UI
 - [ ] Code
-    - [ ] ![code](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/git_clone.png) 
+    - ![code](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/git_clone.png) 
 - [ ] Issues
-    - [ ] ![issues list](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/issues_list.png)
-    - [ ] ![single issue](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/issue.png)
+    - [ ] Issues list ![issues list](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/issues_list.png)
+    - [ ] Single issue ![single issue](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/issue.png)
 - [ ] Pull Requests
+    - [ ] PR list ![PR list](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/pr_list.png)
 - [ ] Discussions
 - [ ] Insights
 - [ ] Settings
