@@ -5,6 +5,7 @@ a truly censorship-resistant alternative to GitHub that has a chance of working
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com)
 - [tRPC](https://trpc.io)
+- [ui.shadcn.com](https://ui.shadcn.com)
 
 ![frontpage](https://github.com/cypherhoodlum/NostrGit/blob/detailed_readme/src/resources/frontpage.png)
 
