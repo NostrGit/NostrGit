@@ -5,7 +5,7 @@ Anyone is invited to contribute without regard to technical experience, "experti
 
 # Communications Channels
 
-All communication happens openly, using github issues, PRs, nostr, or the [Telegram group](https://t.me/nostr_protocol). This ensures that hidden information does not exist, which makes contributing much easier. Please post your nostr public key [here](https://github.com/NostrGit/NostrGit/issues/19) to be noticed on nostr by the team.
+All communication happens openly, using github issues, PRs, and Nostr. This ensures that hidden information does not exist, which makes contributing much easier. Please post your nostr public key [here](https://github.com/NostrGit/NostrGit/issues/19) to be noticed on nostr by the team.
 
 # Contribution Workflow
 
@@ -24,7 +24,7 @@ To contribute a patch, the worflow is a as follows:
     - Keep your commit messages concise. [These](https://chris.beams.io/posts/git-commit/) guidelines should be kept in mind.
 4. Create a pull request
     - Always start your pull requests with a described list (Add, Remove, Bump, etc.)
-5. Be a part of the Nostr movement
+5. Be a part of the Nostr movement!
 
 In general commits should be atomic and diffs should be easy to read. For this reason do not mix any formatting fixes or code moves with actual code changes. Further, each commit, individually, should compile and pass tests, in order to ensure git bisect and other automated tools function properly.
 
