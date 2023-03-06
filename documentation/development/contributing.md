@@ -43,5 +43,13 @@ For core members: always open an issue first, and then the branch:
 
 # Coding conventions
 
-TBA
+Use function components instead of arrow functions.
 
+This :
+```javascript
+function Home() {}
+```
+instead of this :
+```javascript
+const home = () => {}
+```
