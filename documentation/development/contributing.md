@@ -16,8 +16,8 @@ To contribute a patch, the worflow is a as follows:
 1. Fork Repository
 2. Create topic branch
     - Always use the naming conventions
-        - issue/topic/spesific_topic (eg. cypherhoodlum:13/documentation/contributing)
-        - issue/short_description
+        - issue/topic/spesific-topic (eg. cypherhoodlum:13/documentation/contributing)
+        - issue/short-description
         - etc.
 3. Commit patches
     - Keep your commit messages concise. [These](https://chris.beams.io/posts/git-commit/) guidelines should be kept in mind.
