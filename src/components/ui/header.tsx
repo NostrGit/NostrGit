@@ -86,7 +86,6 @@ export const Header = () => {
               <DropdownMenuItem>
                 <span>Upgrade</span>
               </DropdownMenuItem>
-              
               <DropdownMenuItem>
                 <span>Feature Preview</span>
               </DropdownMenuItem>
