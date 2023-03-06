@@ -52,6 +52,8 @@ We use [prettier](https://prettier.io/) to format our code. It is recommended to
 
 Anyone may participate in peer review which is expressed by comments in the pull request. Typically reviewers will review the code for obvious errors, as well as test out the patch set and opine on the technical merits of the patch. PR should be reviewed first on the conceptual level before focusing on code style or grammar fixes.
 
+Please describe the changes you made in the PR description using the `pull_request_template.md` file.
+
 ## For core members
 
 Always open an issue first, and then the branch. It makes organising branches much easier. The exeptions are very simple PRs such as updates to the documentation when creating a separate issue would just complicate the peer review.
