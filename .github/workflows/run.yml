@@ -1,6 +1,6 @@
 on:
   push:
-    branches: [main prod]
+    branches: [main, prod]
   pull_request:
     types: [opened]
 name: Run
