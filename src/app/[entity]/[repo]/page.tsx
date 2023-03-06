@@ -41,53 +41,53 @@ export default function RepoPage({
       <section className="px-8 py-6">
         <div className="flex justify-between">
           <div className="flex items-center text-lg">
-            <Book className="mr-2 inline h-4 w-4 text-gray-400" />
+            <Book className="text-gray-400 mr-2 inline h-4 w-4" />
             <Link className="text-purple-500" href={`/${params.entity}`}>
               {params.entity}
             </Link>
-            <span className="px-2 text-gray-400">/</span>
+            <span className="text-gray-400 px-2">/</span>
             <Link
               className="text-purple-500"
               href={`/${params.entity}/${params.repo}`}
             >
               {params.repo}
             </Link>
-            <span className="ml-1.5 mt-px rounded-full border border-gray-200/40 px-1.5 text-xs text-gray-400">
+            <span className="border-gray-200/40 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
               Public
             </span>
           </div>
 
           <div className="flex gap-2">
             <Button
-              className="h-7 !border-[#383B42] bg-[#22262C] text-xs"
+              className="h-7 !border-gray bg-dark text-xs"
               variant="outline"
             >
               <Eye className="mr-2 h-4 w-4" /> Unwatch{" "}
               <Badge className="ml-2">148</Badge>
             </Button>
             <Button
-              className="h-7 !border-[#383B42] bg-[#22262C] text-xs"
+              className="h-7 !border-gray bg-dark text-xs"
               variant="outline"
             >
               <Zap className="mr-2 h-4 w-4" /> Zaps{" "}
               <Badge className="ml-2">1337</Badge>
             </Button>
             <Button
-              className="h-7 !border-[#383B42] bg-[#22262C] text-xs"
+              className="h-7 !border-gray bg-dark text-xs"
               variant="outline"
             >
               <Globe2 className="mr-2 h-4 w-4" /> Relays{" "}
               <Badge className="ml-2">8</Badge>
             </Button>
             <Button
-              className="h-7 !border-[#383B42] bg-[#22262C] text-xs"
+              className="h-7 !border-gray bg-dark text-xs"
               variant="outline"
             >
               <GitFork className="mr-2 h-4 w-4" /> Fork{" "}
               <Badge className="ml-2">209</Badge>
             </Button>
             <Button
-              className="h-7 !border-[#383B42] bg-[#22262C] text-xs"
+              className="h-7 !border-gray bg-dark text-xs"
               variant="outline"
             >
               <Star className="mr-2 h-4 w-4 text-yellow-500" /> Starred{" "}
@@ -123,7 +123,7 @@ export default function RepoPage({
               Settings
             </TabsTrigger>
           </TabsList>
-          <hr className="w-[calc(100% + 32px)] -mx-8 -mt-1 border-b-0 border-gray-400/20" />
+          <hr className="w-[calc(100% + 32px)] -mx-8 -mt-1 border-b-0 border-gray" />
           <TabsContent value="code">
             <p className="text-sm text-slate-500 dark:text-slate-400"></p>
           </TabsContent>
@@ -137,33 +137,27 @@ export default function RepoPage({
               <div>
                 <div className="flex items-center  gap-4 text-sm">
                   <Button
-                    className="h-8 !border-[#383B42] bg-[#22262C] "
+                    className="h-8 !border-gray bg-dark "
                     variant="outline"
                   >
-                    <GitBranch className="mr-2 h-4 w-4 text-gray-400" /> main{" "}
+                    <GitBranch className="text-gray-400 mr-2 h-4 w-4" /> main{" "}
                     <ChevronDown className="ml-2 h-4 w-4 text-white" />
                   </Button>
                   <div>
-                    <GitBranch className="inline h-4 w-4 text-gray-400" /> 3{" "}
+                    <GitBranch className="text-gray-400 inline h-4 w-4" /> 3{" "}
                     <span className="text-gray-400">branches</span>
                   </div>
                   <div>
-                    <Tag className="inline h-4 w-4 text-gray-400" /> 1{" "}
+                    <Tag className="text-gray-400 inline h-4 w-4" /> 1{" "}
                     <span className="text-gray-400">tags</span>
                   </div>
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button
-                  className="h-8 !border-[#383B42] bg-[#22262C]"
-                  variant="outline"
-                >
+                <Button className="h-8 !border-gray bg-dark" variant="outline">
                   Go to file
                 </Button>
-                <Button
-                  className="h-8 !border-[#383B42] bg-[#22262C]"
-                  variant="outline"
-                >
+                <Button className="h-8 !border-gray bg-dark" variant="outline">
                   Add file
                   <ChevronDown className="ml-2 h-4 w-4 text-white" />
                 </Button>
@@ -205,11 +199,11 @@ export default function RepoPage({
                   </div>
                 }
               />
-              <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-[#383B42]">
-                <ul className="divide-y dark:divide-[#383B42]">
-                  <li className="grid grid-cols-4 p-2 text-sm text-gray-400 hover:bg-[#171B21]">
+              <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-gray">
+                <ul className="divide-y dark:divide-gray">
+                  <li className="text-gray-400 grid grid-cols-4 p-2 text-sm hover:bg-[#171B21]">
                     <div className="flex items-center gap-2">
-                      <Folder className="ml-2 h-4 w-4 text-gray-400" />{" "}
+                      <Folder className="text-gray-400 ml-2 h-4 w-4" />{" "}
                       <a
                         className="hover:text-purple-500 hover:underline"
                         href="#"
@@ -227,9 +221,9 @@ export default function RepoPage({
                     </div>
                     <div className="text-right">last year</div>
                   </li>
-                  <li className="grid grid-cols-4 p-2 text-sm text-gray-400 hover:bg-[#171B21]">
+                  <li className="text-gray-400 grid grid-cols-4 p-2 text-sm hover:bg-[#171B21]">
                     <div className="flex items-center gap-2 ">
-                      <File className="ml-2 h-4 w-4 text-gray-400" />{" "}
+                      <File className="text-gray-400 ml-2 h-4 w-4" />{" "}
                       <a
                         className="hover:text-purple-500 hover:underline"
                         href="#"
@@ -253,9 +247,9 @@ export default function RepoPage({
                   </li>
                 </ul>
               </div>
-              <div className="mt-4 overflow-hidden rounded-md border dark:border-[#383B42]">
-                <div className="flex items-center gap-2 border-b p-2 dark:border-[#383B42]">
-                  <List className="ml-2 h-4 w-4 text-gray-400" />{" "}
+              <div className="mt-4 overflow-hidden rounded-md border dark:border-gray">
+                <div className="flex items-center gap-2 border-b p-2 dark:border-gray">
+                  <List className="text-gray-400 ml-2 h-4 w-4" />{" "}
                   <a
                     className="hover:text-purple-500 hover:underline"
                     href="#readme"
@@ -275,7 +269,7 @@ export default function RepoPage({
           <aside className="col-span-1 space-y-2">
             <div className="flex justify-between">
               <h3 className="font-bold">About</h3>
-              <Settings className="h-4 w-4 text-gray-400" />
+              <Settings className="text-gray-400 h-4 w-4" />
             </div>
             <p className="pb-2">
               a truly censorship-resistant alternative to Twitter that has a
@@ -283,7 +277,7 @@ export default function RepoPage({
             </p>
             <Badge className="mr-2">nostr</Badge>
             <Badge className="mr-2">git</Badge>
-            <ul className="space-y-2 border-b border-gray-400/20 pt-4 pb-8 text-sm text-gray-400">
+            <ul className="text-gray-400 space-y-2 border-b border-gray pt-4 pb-8 text-sm">
               <li>
                 <BookOpen className="mr-2 inline h-4 w-4" />
                 Readme
