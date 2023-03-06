@@ -36,7 +36,9 @@ When refactoring, structure your PR to make it easy to review and don't hesitate
 
 Anyone may participate in peer review which is expressed by comments in the pull request. Typically reviewers will review the code for obvious errors, as well as test out the patch set and opine on the technical merits of the patch. PR should be reviewed first on the conceptual level before focusing on code style or grammar fixes.
 
-For core members: always open an issue first, and then the branch. It makes organising branches much easier.
+## For core members
+
+Always open an issue first, and then the branch. It makes organising branches much easier. The exeptions are very simple PRs such as updates to the documentation when creating a separate issue would just complicate the peer review.
 
 <img src="https://user-images.githubusercontent.com/8019099/222988401-6528471b-8490-4ddf-b54c-4e8b7675a6a8.jpg" alt="Create Branch" width="450px" height="auto" />
 
