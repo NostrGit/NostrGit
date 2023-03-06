@@ -9,10 +9,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="dark">
-        <div
-          style={{ minWidth: 1080 }}
-          className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]"
-        >
+        <div className="dark min-h-screen bg-white text-white dark:bg-[#0E1116]">
           <Header />
           {children}
         </div>
