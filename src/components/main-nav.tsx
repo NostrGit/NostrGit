@@ -1,15 +1,15 @@
 "use client";
 
 import * as React from "react";
-import Link from "next/link";
-
-import { MainNavItem } from "types";
-
-import { cn } from "@/lib/utils";
 
 import { MobileNav } from "@/components/mobile-nav";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
+
 import { Menu, X } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { MainNavItem } from "types";
+
 import { Input } from "./ui/input";
 
 interface MainNavProps {
@@ -23,7 +23,13 @@ export function MainNav({ items, children }: MainNavProps) {
   return (
     <div className="flex items-center justify-center gap-6 md:gap-10">
       <Link href="/" className="hidden items-center space-x-2 md:flex">
-        <Image src="/logo.svg" alt="NostrGit" width={32} height={32} />
+        <Image
+          src="/logo.svg"
+          alt="NostrGit"
+          width={32}
+          height={32}
+          className="hover:opacity-80"
+        />
       </Link>
 
       <div className="hidden max-h-12 md:inline">
@@ -41,7 +47,7 @@ export function MainNav({ items, children }: MainNavProps) {
               key={index}
               href={item.disabled ? "#" : item.href}
               className={cn(
-                "flex items-center text-lg font-semibold text-white sm:text-sm",
+                "flex items-center text-lg font-semibold text-white hover:text-white/80 sm:text-sm",
 
                 item.disabled && "cursor-not-allowed opacity-80"
               )}
