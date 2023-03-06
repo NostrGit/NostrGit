@@ -31,9 +31,8 @@ import Banner from "@/components/banner";
 import DemoReadme from "@/components/demo-readme";
 import { ListHeader } from "@/components/ui/list-header";
 
-
 export default function RepoPage({
-  params
+  params,
 }: {
   params: { entity: string; repo: string };
 }) {
@@ -44,11 +43,14 @@ export default function RepoPage({
           <div className="flex items-center text-lg">
             <Book className="mr-2 inline h-4 w-4 text-gray-400" />
             <Link className="text-purple-500" href={`/${params.entity}`}>
-              { params.entity }
+              {params.entity}
             </Link>
             <span className="px-2 text-gray-400">/</span>
-            <Link className="text-purple-500" href={`/${params.entity}/${params.repo}`}>
-              { params.repo }
+            <Link
+              className="text-purple-500"
+              href={`/${params.entity}/${params.repo}`}
+            >
+              {params.repo}
             </Link>
             <span className="ml-1.5 mt-px rounded-full border border-gray-200/40 px-1.5 text-xs text-gray-400">
               Public
@@ -196,10 +198,7 @@ export default function RepoPage({
                 actionArea={
                   <div className="text-gray-400">
                     <Link href="#">cdcc98f last month</Link>{" "}
-                    <Link
-                      href="#"
-                      className="text-white hover:text-purple-500"
-                    >
+                    <Link href="#" className="text-white hover:text-purple-500">
                       <History className="ml-2 mr-1 -mt-0.5 inline h-4 w-4" />{" "}
                       128 commits
                     </Link>
@@ -209,16 +208,6 @@ export default function RepoPage({
               <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-[#383B42]">
                 <ul className="divide-y dark:divide-[#383B42]">
                   <li className="grid grid-cols-4 p-2 text-sm text-gray-400 hover:bg-[#171B21]">
-
-  
-        
-          
-  
-
-        
-  
-  
-
                     <div className="flex items-center gap-2">
                       <Folder className="ml-2 h-4 w-4 text-gray-400" />{" "}
                       <a
@@ -233,8 +222,7 @@ export default function RepoPage({
                         className="hover:text-purple-500 hover:underline"
                         href="#"
                       >
-                        move nips to the dedicated nips repo and update
-                        readme.
+                        move nips to the dedicated nips repo and update readme.
                       </a>
                     </div>
                     <div className="text-right">last year</div>
@@ -276,9 +264,9 @@ export default function RepoPage({
                   </a>
                 </div>
                 <article
-                    id="readme"
-                    className="prose max-w-full p-4 text-white dark:prose-invert prose-a:text-purple-500"
-                  >
+                  id="readme"
+                  className="prose max-w-full p-4 text-white dark:prose-invert prose-a:text-purple-500"
+                >
                   <DemoReadme /> {/* TODO: use next-markdown here */}
                 </article>
               </div>
