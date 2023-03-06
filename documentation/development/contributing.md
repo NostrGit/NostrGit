@@ -32,6 +32,19 @@ When adding a new feature, thought must be given to the long term technical debt
 
 When refactoring, structure your PR to make it easy to review and don't hesitate to split it into multiple small, focused PRs.
 
+## Development
+
+Fork the repo
+
+```bash
+# install npm packages
+$ yarn
+# run in development mode (localhost:3000)
+$ yarn dev
+```
+
+If you use npm instead of yarn, make sure not to include package-lock.json in the commits.
+
 ## Peer review
 
 Anyone may participate in peer review which is expressed by comments in the pull request. Typically reviewers will review the code for obvious errors, as well as test out the patch set and opine on the technical merits of the patch. PR should be reviewed first on the conceptual level before focusing on code style or grammar fixes.

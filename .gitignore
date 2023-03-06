@@ -43,3 +43,6 @@ yarn-error.log*
 
 #ide 
 .vscode/*
+
+# npm
+package-lock.json
