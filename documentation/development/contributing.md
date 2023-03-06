@@ -46,7 +46,7 @@ If you use npm instead of yarn, make sure not to include package-lock.json in th
 
 ## Tooling
 
-We use [prettier](https://prettier.io/) to format our code. It is recommended to use the [prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for VSCode. We also use [@trivago/prettier-plugin-sort-imports] to sort our imports. It is recommended to use the [sort-imports extension](https://marketplace.visualstudio.com/items?itemName=amatiasq.sort-imports) for VSCode.
+We use [prettier](https://prettier.io/) to format our code. It is recommended to use the [prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for VSCode. We also use `@trivago/prettier-plugin-sort-imports` to sort our imports.
 
 ## Peer review
 
