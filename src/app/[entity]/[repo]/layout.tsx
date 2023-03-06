@@ -1,6 +1,9 @@
+"use client"
+
 import Banner from "@/components/banner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { clsx } from "clsx";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,14 +26,19 @@ import {
   Zap,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function RepoLayout({
   children, 
   params,
 }: {
   children: React.ReactNode,
-  params: { entity: string; repo: string };
+  params: { entity: string; repo: string, subpage?: string };
 }) {
+  const pathname = usePathname() || ''
+
+  const pathIs = (path: string) => pathname === path
+
   return (
     <>
       <section className="px-8 py-6">
@@ -134,7 +142,7 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}`}
-              className="w-	mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-purple-500 p-4 text-sm"
+              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname === `/${params.entity}/${params.repo}` })}
             >
               <Code className="mr-2 h-4 w-4" />
               Code
@@ -143,7 +151,7 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/issues`}
-              className="w-	mr-2 flex h-4 items-center whitespace-nowrap text-sm"
+              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/issues`) })}
             >
               <CircleDot className="mr-2 h-4 w-4" />
               Issues <Badge className="ml-2">36</Badge>
@@ -152,7 +160,7 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/pulls`}
-              className="w-	mr-2 flex h-4 items-center whitespace-nowrap text-sm"
+              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/pulls`) })}
             >
               <GitPullRequest className="mr-2 h-4 w-4" />
               Pull Requests <Badge className="ml-2">3</Badge>
@@ -161,7 +169,7 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/discussions`}
-              className="w-	mr-2 flex h-4 items-center whitespace-nowrap text-sm"
+              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/discussions`) })}
             >
               <MessageCircle className="mr-2 h-4 w-4" />
               Discussions
@@ -170,7 +178,7 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/insights`}
-              className="w-	mr-2 flex h-4 items-center whitespace-nowrap text-sm"
+              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/insights`) })}
             >
               <BarChart4 className="mr-2 h-4 w-4" />
               Insights
@@ -179,7 +187,7 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/settings`}
-              className="w-	mr-2 flex h-4 items-center whitespace-nowrap text-sm"
+              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/settings`) })}
             >
               <Settings className="mr-2 h-4 w-4" />
               Settings
