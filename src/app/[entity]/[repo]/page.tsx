@@ -196,7 +196,7 @@ export default function RepoPage({
           </li>
         </ul>
 
-        <hr className="w-[calc(100% + 32px)] -mx-8 -mt-1 border-b-0 border-gray" />
+        <hr className="w-[calc(100% + 32px)] -mx-8 -mt-4 border-b-0 border-gray" />
 
         <div className="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
           <div className="col-span-3 lg:col-span-3">
