@@ -7,7 +7,7 @@ name: Run
 jobs:
   prettier:
     name: Prettier
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -20,7 +20,7 @@ jobs:
         working-directory: .
   eslint:
     name: Eslint
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     timeout-minutes: 7
     steps:
       - uses: actions/checkout@v3
