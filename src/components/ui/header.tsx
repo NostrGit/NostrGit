@@ -1,7 +1,4 @@
-import Link from "next/link";
-import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Input } from "@/components/ui/input";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,6 +8,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+
 import { ChevronDown } from "lucide-react";
 import { HeaderConfig } from "types";
 import { MainNav } from "../main-nav";
