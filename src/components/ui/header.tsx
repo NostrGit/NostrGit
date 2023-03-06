@@ -1,3 +1,5 @@
+
+"use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {
   DropdownMenu,
@@ -8,6 +10,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import Link from "next/link";
+import Image from "next/image";
+import { Input } from "@/components/ui/input";
+import useMetadata from "@/lib/nostr/useMetadata";
+
+const HeaderAvatar = () => {
+
+  const metadata = useMetadata();
+  console.log(metadata);
+  return (
+    <Avatar className="h-6 w-6">
+      <AvatarImage src={metadata.picture} />
+      <AvatarFallback>CN</AvatarFallback>
+    </Avatar>
+  );
+};
 
 import { ChevronDown } from "lucide-react";
 import { HeaderConfig } from "types";
@@ -92,10 +111,7 @@ export function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex cursor-pointer">
-              <Avatar className="h-6 w-6">
-                <AvatarImage src="https://github.com/peerrich.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
+            <HeaderAvatar />
               <ChevronDown className="mt-1 h-4 w-4 hover:text-white/80" />
             </div>
           </DropdownMenuTrigger>

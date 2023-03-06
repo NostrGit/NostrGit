@@ -12,6 +12,9 @@ const config = {
     appDir: true,
   },
   reactStrictMode: true,
+  images: {
+    domains: ["void.cat"],
+  },
 
   /**
    * If you have the "experimental: { appDir: true }" setting enabled, then you
