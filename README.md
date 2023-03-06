@@ -1,6 +1,8 @@
 # NostrGit
 
-a truly censorship-resistant alternative to GitHub that has a chance of working
+A truly censorship-resistant alternative to GitHub that has a chance of working.
+
+Read about the vision [here](https://github.com/NostrGit/NostrGit/tree/main/documentation/vision.md).
 
 - [Next.js](https://nextjs.org)
 - [Tailwind CSS](https://tailwindcss.com)
@@ -99,3 +101,17 @@ UI
 Nostr
 - [ ] Login
 - [ ] Figure out decentralised data storage
+    - [ ] New repository: serve created repository with [GitTorrent](https://github.com/cjb/GitTorrent)
+    - [ ] Repo has a public key
+        ```JSON
+        {
+            "pubkey": "abcd123...",
+            "nrepo": "nrepo1ris1683fw6n2mvhl5h6dhqd8mqfv3wmxnz4qph83ua4dk4006ezsrt5c24"
+        }
+        ```
+    - [ ] Zap a repo
+        - [ ] Zap PRs
+    - [ ] Rate a repo
+    - [ ] Follow a repo
+    - [ ] Comment on a repo
+    - [ ] Add bounties
