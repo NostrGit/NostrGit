@@ -1,28 +1,16 @@
-on:
-  push:
-    branches: [main, prod]
-  pull_request:
-    types: [opened]
 name: Run
+on:
+  pull_request:
+  push:
+    branches:
+      - main
 jobs:
   prettier:
-    name: Prettier
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - name: Cache Node Modules
-        id: cache
-        uses: actions/cache@v3
-      - run: npm run prettier
-        working-directory: .
-  eslint:
-    name: Eslint
-    runs-on: ubuntu-latest
-    timeout-minutes: 7
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-      - run: npm run eslint
-        working-directory: .
-# DO NOT EDIT: END
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.head_ref }}
+      - name: Prettify code
+        uses: creyD/prettier_action@v4.2
