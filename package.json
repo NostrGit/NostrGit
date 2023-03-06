@@ -7,7 +7,8 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "eslint": "eslint --ext .ts,.tsx --fix ."
   },
   "dependencies": {
     "@radix-ui/react-avatar": "^1.0.1",
