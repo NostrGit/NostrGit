@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Contributors } from "@/components/ui/contributors";
 import { ListHeader } from "@/components/ui/list-header";
+
 import {
   BookOpen,
   ChevronDown,
@@ -32,10 +33,7 @@ export default function RepoCodePage({
         <div className="flex flex-col justify-between gap-y-4 overflow-hidden lg:flex-row lg:gap-y-0">
           <div>
             <div className="flex items-center  gap-4 text-sm">
-              <Button
-                className="h-8 !border-gray bg-dark "
-                variant="outline"
-              >
+              <Button className="h-8 !border-gray bg-dark " variant="outline">
                 <GitBranch className="text-gray-400 mr-2 h-4 w-4" /> main{" "}
                 <ChevronDown className="ml-2 h-4 w-4 text-white" />
               </Button>
@@ -90,8 +88,8 @@ export default function RepoCodePage({
               <div className="text-gray-400">
                 <Link href="#">cdcc98f last month</Link>{" "}
                 <Link href="#" className="text-white hover:text-purple-500">
-                  <History className="ml-2 mr-1 -mt-0.5 inline h-4 w-4" />{" "}
-                  128 commits
+                  <History className="ml-2 mr-1 -mt-0.5 inline h-4 w-4" /> 128
+                  commits
                 </Link>
               </div>
             }
@@ -101,18 +99,12 @@ export default function RepoCodePage({
               <li className="text-gray-400 grid grid-cols-4 p-2 text-sm hover:bg-[#171B21]">
                 <div className="flex items-center gap-2">
                   <Folder className="text-gray-400 ml-2 h-4 w-4" />{" "}
-                  <a
-                    className="hover:text-purple-500 hover:underline"
-                    href="#"
-                  >
+                  <a className="hover:text-purple-500 hover:underline" href="#">
                     nips
                   </a>
                 </div>
                 <div className="col-span-2">
-                  <a
-                    className="hover:text-purple-500 hover:underline"
-                    href="#"
-                  >
+                  <a className="hover:text-purple-500 hover:underline" href="#">
                     move nips to the dedicated nips repo and update readme.
                   </a>
                 </div>
@@ -121,18 +113,12 @@ export default function RepoCodePage({
               <li className="text-gray-400 grid grid-cols-4 p-2 text-sm hover:bg-[#171B21]">
                 <div className="flex items-center gap-2 ">
                   <File className="text-gray-400 ml-2 h-4 w-4" />{" "}
-                  <a
-                    className="hover:text-purple-500 hover:underline"
-                    href="#"
-                  >
+                  <a className="hover:text-purple-500 hover:underline" href="#">
                     README.md
                   </a>
                 </div>
                 <div className="col-span-2">
-                  <a
-                    className="hover:text-purple-500 hover:underline"
-                    href="#"
-                  >
+                  <a className="hover:text-purple-500 hover:underline" href="#">
                     Fixed grammatical and sentence structure issues. (
                     <span className="text-purple-500 hover:underline">
                       #112
@@ -170,8 +156,8 @@ export default function RepoCodePage({
           <Settings className="text-gray-400 h-4 w-4" />
         </div>
         <p className="pb-2">
-          a truly censorship-resistant alternative to Twitter that has a
-          chance of working
+          a truly censorship-resistant alternative to Twitter that has a chance
+          of working
         </p>
         <Badge className="mr-2">nostr</Badge>
         <Badge className="mr-2">git</Badge>
@@ -203,4 +189,3 @@ export default function RepoCodePage({
     </div>
   );
 }
-

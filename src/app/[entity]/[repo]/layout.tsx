@@ -1,15 +1,16 @@
-"use client"
+"use client";
 
 import Banner from "@/components/banner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { clsx } from "clsx";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+import { clsx } from "clsx";
 import {
   BarChart4,
   Book,
@@ -29,15 +30,15 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function RepoLayout({
-  children, 
+  children,
   params,
 }: {
-  children: React.ReactNode,
-  params: { entity: string; repo: string, subpage?: string };
+  children: React.ReactNode;
+  params: { entity: string; repo: string; subpage?: string };
 }) {
-  const pathname = usePathname() || ''
+  const pathname = usePathname() || "";
 
-  const pathIs = (path: string) => pathname === path
+  const pathIs = (path: string) => pathname === path;
 
   return (
     <>
@@ -142,7 +143,13 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}`}
-              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname === `/${params.entity}/${params.repo}` })}
+              className={clsx(
+                "mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm",
+                {
+                  "border-b-purple-600":
+                    pathname === `/${params.entity}/${params.repo}`,
+                }
+              )}
             >
               <Code className="mr-2 h-4 w-4" />
               Code
@@ -151,7 +158,14 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/issues`}
-              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/issues`) })}
+              className={clsx(
+                "mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm",
+                {
+                  "border-b-purple-600": pathname.includes(
+                    `/${params.entity}/${params.repo}/issues`
+                  ),
+                }
+              )}
             >
               <CircleDot className="mr-2 h-4 w-4" />
               Issues <Badge className="ml-2">36</Badge>
@@ -160,7 +174,14 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/pulls`}
-              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/pulls`) })}
+              className={clsx(
+                "mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm",
+                {
+                  "border-b-purple-600": pathname.includes(
+                    `/${params.entity}/${params.repo}/pulls`
+                  ),
+                }
+              )}
             >
               <GitPullRequest className="mr-2 h-4 w-4" />
               Pull Requests <Badge className="ml-2">3</Badge>
@@ -169,7 +190,14 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/discussions`}
-              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/discussions`) })}
+              className={clsx(
+                "mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm",
+                {
+                  "border-b-purple-600": pathname.includes(
+                    `/${params.entity}/${params.repo}/discussions`
+                  ),
+                }
+              )}
             >
               <MessageCircle className="mr-2 h-4 w-4" />
               Discussions
@@ -178,7 +206,14 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/insights`}
-              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/insights`) })}
+              className={clsx(
+                "mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm",
+                {
+                  "border-b-purple-600": pathname.includes(
+                    `/${params.entity}/${params.repo}/insights`
+                  ),
+                }
+              )}
             >
               <BarChart4 className="mr-2 h-4 w-4" />
               Insights
@@ -187,7 +222,14 @@ export default function RepoLayout({
           <li>
             <Link
               href={`/${params.entity}/${params.repo}/settings`}
-              className={clsx('mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm', { 'border-b-purple-600' : pathname.includes(`/${params.entity}/${params.repo}/settings`) })}
+              className={clsx(
+                "mr-2 flex h-4 items-center whitespace-nowrap border-b-2 border-transparent transition-all ease-in-out p-4 text-sm",
+                {
+                  "border-b-purple-600": pathname.includes(
+                    `/${params.entity}/${params.repo}/settings`
+                  ),
+                }
+              )}
             >
               <Settings className="mr-2 h-4 w-4" />
               Settings
@@ -197,7 +239,7 @@ export default function RepoLayout({
 
         <hr className="w-[calc(100% + 32px)] -mx-8 -mt-1 border-b-0 border-gray" />
 
-        { children }
+        {children}
       </section>
       <Banner
         title="Contribute"
