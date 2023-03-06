@@ -12,32 +12,11 @@ Read about the vision [here](https://github.com/NostrGit/NostrGit/tree/main/docu
 
 <a href="https://nostrgit.com"><img src="https://raw.githubusercontent.com/NostrGit/NostrGit/main/documentation/resources/frontpage.png" alt="NostrGit"></a>
 
-# Development
-
-Fork the repo
-
-```bash
-# install npm packages
-$ npm i
-# run in development mode (localhost:3000)
-$ npm run dev
-```
-
-or
-
-
-```bash
-# install npm packages
-$ yarn
-# run in development mode (localhost:3000)
-$ yarn dev
-```
-
 # Contributing
 
 The NostrGit project operates an open contributor model where anyone is welcome to contribute towards development in the form of peer review, documentation, testing and patches. Anyone is invited to contribute without regard to technical experience, "expertise", OSS experience, age, or other concern.
 
-See [contribution](https://github.com/NostrGit/NostrGit/blob/main/documentation/development/contributing.md).
+See [contribution guidelines](https://github.com/NostrGit/NostrGit/blob/main/documentation/development/contributing.md).
 
 ## Contributors
 <img src="https://contrib.rocks/image?repo=nostrgit/nostrgit" alt="list of contributors" />
