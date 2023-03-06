@@ -17,15 +17,6 @@ Fork the repo
 
 ```bash
 # install npm packages
-$ npm i
-# run in development mode (localhost:3000)
-$ npm run dev
-```
-
-or
-
-```bash
-# install npm packages
 $ yarn
 # run in development mode (localhost:3000)
 $ yarn dev
