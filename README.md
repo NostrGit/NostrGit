@@ -39,6 +39,9 @@ The NostrGit project operates an open contributor model where anyone is welcome 
 
 See [contribution](https://github.com/NostrGit/NostrGit/blob/main/documentation/development/contributing.md).
 
+## Contributors
+<img src="https://contrib.rocks/image?repo=nostrgit/nostrgit" alt="list of contributors" />
+
 # Roadmap
 
 UI
