@@ -1,6 +1,12 @@
-import Link from "next/link";
+import Banner from "@/components/banner";
+import DemoReadme from "@/components/demo-readme";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Contributors } from "@/components/ui/contributors";
+import { ListHeader } from "@/components/ui/list-header";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+
 import {
   BarChart4,
   Book,
@@ -23,13 +29,7 @@ import {
   Tag,
   Zap,
 } from "lucide-react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-
-import { Badge } from "@/components/ui/badge";
-import { Contributors } from "@/components/ui/contributors";
-import Banner from "@/components/banner";
-import DemoReadme from "@/components/demo-readme";
-import { ListHeader } from "@/components/ui/list-header";
+import Link from "next/link";
 
 export default function RepoPage({
   params,

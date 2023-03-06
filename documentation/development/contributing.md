@@ -15,16 +15,15 @@ To contribute a patch, the worflow is a as follows:
 
 1. Fork Repository
 2. Create topic branch
-    - Always use the naming conventions
-        - issue/topic/spesific-topic (eg. cypherhoodlum:13/documentation/contributing)
-        - issue/short-description
-        - etc.
+   - Always use the naming conventions
+     - issue/topic/spesific-topic (eg. cypherhoodlum:13/documentation/contributing)
+     - issue/short-description
+     - etc.
 3. Commit patches
-    - Keep your commit messages concise. [These](https://chris.beams.io/posts/git-commit/) guidelines should be kept in mind.
+   - Keep your commit messages concise. [These](https://chris.beams.io/posts/git-commit/) guidelines should be kept in mind.
 4. Create a pull request
-    - Always start your pull requests with a described list (Add, Remove, Bump, etc.)
+   - Always start your pull requests with a described list (Add, Remove, Bump, etc.)
 5. Be a part of the Nostr movement!
-
 
 In general commits should be atomic and diffs should be easy to read. For this reason do not mix any formatting fixes or code moves with actual code changes. Further, each commit, individually, should compile and pass tests, in order to ensure git bisect and other automated tools function properly.
 
@@ -65,12 +64,15 @@ Always open an issue first, and then the branch. It makes organising branches mu
 Use function components instead of arrow functions.
 
 This :
+
 ```javascript
 function Home() {}
 ```
+
 instead of this :
+
 ```javascript
-const home = () => {}
+const home = () => {};
 ```
 
 # UI
