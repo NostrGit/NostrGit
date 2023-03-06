@@ -154,16 +154,10 @@ export default function RepoPage({
                 </div>
               </div>
               <div className="flex gap-2">
-                <Button
-                  className="h-8 !border-gray bg-dark"
-                  variant="outline"
-                >
+                <Button className="h-8 !border-gray bg-dark" variant="outline">
                   Go to file
                 </Button>
-                <Button
-                  className="h-8 !border-gray bg-dark"
-                  variant="outline"
-                >
+                <Button className="h-8 !border-gray bg-dark" variant="outline">
                   Add file
                   <ChevronDown className="ml-2 h-4 w-4 text-white" />
                 </Button>
@@ -283,7 +277,7 @@ export default function RepoPage({
             </p>
             <Badge className="mr-2">nostr</Badge>
             <Badge className="mr-2">git</Badge>
-            <ul className="border-gray-400/20 text-gray-400 space-y-2 border-b pt-4 pb-8 text-sm">
+            <ul className="text-gray-400 space-y-2 border-b border-gray pt-4 pb-8 text-sm">
               <li>
                 <BookOpen className="mr-2 inline h-4 w-4" />
                 Readme
