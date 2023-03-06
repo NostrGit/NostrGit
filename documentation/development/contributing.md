@@ -62,4 +62,4 @@ const home = () => {}
 
 # UI
 
-When designing the visual style of components, [shadcn] should always be used when possible.
+When designing the visual style of components, [shadcn](https://ui.shadcn.com/) should always be used when possible.
