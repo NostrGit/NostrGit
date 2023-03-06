@@ -44,6 +44,10 @@ $ yarn dev
 
 If you use npm instead of yarn, make sure not to include package-lock.json in the commits.
 
+## Tooling
+
+We use [prettier](https://prettier.io/) to format our code. It is recommended to use the [prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for VSCode. We also use [@trivago/prettier-plugin-sort-imports] to sort our imports. It is recommended to use the [sort-imports extension](https://marketplace.visualstudio.com/items?itemName=amatiasq.sort-imports) for VSCode.
+
 ## Peer review
 
 Anyone may participate in peer review which is expressed by comments in the pull request. Typically reviewers will review the code for obvious errors, as well as test out the patch set and opine on the technical merits of the patch. PR should be reviewed first on the conceptual level before focusing on code style or grammar fixes.
