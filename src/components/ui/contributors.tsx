@@ -1,4 +1,4 @@
-export const Contributors = () => {
+export function Contributors() {
   return (
     <div>
       <a
@@ -157,4 +157,4 @@ export const Contributors = () => {
       </a>
     </div>
   );
-};
+}

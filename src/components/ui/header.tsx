@@ -86,7 +86,7 @@ const PrimaryGitInfo = DropdownItems.slice(0,8)
 const restGitInfo = DropdownItems.slice(8)
 
 
-export const Header = () => {
+export function Header() {
   return (
     <header className="flex h-14 w-full items-center justify-between bg-[#171B21] px-8">
       
