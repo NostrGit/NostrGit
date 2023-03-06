@@ -1,0 +1,35 @@
+on:
+  push:
+    branches: [main prod]
+  pull_request:
+    types: [opened]
+name: Run
+jobs:
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16.0
+      - name: Cache Node Modules
+        id: cache
+        uses: actions/cache@v3
+      - run: npm run prettier
+        working-directory: .
+  eslint:
+    name: Eslint
+    runs-on: ubuntu-20.04
+    timeout-minutes: 7
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16.16.0
+      - name: Cache Node Modules
+        id: cache
+        uses: actions/cache@v3
+      - run: npm run eslint
+        working-directory: .
+# DO NOT EDIT: END
