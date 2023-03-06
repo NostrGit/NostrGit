@@ -38,12 +38,10 @@ export default function RepoLayout({
 }) {
   const pathname = usePathname() || "";
 
-  const pathIs = (path: string) => pathname === path;
-
   return (
     <>
       <section className="px-8 py-6">
-        <div className="justify-between overflow-hidden lg:flex">
+        <div className="justify-between overflow-hidden flex flex-col lg:flex-row">
           <div className="mb-4 flex items-center text-lg">
             <Book className="mr-2 inline h-4 w-4 text-gray-400" />
             <Link className="text-purple-500" href={`/${params.entity}`}>
@@ -64,7 +62,7 @@ export default function RepoLayout({
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button
-                className="h-8 !border-[#383B42] bg-[#22262C] text-xs lg:hidden"
+                className="h-8 !border-[#383B42] bg-[#22262C] text-xs md:hidden"
                 variant="outline"
               >
                 Actions <ChevronDown className="ml-2 h-4 w-4 text-white" />
@@ -98,8 +96,8 @@ export default function RepoLayout({
             </DropdownMenuContent>
           </DropdownMenu>
 
-          <div className="flex">
-            <div className="hidden lg:flex lg:flex-row lg:gap-2">
+          <div className="flex justify-end">
+            <div className="hidden md:flex md:flex-row md:gap-2">
               <Button
                 className="h-8 !border-[#383B42] bg-[#22262C] text-xs"
                 variant="outline"
@@ -237,7 +235,7 @@ export default function RepoLayout({
           </li>
         </ul>
 
-        <hr className="w-[calc(100% + 32px)] -mx-8 -mt-1 border-b-0 border-gray" />
+        <hr className="w-[calc(100% + 32px)] -mx-8 -mt-4 border-b-0 border-gray" />
 
         {children}
       </section>
