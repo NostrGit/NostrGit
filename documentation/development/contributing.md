@@ -59,3 +59,7 @@ instead of this :
 ```javascript
 const home = () => {}
 ```
+
+# UI
+
+When designing the visual style of components, [shadcn] should always be used when possible.
