@@ -4,7 +4,7 @@
 
 ### QA
 
-👉🏻 &nbsp;Please add what you think the reviewer has to test
+👉🏻 &nbsp;Please add what you think the reviewer has to test.
 
 ### Review
 
