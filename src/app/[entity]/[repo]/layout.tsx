@@ -46,12 +46,15 @@ export default function RepoLayout({
         <div className="justify-between overflow-hidden lg:flex">
           <div className="mb-4 flex items-center text-lg">
             <Book className="mr-2 inline h-4 w-4 text-gray-400" />
-            <Link className="text-purple-500" href={`/${params.entity}`}>
+            <Link
+              className="text-purple-500 hover:underline"
+              href={`/${params.entity}`}
+            >
               {params.entity}
             </Link>
             <span className="text-gray-400 px-2">/</span>
             <Link
-              className="text-purple-500"
+              className="text-purple-500 hover:underline"
               href={`/${params.entity}/${params.repo}`}
             >
               {params.repo}
