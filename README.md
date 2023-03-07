@@ -9,7 +9,7 @@ Read about the vision [here](https://github.com/NostrGit/NostrGit/tree/main/docu
 - [tRPC](https://trpc.io)
 - [ui.shadcn.com](https://ui.shadcn.com)
 
-<a href="https://nostrgit.com"><img src="https://raw.githubusercontent.com/NostrGit/NostrGit/main/documentation/resources/frontpage.png" alt="NostrGit"></a>
+<a href="https://nostrgit.com"><img src="https://user-images.githubusercontent.com/8019099/223422735-795b4341-5751-49ce-bffb-800ee81788d2.jpg" alt="NostrGit"></a>
 
 # Development
 
@@ -21,6 +21,10 @@ $ yarn
 # run in development mode (localhost:3000)
 $ yarn dev
 ```
+
+# Questions or Discussions
+
+Have a question or a proposal? Create a [new discussion](https://github.com/NostrGit/NostrGit/discussions/new?category=general) first
 
 # Contributing
 

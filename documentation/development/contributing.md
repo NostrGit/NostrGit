@@ -16,12 +16,12 @@ To contribute a patch, the worflow is a as follows:
 1. Fork Repository
 2. Create topic branch
    - Always use the naming conventions
-     - issue/topic/spesific-topic (eg. cypherhoodlum:13/documentation/contributing)
-     - issue/short-description
-     - etc.
+     - feature/fix/documentation/core/bump/remove (eg. core/add-huskyjs)
 3. Commit patches
    - Keep your commit messages concise. [These](https://chris.beams.io/posts/git-commit/) guidelines should be kept in mind.
 4. Create a pull request
+   - By default use the PR template when creating pull requests
+     - ![PR template](https://github.com/NostrGit/NostrGit/blob/main/documentation/resources/pr_template.png)
    - Always start your pull requests with a described list (Add, Remove, Bump, etc.)
 5. Be a part of the Nostr movement!
 
@@ -54,6 +54,15 @@ Anyone may participate in peer review which is expressed by comments in the pull
 
 Please describe the changes you made in the PR description using the `pull_request_template.md` file.
 
+## About Github Actions
+
+You may notice that we have enable required Github Actions for all PRs. This is to ensure that all PRs are tested before merging. The actions are as follows:
+
+- prettier
+- eslint
+
+Others will be added in the future.
+
 ## For core members
 
 Always open an issue first, and then the branch. It makes organising branches much easier. The exeptions are very simple PRs such as updates to the documentation when creating a separate issue would just complicate the peer review.
@@ -81,6 +90,18 @@ instead of this :
 const home = () => {};
 ```
 
+```javascript
+// bad
+<Link onClick={(e) => e.currentTarget.Value}>Click me</Link>;
+// good
+const handleClick = useCallback((e) => e.currentTarget.Value, []);
+<Link onClick={handleClick}>Click me</Link>;
+```
+
 # UI
 
 When designing the visual style of components, [shadcn](https://ui.shadcn.com/) should always be used when possible.
+
+```
+
+```

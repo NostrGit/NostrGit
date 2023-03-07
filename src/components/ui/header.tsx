@@ -9,7 +9,6 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-
 import { ChevronDown } from "lucide-react";
 import { HeaderConfig } from "types";
 import { MainNav } from "../main-nav";
@@ -82,9 +81,8 @@ const DropdownItems = [
   },
 ];
 
-const PrimaryGitInfo = DropdownItems.slice(0,8)
-const restGitInfo = DropdownItems.slice(8)
-
+const PrimaryGitInfo = DropdownItems.slice(0, 8);
+const restGitInfo = DropdownItems.slice(8);
 
 export function Header() {
   return (
@@ -105,13 +103,13 @@ export function Header() {
             <DropdownMenuLabel>Signed in as XXX</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-             {PrimaryGitInfo?.map((item) => (
+              {PrimaryGitInfo?.map((item) => (
                 <DropdownMenuItem key={item.title}>
                   <span>{item.title}</span>
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator />
-              
+
               {restGitInfo?.map((item) => (
                 <DropdownMenuItem key={item.title}>
                   <span>{item.title}</span>
