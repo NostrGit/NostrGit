@@ -1,0 +1,40 @@
+on:
+  push:
+    branches: [main, prod]
+  pull_request:
+    types: [opened, reopened, synchronize]
+name: Run
+jobs:
+  prettier:
+    name: Prettier
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install Prettier
+        run: |
+          npm install prettier@latest
+      - name: Run Prettier
+        run: npm run prettier
+          src/**/*.{ts,tsx}
+          --write
+        continue-on-error: true
+  eslint:
+    name: Eslint
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Install ESLint
+        run: |
+          npm install eslint@latest
+      - name: Run ESLint
+        run: npx eslint .
+          --config .eslintrc.js
+          --ext .ts,.tsx
+        continue-on-error: true
+# DO NOT EDIT: END

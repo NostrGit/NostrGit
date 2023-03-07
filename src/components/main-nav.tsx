@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { MainNavItem } from "types";
+import { type MainNavItem } from "types";
 
 import { Input } from "./ui/input";
 
