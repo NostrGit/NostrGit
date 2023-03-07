@@ -13,7 +13,6 @@ import {
   MessageSquare,
   Search,
 } from "lucide-react";
-import shortid from "shortid";
 
 export default function IssuesPage({}) {
   const [issueType, setIssueType] = React.useState<
@@ -140,7 +139,7 @@ export default function IssuesPage({}) {
               <ul className="divide-y dark:divide-gray">
                 {issues.map((item) => (
                   <li
-                    key={item.id}
+                    key={`${item.id} ${item.entity}`}
                     className="text-gray-400 grid grid-cols-8 p-2 text-sm hover:bg-[#171B21]"
                   >
                     <div className="col-span-8 sm:col-span-6">
@@ -220,11 +219,9 @@ interface IIssueData {
   comments: number;
 }
 
-const generateId = () => shortid.generate();
-
 const openData = [
   {
-    id: generateId(),
+    id: "101",
     entity: "NostrGit",
     repo: "NostrGit",
     title: "Make GHA required",
@@ -239,7 +236,7 @@ const openData = [
     comments: 0,
   },
   {
-    id: generateId(),
+    id: "102",
     entity: "NostrGit",
     repo: "NostrGit",
     title: "Which github actions do we need?",
@@ -254,7 +251,7 @@ const openData = [
     comments: 4,
   },
   {
-    id: generateId(),
+    id: "103",
     entity: "NostrGit",
     repo: "NostrGit",
     title: "use nostr-relaypool-ts?",
@@ -272,7 +269,7 @@ const openData = [
 
 const closedData = [
   {
-    id: generateId(),
+    id: "201",
     entity: "NostrGit",
     repo: "NostrGit",
     title: "fix two arrow functions",
@@ -287,7 +284,7 @@ const closedData = [
     comments: 3,
   },
   {
-    id: generateId(),
+    id: "202",
     entity: "NostrGit",
     repo: "NostrGit",
     title: "Add default pull request template ",
@@ -302,7 +299,7 @@ const closedData = [
     comments: 12,
   },
   {
-    id: generateId(),
+    id: "203",
     entity: "NostrGit",
     repo: "NostrGit",
     title: "Update coding conventions.",
@@ -317,7 +314,7 @@ const closedData = [
     comments: 1,
   },
   {
-    id: generateId(),
+    id: "204",
     entity: "NostrGit",
     repo: "NostrGit",
     title: "move to next.js app directory",
