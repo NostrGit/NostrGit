@@ -7,7 +7,7 @@
     "dev": "next dev",
     "lint": "next lint",
     "start": "next start",
-    "prettier": "prettier --write .",
+    "prettier": "prettier src/**/*.tsx --write",
     "eslint": "eslint --ext .ts,.tsx --fix ."
   },
   "dependencies": {

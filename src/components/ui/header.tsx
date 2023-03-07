@@ -89,7 +89,6 @@ const restGitInfo = DropdownItems.slice(8)
 export const Header = () => {
   return (
     <header className="flex h-14 w-full items-center justify-between bg-[#171B21] px-8">
-      
       <MainNav items={HeaderConfig.mainNav} />
       <div className="hidden items-center md:inline">
         <DropdownMenu>
@@ -106,14 +105,14 @@ export const Header = () => {
             <DropdownMenuLabel>Signed in as XXX</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-             {PrimaryGitInfo.map((item) => (
+             {PrimaryGitInfo?.map((item) => (
                 <DropdownMenuItem key={item.title}>
                   <span>{item.title}</span>
                 </DropdownMenuItem>
               ))}
               <DropdownMenuSeparator />
               
-              {restGitInfo.map((item) => (
+              {restGitInfo?.map((item) => (
                 <DropdownMenuItem key={item.title}>
                   <span>{item.title}</span>
                 </DropdownMenuItem>
