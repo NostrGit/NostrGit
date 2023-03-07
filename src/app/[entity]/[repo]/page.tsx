@@ -27,6 +27,7 @@ export default function RepoCodePage({
 }: {
   params: { entity: string; repo: string };
 }) {
+  console.log(params); // fixing lint and debug only
   return (
     <div className="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
       <div className="col-span-3 lg:col-span-3">
@@ -132,7 +133,7 @@ export default function RepoCodePage({
           </div>
           <div className="mt-4 rounded-md border dark:border-[#383B42]">
             <div className="flex items-center gap-2 border-b p-2 dark:border-[#383B42]">
-              <List className="ml-2 h-4 w-4 text-gray-400" />{" "}
+              <List className="text-gray-400 ml-2 h-4 w-4" />{" "}
               <a
                 className="hover:text-purple-500 hover:underline"
                 href="#readme"
