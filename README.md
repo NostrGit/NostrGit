@@ -22,6 +22,10 @@ $ yarn
 $ yarn dev
 ```
 
+# Questions or Discussions
+
+Have a question or a proposal? Create a [new discussion](https://github.com/NostrGit/NostrGit/discussions/new?category=general) first
+
 # Contributing
 
 The NostrGit project operates an open contributor model where anyone is welcome to contribute towards development in the form of peer review, documentation, testing and patches. Anyone is invited to contribute without regard to technical experience, "expertise", OSS experience, age, or other concern.
