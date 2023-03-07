@@ -23,6 +23,8 @@ To contribute a patch, the worflow is a as follows:
    - By default use the PR template when creating pull requests
      - ![PR template](https://github.com/NostrGit/NostrGit/blob/main/documentation/resources/pr_template.png)
    - Always start your pull requests with a described list (Add, Remove, Bump, etc.)
+   - Including screenshots or [loom](https://www.loom.com/) videos into PRs is highly recommended. This helps the reviewing process immensely, especially from casual contributions.
+    - After you have signed up to [loom](https://www.loom.com/), you can record short videos easily of your screen to showcase what you have done. The videos can be shared by embedding a link to the PR.
 5. Be a part of the Nostr movement!
 
 In general commits should be atomic and diffs should be easy to read. For this reason do not mix any formatting fixes or code moves with actual code changes. Further, each commit, individually, should compile and pass tests, in order to ensure git bisect and other automated tools function properly.
