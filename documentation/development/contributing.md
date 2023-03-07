@@ -22,6 +22,8 @@ To contribute a patch, the worflow is a as follows:
 3. Commit patches
    - Keep your commit messages concise. [These](https://chris.beams.io/posts/git-commit/) guidelines should be kept in mind.
 4. Create a pull request
+   - By default use the PR template when creating pull requests
+      - ![PR template](https://github.com/NostrGit/NostrGit/blob/main/documentation/resources/pr_template.png)
    - Always start your pull requests with a described list (Add, Remove, Bump, etc.)
 5. Be a part of the Nostr movement!
 
