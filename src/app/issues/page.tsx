@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useEffect } from "react";
 
 import { clsx } from "clsx";
 import {
@@ -12,6 +13,7 @@ import {
   MessageSquare,
   Search,
 } from "lucide-react";
+import shortid from "shortid";
 
 export default function IssuesPage({}) {
   const [issueType, setIssueType] = React.useState<
@@ -26,7 +28,7 @@ export default function IssuesPage({}) {
     "open"
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (issueStatus === "open") {
       setIssues(openData);
     } else {
@@ -136,9 +138,9 @@ export default function IssuesPage({}) {
             </div>
             <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-gray">
               <ul className="divide-y dark:divide-gray">
-                {issues.map((item, index) => (
+                {issues.map((item) => (
                   <li
-                    key={index}
+                    key={item.id}
                     className="text-gray-400 grid grid-cols-8 p-2 text-sm hover:bg-[#171B21]"
                   >
                     <div className="col-span-8 sm:col-span-6">
@@ -203,7 +205,7 @@ export default function IssuesPage({}) {
 }
 
 interface IIssueData {
-  id: number;
+  id: string;
   entity: string;
   repo: string;
   title: string;
@@ -218,9 +220,11 @@ interface IIssueData {
   comments: number;
 }
 
+const generateId = () => shortid.generate();
+
 const openData = [
   {
-    id: 1,
+    id: generateId(),
     entity: "NostrGit",
     repo: "NostrGit",
     title: "Make GHA required",
@@ -235,7 +239,7 @@ const openData = [
     comments: 0,
   },
   {
-    id: 2,
+    id: generateId(),
     entity: "NostrGit",
     repo: "NostrGit",
     title: "Which github actions do we need?",
@@ -250,7 +254,7 @@ const openData = [
     comments: 4,
   },
   {
-    id: 3,
+    id: generateId(),
     entity: "NostrGit",
     repo: "NostrGit",
     title: "use nostr-relaypool-ts?",
@@ -268,7 +272,7 @@ const openData = [
 
 const closedData = [
   {
-    id: 1,
+    id: generateId(),
     entity: "NostrGit",
     repo: "NostrGit",
     title: "fix two arrow functions",
@@ -283,7 +287,7 @@ const closedData = [
     comments: 3,
   },
   {
-    id: 2,
+    id: generateId(),
     entity: "NostrGit",
     repo: "NostrGit",
     title: "Add default pull request template ",
@@ -298,7 +302,7 @@ const closedData = [
     comments: 12,
   },
   {
-    id: 3,
+    id: generateId(),
     entity: "NostrGit",
     repo: "NostrGit",
     title: "Update coding conventions.",
@@ -313,7 +317,7 @@ const closedData = [
     comments: 1,
   },
   {
-    id: 4,
+    id: generateId(),
     entity: "NostrGit",
     repo: "NostrGit",
     title: "move to next.js app directory",
