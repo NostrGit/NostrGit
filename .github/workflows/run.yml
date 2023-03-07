@@ -2,7 +2,7 @@ on:
   push:
     branches: [main, prod]
   pull_request:
-    types: [opened]
+    types: [opened, reopened, synchronize]
 name: Run
 jobs:
   prettier:
