@@ -18,7 +18,6 @@ const config = {
   plugins: ["@typescript-eslint"],
   extends: ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
   rules: {
-    "react/jsx-no-bind": "error",
     "@typescript-eslint/consistent-type-imports": [
       "warn",
       {
