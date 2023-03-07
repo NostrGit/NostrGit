@@ -95,7 +95,8 @@ export default function IssuesPage({}) {
         </div>
 
         <main>
-          <div className="mt-4 rounded-md border dark:border-[#383B42]">
+          <div className="mt-4">
+
             <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-[#383B42] dark:text-slate-100">
               <div className="md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
                 <div className="flex items-center lg:flex-row space-x-4 font-medium">
