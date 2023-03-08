@@ -39,25 +39,29 @@ export default function Login() {
           <h1 className="mt-6 text-center text-3xl font-bold tracking-tight">
             Sign in
           </h1>
-          <p className="mt-2 text-center text-sm text-gray-600">
-            Or{" "}
-            <a href="/signup" className="font-medium text-purple-500">
-              sign up
-            </a>
-          </p>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-[#171B21] py-8 px-4 shadow sm:rounded-lg sm:px-10">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
-                <label
-                  htmlFor="key"
-                  className="block text-sm font-medium leading-6"
-                >
-                  <span className="line-through">nsec</span>, npub,{" "}
-                  <span className="line-through">nip-05 or hex</span>
-                </label>
+                <div className="flex justify-between">
+                  <label
+                    htmlFor="key"
+                    className="block text-sm font-medium leading-6"
+                  >
+                    <span className="line-through">nsec</span>, npub,{" "}
+                    <span className="line-through">nip-05 or hex</span>
+                  </label>
+                  <label
+                    htmlFor="key"
+                    className="text-sm font-medium leading-6"
+                  >
+                    <a href="https://nostr.how/get-started" className="font-bold ">
+                      What are these?
+                    </a>
+                  </label>
+                </div>
                 <div className="mt-2">
                   <Input
                     id="key"
@@ -84,7 +88,7 @@ export default function Login() {
             <div className="mt-6">
               <div className="relative">
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2">Or continue with</span>
+                  <span className="px-2">Or continue with Alby</span>
                 </div>
               </div>
 
@@ -104,6 +108,18 @@ export default function Login() {
                 </div>
               </div>
             </div>
+          </div>
+          <div className="flex justify-center center mt-1">
+            <p>
+              Don't have a{" "}
+              <a href="https://nostr.how/">
+                <b>nostr</b>
+              </a>{" "}
+              profile?
+            </p>
+            <a href="/signup" className="font-medium text-purple-500 ml-1">
+              Create one here.
+            </a>
           </div>
         </div>
       </div>
