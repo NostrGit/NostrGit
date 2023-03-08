@@ -14,6 +14,22 @@ import {
   Search,
 } from "lucide-react";
 
+interface IIssueData {
+  id: string;
+  entity: string;
+  repo: string;
+  title: string;
+  number: string;
+  date: string;
+  author: string;
+  tags: string[];
+  taskTotal: number | null;
+  taskCompleted: number | null;
+  linkedPR: number;
+  assignees: string[];
+  comments: number;
+}
+
 export default function IssuesPage({}) {
   const [issueType, setIssueType] = useState<
     "created" | "assigned" | "mentioned"
@@ -39,30 +55,27 @@ export default function IssuesPage({}) {
     []
   );
 
-  const handleIssueType = useCallback(() => {
-    if (issueType === "created") {
-      setIssueType("created");
-    } else if (issueType === "assigned") {
-      setIssueType("assigned");
-    } else {
-      setIssueType("mentioned");
-    }
-  }, [issueType]);
+  const handleIssueStatusOpen = useCallback(() => setIssueStatus("open"), []);
+  const handleIssueStatusClosed = useCallback(
+    () => setIssueStatus("closed"),
+    []
+  );
 
-  const handleIssueStatus = useCallback(() => {
-    if (issueStatus === "open") {
-      setIssueStatus("open");
-    } else {
-      setIssueStatus("closed");
-    }
-  }, [issueStatus]);
+  const handleIssueTypeCreated = useCallback(() => setIssueType("created"), []);
+  const handleIssueTypeAssigned = useCallback(
+    () => setIssueType("assigned"),
+    []
+  );
+  const handleIssueTypeMentioned = useCallback(
+    () => setIssueType("mentioned"),
+    []
+  );
 
   return (
     <section className="sm:px-8 py-6 max-w-6xl m-auto">
       <div className="md:flex justify-between gap-4 px-4 sm:px-0">
         <div className="">
           <span className="isolate inline-flex rounded-md shadow-sm w-full">
-            sqfqsdf
             <button
               type="button"
               className={clsx(
@@ -71,7 +84,7 @@ export default function IssuesPage({}) {
                   "bg-purple-600 text-slate-50": issueType === `created`,
                 }
               )}
-              onClick={handleIssueType}
+              onClick={handleIssueTypeCreated}
             >
               Created
             </button>
@@ -83,7 +96,7 @@ export default function IssuesPage({}) {
                   "bg-purple-600 text-slate-50": issueType === `assigned`,
                 }
               )}
-              onClick={handleIssueType}
+              onClick={handleIssueTypeAssigned}
             >
               Assigned
             </button>
@@ -95,7 +108,7 @@ export default function IssuesPage({}) {
                   "bg-purple-600 text-slate-50": issueType === `mentioned`,
                 }
               )}
-              onClick={handleIssueType}
+              onClick={handleIssueTypeMentioned}
             >
               Mentioned
             </button>
@@ -123,17 +136,17 @@ export default function IssuesPage({}) {
               <div className="flex items-center lg:flex-row space-x-4 font-medium">
                 <button
                   className={clsx("flex text-slate-400 hover:text-slate-200", {
-                    "text-slate-100": issueStatus === `open`,
+                    "text-slate-50": issueStatus === `open`,
                   })}
-                  onClick={handleIssueStatus}
+                  onClick={handleIssueStatusOpen}
                 >
                   <CircleDot className="h-5 w-5 mr-2 mt-0.5" /> 3 Open
                 </button>
                 <button
                   className={clsx("flex text-slate-400 hover:text-slate-200", {
-                    "text-slate-100": issueStatus === `closed`,
+                    "text-slate-50": issueStatus === `closed`,
                   })}
-                  onClick={handleIssueStatus}
+                  onClick={handleIssueStatusClosed}
                 >
                   <Check className="h-5 w-5 mr-2 mt-0.5" /> 4 Closed
                 </button>
@@ -216,22 +229,6 @@ export default function IssuesPage({}) {
       </main>
     </section>
   );
-}
-
-interface IIssueData {
-  id: string;
-  entity: string;
-  repo: string;
-  title: string;
-  number: string;
-  date: string;
-  author: string;
-  tags: string[];
-  taskTotal: number | null;
-  taskCompleted: number | null;
-  linkedPR: number;
-  assignees: string[];
-  comments: number;
 }
 
 const openData = [
