@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { clsx } from "clsx";
 import {
@@ -15,17 +15,15 @@ import {
 } from "lucide-react";
 
 export default function IssuesPage({}) {
-  const [issueType, setIssueType] = React.useState<
+  const [issueType, setIssueType] = useState<
     "created" | "assigned" | "mentioned"
   >("created");
 
-  const [search, setSearch] = React.useState<string>(
+  const [search, setSearch] = useState<string>(
     `is:open is:issue author:xxxxx archived:false`
   );
-  const [issues, setIssues] = React.useState<IIssueData[]>(openData);
-  const [issueStatus, setIssueStatus] = React.useState<"open" | "closed">(
-    "open"
-  );
+  const [issues, setIssues] = useState<IIssueData[]>(openData);
+  const [issueStatus, setIssueStatus] = useState<"open" | "closed">("open");
 
   useEffect(() => {
     if (issueStatus === "open") {
