@@ -18,7 +18,7 @@ jobs:
           npm install prettier@latest
       - name: Run Prettier
         run: npm run prettier
-          src/**/*.{ts,tsx}
+          src/**/*.{ts,tsx,json}
           --write
         continue-on-error: true
   eslint:
