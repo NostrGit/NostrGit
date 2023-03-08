@@ -91,24 +91,21 @@ export default function Login() {
             <div className="mt-6">
               <div className="relative">
                 <div className="relative flex justify-center text-sm">
-                  <span className="px-2">Or continue with Alby</span>
+                  <span className="px-2">Or</span>
                 </div>
               </div>
 
-              <div className="mt-6 grid grid-cols-3 gap-3">
-                <div></div>
-                <div>
-                  <Button className="w-full">
-                    <span className="sr-only">Sign in with Alby</span>
-                    <Image
-                      className="grayscale"
-                      width={36}
-                      height={36}
-                      src="/logo-alby.svg"
-                      alt="Alby"
-                    />
-                  </Button>
-                </div>
+              <div className="mt-6">
+                <Button className="flex justify-center gap-2 items-center w-full">
+                  <Image
+                    className="grayscale self-start"
+                    width={31}
+                    height={31}
+                    src="/extension.png"
+                    alt="Alby"
+                  />
+                  <p className="self-center">Use extension</p>
+                </Button>
               </div>
             </div>
           </div>
