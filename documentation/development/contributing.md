@@ -7,6 +7,8 @@ Anyone is invited to contribute without regard to technical experience, "experti
 
 All communication happens openly, using github issues, PRs, and Nostr. This ensures that hidden information does not exist, which makes contributing much easier. Please post your nostr public key [here](https://github.com/NostrGit/NostrGit/issues/19) to be noticed on nostr by the team.
 
+Do not use Discussions, only Issues. They are much easier to track.
+
 # Contribution Workflow
 
 The codebase is maintained using the "contributor workflow" where everyone without exception contributes patch proposals using "pull requests". This facilitates social contribution, easy testing and peer review.
