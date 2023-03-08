@@ -4,7 +4,7 @@ import { useNostrContext } from "./NostrContext";
 
 export type Metadata = {
   banner?: string;
-  webstie?: string;
+  website?: string;
   nip05?: string;
   picture?: string;
   lud16?: string;
@@ -17,7 +17,6 @@ const useMetadata = (relays: string[] = []) => {
   const { subscribe, defaultRelays, pubkey } = useNostrContext();
 
   const [metadata, setMetadata] = useState<Metadata>({});
-
   useEffect(() => {
     if (!subscribe || !pubkey) return;
     const unsub = subscribe(

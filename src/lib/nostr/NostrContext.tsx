@@ -11,6 +11,8 @@ import { nip19 } from "nostr-tools";
 
 import useLocalStorage from "../hooks/useLocalStorage";
 
+import { WEB_STORAGE_KEYS } from "./localStorage";
+
 const defaultRelays = [
   "wss://relay.damus.io",
   "wss://nostr.fmt.wiz.biz",
@@ -65,7 +67,7 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   );
 
   const [pubkey, setPubKey, removePubKey] = useLocalStorage<string | null>(
-    "npub",
+    WEB_STORAGE_KEYS.NPUB,
     null
   );
 

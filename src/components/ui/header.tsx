@@ -1,7 +1,6 @@
 
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -12,11 +11,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useNostrContext } from "@/lib/nostr/NostrContext";
-import useMetadata from "@/lib/nostr/useMetadata";
+import useSession from "@/lib/nostr/useSession";
 import { ChevronDown } from "lucide-react";
 import { HeaderConfig } from "types";
 import { MainNav } from "../main-nav";
 import { Button } from "./button";
+import { useRouter } from "next/navigation";
+import { useCallback } from "react";
+import Link from "next/link";
 
 const HeaderConfig: HeaderConfig = {
   mainNav: [
@@ -91,8 +93,16 @@ const restGitInfo = DropdownItems.slice(8);
 
 export function Header() {
 
-  const metadata = useMetadata();
+  const {picture, name, initials, isLoggedIn} = useSession();
   const { signOut } = useNostrContext();
+  const router = useRouter();
+  const handleSignOut = useCallback(() => {
+    if(signOut) {
+      signOut();
+      router.push('/');
+    }
+  }, [router, signOut]);
+
   return (
     <header className="flex h-14 w-full items-center justify-between bg-[#171B21] px-8">
       <MainNav items={HeaderConfig.mainNav} />
@@ -101,14 +111,14 @@ export function Header() {
     <DropdownMenuTrigger asChild>
       <div className="flex cursor-pointer">
         <Avatar className="h-6 w-6">
-          <AvatarImage src={metadata.picture} />
-          <AvatarFallback>CN</AvatarFallback>
+          <AvatarImage src={picture} />
+          <AvatarFallback>{initials}</AvatarFallback>
         </Avatar>
         <ChevronDown className="mt-1 h-4 w-4 hover:text-white/80" />
       </div>
     </DropdownMenuTrigger>
-    <DropdownMenuContent className="w-56">
-      <DropdownMenuLabel>Signed in as {metadata.name}</DropdownMenuLabel>
+    {isLoggedIn ? (<DropdownMenuContent className="w-56">
+      <DropdownMenuLabel>Signed in as {name}</DropdownMenuLabel>
       <DropdownMenuSeparator />
       <DropdownMenuGroup>
         {PrimaryGitInfo?.map((item) => (
@@ -126,11 +136,18 @@ export function Header() {
       </DropdownMenuGroup>
       <DropdownMenuSeparator />
       <DropdownMenuItem>
-        <Button onClick={signOut}>Sign Out</Button>
+        <Button onClick={handleSignOut}>Sign Out</Button>
       </DropdownMenuItem>
     </DropdownMenuContent>
+  ) : (
+    <DropdownMenuContent className="w-56">
+      <DropdownMenuItem>
+        <Link href="/login">Sign in</Link>
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  )}
   </DropdownMenu>
-      </div>
-    </header>
+  </div>
+  </header>
   );
 }

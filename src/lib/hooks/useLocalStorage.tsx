@@ -15,6 +15,7 @@ export default function useLocalStorage<T>(key: string, initialValue: T) {
   });
 
   const setValue = (value: T) => {
+    if (value === storedValue || value === undefined || value === null) return;
     try {
       setStoredValue(value);
       if (typeof window !== "undefined") {
