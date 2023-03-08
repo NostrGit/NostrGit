@@ -99,19 +99,18 @@ export default function Login() {
                 <Button className="flex justify-center gap-2 items-center w-full">
                   <Image
                     className="grayscale self-start"
-                    width={31}
-                    height={31}
-                    src="/extension.png"
+                    width={28}
+                    height={28}
+                    src="/extension.svg"
                     alt="Alby"
                   />
-                  <p className="self-center">Use extension</p>
+                  <p className="text-center">Continue with extension</p>
                 </Button>
               </div>
             </div>
           </div>
           <div className="flex justify-center center mt-1">
             <p>
-              {/* eslint react/no-unescaped-entities */}
               Don't have a
               <a href="https://nostr.how/">
                 <b className="font-medium text-purple-500 ml-1 mr-1">Nostr</b>
