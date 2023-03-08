@@ -8,6 +8,7 @@ import { useNostrContext } from "@/lib/nostr/NostrContext";
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { Puzzle } from "lucide-react";
 
 export default function Login() {
   const { setAuthor } = useNostrContext();
@@ -97,13 +98,7 @@ export default function Login() {
 
               <div className="mt-6">
                 <Button className="flex justify-center gap-2 items-center w-full">
-                  <Image
-                    className="grayscale self-start"
-                    width={28}
-                    height={28}
-                    src="/extension.svg"
-                    alt="Alby"
-                  />
+                  <Puzzle />
                   <p className="text-center">Continue with extension</p>
                 </Button>
               </div>
