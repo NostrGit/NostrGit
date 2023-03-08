@@ -5,7 +5,3 @@ export type NavItem = {
 };
 
 export type MainNavItem = NavItem;
-
-export type HeaderConfig = {
-  mainNav: MainNavItem[];
-};

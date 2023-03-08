@@ -10,10 +10,10 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { ChevronDown } from "lucide-react";
-import { HeaderConfig } from "types";
+
 import { MainNav } from "../main-nav";
 
-const HeaderConfig: HeaderConfig = {
+const HeaderConfig = {
   mainNav: [
     {
       title: "Pull Requests",

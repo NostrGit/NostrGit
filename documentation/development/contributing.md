@@ -40,9 +40,11 @@ When refactoring, structure your PR to make it easy to review and don't hesitate
 We are using [Vercel](https://vercel.com/) to deploy our code.
 
 If Vercel fails to deploy your branch, and you cannot see why, try running the following command locally:
+
 ```bash
   $ yarn build
 ```
+
 It should show you the relevant error message.
 
 ## Development
