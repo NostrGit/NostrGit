@@ -7,6 +7,8 @@ Anyone is invited to contribute without regard to technical experience, "experti
 
 All communication happens openly, using github issues, PRs, and Nostr. This ensures that hidden information does not exist, which makes contributing much easier. Please post your nostr public key [here](https://github.com/NostrGit/NostrGit/issues/19) to be noticed on nostr by the team.
 
+Do not use Discussions, only Issues. They are much easier to track.
+
 # Contribution Workflow
 
 The codebase is maintained using the "contributor workflow" where everyone without exception contributes patch proposals using "pull requests". This facilitates social contribution, easy testing and peer review.
@@ -24,7 +26,7 @@ To contribute a patch, the worflow is a as follows:
      - ![PR template](https://github.com/NostrGit/NostrGit/blob/main/documentation/resources/pr_template.png)
    - Always start your pull requests with a described list (Add, Remove, Bump, etc.)
    - Including screenshots or [loom](https://www.loom.com/) videos into PRs is highly recommended. This helps the reviewing process immensely, especially from casual contributions.
-    - After you have signed up to [loom](https://www.loom.com/), you can record short videos easily of your screen to showcase what you have done. The videos can be shared by embedding a link to the PR.
+     - After you have signed up to [loom](https://www.loom.com/), you can record short videos easily of your screen to showcase what you have done. The videos can be shared by embedding a link to the PR.
 5. Be a part of the Nostr movement!
 
 In general commits should be atomic and diffs should be easy to read. For this reason do not mix any formatting fixes or code moves with actual code changes. Further, each commit, individually, should compile and pass tests, in order to ensure git bisect and other automated tools function properly.
@@ -32,6 +34,18 @@ In general commits should be atomic and diffs should be easy to read. For this r
 When adding a new feature, thought must be given to the long term technical debt. Every new feature should be covered by functional tests where possible.
 
 When refactoring, structure your PR to make it easy to review and don't hesitate to split it into multiple small, focused PRs.
+
+## Troubleshooting Vercel
+
+We are using [Vercel](https://vercel.com/) to deploy our code.
+
+If Vercel fails to deploy your branch, and you cannot see why, try running the following command locally:
+
+```bash
+  $ yarn build
+```
+
+It should show you the relevant error message.
 
 ## Development
 
@@ -100,10 +114,6 @@ const handleClick = useCallback((e) => e.currentTarget.Value, []);
 <Link onClick={handleClick}>Click me</Link>;
 ```
 
-# UI
+## UI
 
 When designing the visual style of components, [shadcn](https://ui.shadcn.com/) should always be used when possible.
-
-```
-
-```

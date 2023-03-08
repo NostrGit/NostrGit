@@ -8,9 +8,21 @@ import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { type MainNavItem } from "types";
 
 import { Input } from "./ui/input";
+
+export type NavItem = {
+  title: string;
+  href: string;
+  disabled?: boolean;
+};
+
+export type MainNavItem = NavItem;
+
+export type HeaderConfig = {
+  mainNav: MainNavItem[];
+};
+
 
 interface MainNavProps {
   items?: MainNavItem[];

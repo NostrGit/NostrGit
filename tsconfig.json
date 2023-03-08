@@ -27,6 +27,7 @@
     ]
   },
   "include": [
+    "@types/**/*.d.ts",
     ".eslintrc.cjs",
     "next-env.d.ts",
     "**/*.ts",
