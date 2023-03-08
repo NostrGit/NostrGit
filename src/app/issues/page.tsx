@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 import { clsx } from "clsx";
 import {
@@ -35,6 +35,8 @@ export default function IssuesPage({}) {
     }
   }, [issueStatus]);
 
+  const handleSearch = useCallback((val: string) => setSearch(val), []);
+
   return (
     <>
       <section className="sm:px-8 py-6 max-w-6xl m-auto">
@@ -49,7 +51,7 @@ export default function IssuesPage({}) {
                     "bg-purple-600 text-slate-50": issueType === `created`,
                   }
                 )}
-                onClick={() => setIssueType("created")}
+                onClick={useCallback(() => setIssueType("created"), [])}
               >
                 Created
               </button>
@@ -61,7 +63,7 @@ export default function IssuesPage({}) {
                     "bg-purple-600 text-slate-50": issueType === `assigned`,
                   }
                 )}
-                onClick={() => setIssueType("assigned")}
+                onClick={useCallback(() => setIssueType("assigned"), [])}
               >
                 Assigned
               </button>
@@ -73,7 +75,7 @@ export default function IssuesPage({}) {
                     "bg-purple-600 text-slate-50": issueType === `mentioned`,
                   }
                 )}
-                onClick={() => setIssueType("mentioned")}
+                onClick={useCallback(() => setIssueType("mentioned"), [])}
               >
                 Mentioned
               </button>
@@ -89,14 +91,13 @@ export default function IssuesPage({}) {
               className="block bg-[#0E1116] w-full h-full rounded-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
               type="text"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
+              onChange={(e) => handleSearch(e.target.value)}
             />
           </label>
         </div>
 
         <main>
           <div className="mt-4">
-
             <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-[#383B42] dark:text-slate-100">
               <div className="md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
                 <div className="flex items-center lg:flex-row space-x-4 font-medium">
@@ -104,10 +105,10 @@ export default function IssuesPage({}) {
                     className={clsx(
                       "flex text-slate-400 hover:text-slate-200",
                       {
-                        "text-slate-200": issueStatus === `open`,
+                        "text-slate-100": issueStatus === `open`,
                       }
                     )}
-                    onClick={() => setIssueStatus("open")}
+                    onClick={useCallback(() => setIssueStatus("open"), [])}
                   >
                     <CircleDot className="h-5 w-5 mr-2 mt-0.5" /> 3 Open
                   </button>
@@ -115,10 +116,10 @@ export default function IssuesPage({}) {
                     className={clsx(
                       "flex text-slate-400 hover:text-slate-200",
                       {
-                        "text-slate-200": issueStatus === `closed`,
+                        "text-slate-100": issueStatus === `closed`,
                       }
                     )}
-                    onClick={() => setIssueStatus("closed")}
+                    onClick={useCallback(() => setIssueStatus("closed"), [])}
                   >
                     <Check className="h-5 w-5 mr-2 mt-0.5" /> 4 Closed
                   </button>
