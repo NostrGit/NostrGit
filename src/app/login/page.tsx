@@ -57,7 +57,10 @@ export default function Login() {
                     htmlFor="key"
                     className="text-sm font-medium leading-6"
                   >
-                    <a href="https://nostr.how/get-started" className="font-bold ">
+                    <a
+                      href="https://nostr.how/get-started"
+                      className="font-bold "
+                    >
                       What are these?
                     </a>
                   </label>
