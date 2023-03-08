@@ -46,7 +46,7 @@ declare module "relay" {
 }
 declare module "author" {
     import type { OnEvent, RelayPool } from "relay-pool";
-    import { Filter, type Event } from "node_modules/nostr-tools/index";
+    import { type Filter, type Event } from "node_modules/nostr-tools/index";
     export class Author {
         pubkey: string;
         relayPool: RelayPool;
@@ -65,9 +65,9 @@ declare module "author" {
     }
 }
 declare module "event" {
-    import { Event as NostrToolsEvent, Kind } from "node_modules/nostr-tools/index";
-    import { Author } from "author";
-    import { RelayPool } from "relay-pool";
+    import { type Event as NostrToolsEvent, type Kind } from "node_modules/nostr-tools/index";
+    import { type Author } from "author";
+    import { type RelayPool } from "relay-pool";
     export type { NostrToolsEvent };
     export type NostrToolsEventWithId = NostrToolsEvent & {
         id: string;
@@ -92,8 +92,8 @@ declare module "event" {
     }
 }
 declare module "on-event-filters" {
-    import { Filter } from "node_modules/nostr-tools/index";
-    import { Event } from "event";
+    import { type Filter } from "node_modules/nostr-tools/index";
+    import { type Event } from "event";
     export type OnEventArgs = [
         event: Event,
         afterEose: boolean,
@@ -106,8 +106,8 @@ declare module "on-event-filters" {
     export function emitEventsOnNextTick(onEvent: OnEvent): OnEvent;
 }
 declare module "event-cache" {
-    import { Filter } from "node_modules/nostr-tools/index";
-    import { Event } from "event";
+    import { type Filter } from "node_modules/nostr-tools/index";
+    import { type Event } from "event";
     export class EventCache {
         #private;
         eventsById: Map<string, Event>;
@@ -149,12 +149,12 @@ declare module "callback-replayer" {
     }
 }
 declare module "group-filters-by-relay" {
-    import { Filter } from "node_modules/nostr-tools/index";
+    import { type Filter } from "node_modules/nostr-tools/index";
     import { type OnEvent } from "on-event-filters";
-    import { EventCache } from "event-cache";
-    import { Event } from "event";
-    import { FilterToSubscribe } from "relay-pool";
-    import { CallbackReplayer } from "callback-replayer";
+    import { type EventCache } from "event-cache";
+    import { type Event } from "event";
+    import { type FilterToSubscribe } from "relay-pool";
+    import { type CallbackReplayer } from "callback-replayer";
     export function groupFiltersByRelayAndEmitCacheHits(filters: (Filter & {
         relay?: string;
         noCache?: boolean;
@@ -168,12 +168,12 @@ declare module "group-filters-by-relay" {
     }];
 }
 declare module "relay-pool" {
-    import { Filter } from "node_modules/nostr-tools/index";
+    import { type Filter } from "node_modules/nostr-tools/index";
     import { type Relay } from "relay";
     import { type OnEvent } from "on-event-filters";
-    import { EventCache } from "event-cache";
-    import { Event, NostrToolsEvent, NostrToolsEventWithId } from "event";
-    import { CallbackReplayer } from "callback-replayer";
+    import { type EventCache } from "event-cache";
+    import { type Event, type NostrToolsEvent, type NostrToolsEventWithId } from "event";
+    import { type CallbackReplayer } from "callback-replayer";
     export { type OnEvent } from "on-event-filters";
     export type OnEose = (relayUrl: string, minCreatedAt: number) => void;
     export type FilterToSubscribe = [
@@ -235,15 +235,15 @@ declare module "relay-pool" {
 declare module "author-test-manual" { }
 declare module "callback-replayer-test" { }
 declare module "collect" {
-    import { Event } from "event";
-    import { OnEvent } from "on-event-filters";
+    import { type Event } from "event";
+    import { type OnEvent } from "on-event-filters";
     export function collect(onEvents: (events: Event[]) => void, skipSort?: boolean): OnEvent;
 }
 declare module "event-cache-test" { }
 declare module "event-demultiplexer" {
-    import { Filter } from "node_modules/nostr-tools/index";
-    import { OnEvent } from "on-event-filters";
-    import { Event } from "event";
+    import { type Filter } from "node_modules/nostr-tools/index";
+    import { type OnEvent } from "on-event-filters";
+    import { type Event } from "event";
     export class EventDemultiplexer {
         #private;
         filterAndOnEventByEvent: Map<string, [Filter, OnEvent][]>;
@@ -254,8 +254,8 @@ declare module "event-demultiplexer" {
 declare module "event-demultiplexer-test" { }
 declare module "fakejson.test" { }
 declare module "in-memory-relay-server" {
-    import { Event, Filter } from "node_modules/nostr-tools/index";
-    import { WebSocket, WebSocketServer } from "isomorphic-ws";
+    import { type Event, type Filter } from "node_modules/nostr-tools/index";
+    import { type WebSocket, type WebSocketServer } from "isomorphic-ws";
     export class InMemoryRelayServer {
         events: (Event & {
             id: string;

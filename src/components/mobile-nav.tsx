@@ -1,12 +1,11 @@
 import * as React from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useLockBody } from "@/lib/hooks/use-lock-body";
 import { cn } from "@/lib/utils";
 
 import Link from "next/link";
 import { type MainNavItem } from "types";
-
-import { useLockBody } from "../hooks/use-lock-body";
 
 import { Input } from "./ui/input";
 

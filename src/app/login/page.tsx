@@ -1,11 +1,13 @@
 "use client";
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
+import { useCallback, useRef } from "react";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNostrContext } from "@/lib/nostr/NostrContext";
-import { useRef, useCallback } from "react";
+
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   const { setAuthor } = useNostrContext();
@@ -13,15 +15,15 @@ export default function Login() {
   const inputRef = useRef<HTMLInputElement>(null);
 
   /* try entering npub18zx8lw3947pghsgzqv2t0x8pe767sscag5djgj5afr755xkqd97qt530pr */
- 
-    const handleSubmit = useCallback(
-        (e: React.FormEvent<HTMLFormElement>) => {
-            e.preventDefault();
-            setAuthor && setAuthor(inputRef.current?.value || "");
-            router.push("/");
-        },
-        [setAuthor, router]
-    );
+
+  const handleSubmit = useCallback(
+    (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      setAuthor && setAuthor(inputRef.current?.value || "");
+      router.push("/");
+    },
+    [setAuthor, router]
+  );
 
   return (
     <>

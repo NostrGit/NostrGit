@@ -1,6 +1,7 @@
 
 "use client";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import Link from "next/link";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,27 +11,12 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-import Link from "next/link";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
+import { useNostrContext } from "@/lib/nostr/NostrContext";
 import useMetadata from "@/lib/nostr/useMetadata";
-
-const HeaderAvatar = () => {
-
-  const metadata = useMetadata();
-  console.log(metadata);
-  return (
-    <Avatar className="h-6 w-6">
-      <AvatarImage src={metadata.picture} />
-      <AvatarFallback>CN</AvatarFallback>
-    </Avatar>
-  );
-};
-
 import { ChevronDown } from "lucide-react";
 import { HeaderConfig } from "types";
 import { MainNav } from "../main-nav";
+import { Button } from "./button";
 
 const HeaderConfig: HeaderConfig = {
   mainNav: [
@@ -104,40 +90,46 @@ const PrimaryGitInfo = DropdownItems.slice(0, 8);
 const restGitInfo = DropdownItems.slice(8);
 
 export function Header() {
+
+  const metadata = useMetadata();
+  const { signOut } = useNostrContext();
   return (
     <header className="flex h-14 w-full items-center justify-between bg-[#171B21] px-8">
       <MainNav items={HeaderConfig.mainNav} />
       <div className="hidden items-center md:inline">
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <div className="flex cursor-pointer">
-            <HeaderAvatar />
-              <ChevronDown className="mt-1 h-4 w-4 hover:text-white/80" />
-            </div>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Signed in as XXX</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              {PrimaryGitInfo?.map((item) => (
-                <DropdownMenuItem key={item.title}>
-                  <span>{item.title}</span>
-                </DropdownMenuItem>
-              ))}
-              <DropdownMenuSeparator />
+      <DropdownMenu>
+    <DropdownMenuTrigger asChild>
+      <div className="flex cursor-pointer">
+        <Avatar className="h-6 w-6">
+          <AvatarImage src={metadata.picture} />
+          <AvatarFallback>CN</AvatarFallback>
+        </Avatar>
+        <ChevronDown className="mt-1 h-4 w-4 hover:text-white/80" />
+      </div>
+    </DropdownMenuTrigger>
+    <DropdownMenuContent className="w-56">
+      <DropdownMenuLabel>Signed in as {metadata.name}</DropdownMenuLabel>
+      <DropdownMenuSeparator />
+      <DropdownMenuGroup>
+        {PrimaryGitInfo?.map((item) => (
+          <DropdownMenuItem key={item.title}>
+            <span>{item.title}</span>
+          </DropdownMenuItem>
+        ))}
+        <DropdownMenuSeparator />
 
-              {restGitInfo?.map((item) => (
-                <DropdownMenuItem key={item.title}>
-                  <span>{item.title}</span>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuGroup>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <span>Sign Out</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        {restGitInfo?.map((item) => (
+          <DropdownMenuItem key={item.title}>
+            <span>{item.title}</span>
+          </DropdownMenuItem>
+        ))}
+      </DropdownMenuGroup>
+      <DropdownMenuSeparator />
+      <DropdownMenuItem>
+        <Button onClick={signOut}>Sign Out</Button>
+      </DropdownMenuItem>
+    </DropdownMenuContent>
+  </DropdownMenu>
       </div>
     </header>
   );

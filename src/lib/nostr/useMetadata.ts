@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+
 import { useNostrContext } from "./NostrContext";
 
 export type Metadata = {
@@ -10,46 +11,43 @@ export type Metadata = {
   display_name?: string;
   about?: string;
   name?: string;
-} 
-
+};
 
 const useMetadata = (relays: string[] = []) => {
-    const { subscribe, defaultRelays, pubkey } = useNostrContext()
-    
-    const [metadata, setMetadata] = useState<Metadata>({});
-    
-    useEffect(() => {
-        if(!subscribe || !pubkey) return;
-        const unsub = subscribe(
-            [
-              {
-                kinds: [0],
-                authors: [pubkey],
-              },
-            ],
-            [...defaultRelays, ...relays],
-            (event, isAfterEose, relayURL) => {
-              console.log(event, isAfterEose, relayURL);
+  const { subscribe, defaultRelays, pubkey } = useNostrContext();
 
-                if (!isAfterEose && event.kind === 0) {
-                  const data = JSON.parse(event.content) as Metadata;
-                    setMetadata(data);
-                }
+  const [metadata, setMetadata] = useState<Metadata>({});
 
-            },
-            undefined,
-            (events, relayURL) => {
-              console.log('EOSE', events, relayURL);
-            }
-          );
-        return () => {
-            unsub();
-        };
+  useEffect(() => {
+    if (!subscribe || !pubkey) return;
+    const unsub = subscribe(
+      [
+        {
+          kinds: [0],
+          authors: [pubkey],
+        },
+      ],
+      [...defaultRelays, ...relays],
+      (event, isAfterEose, relayURL) => {
+        console.log(event, isAfterEose, relayURL);
+
+        if (!isAfterEose && event.kind === 0) {
+          const data = JSON.parse(event.content) as Metadata;
+          setMetadata(data);
+        }
+      },
+      undefined,
+      (events, relayURL) => {
+        console.log("EOSE", events, relayURL);
+      }
+    );
+    return () => {
+      unsub();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pubkey]);
+  }, [pubkey]);
 
-    return metadata;
-
+  return metadata;
 };
 
 export default useMetadata;
