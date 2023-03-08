@@ -27,15 +27,15 @@
     ]
   },
   "include": [
+    ".eslintrc.js",
     "@types/**/*.d.ts",
-    ".eslintrc.cjs",
+    ".eslintrc.js",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
     "**/*.cjs",
     "**/*.mjs",
-    ".next/types/**/*.ts",
-    "/Users/ghost/Code/NostrGit/.next/types/**/*.ts"
+    ".next/types/**/*.ts"
   ],
   "exclude": ["node_modules"]
 }
