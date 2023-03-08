@@ -59,7 +59,7 @@ export default function Login() {
                   >
                     <a
                       href="https://nostr.how/get-started"
-                      className="font-bold "
+                      className="font-bold font-medium text-purple-500"
                     >
                       What are these?
                     </a>
@@ -114,10 +114,11 @@ export default function Login() {
           </div>
           <div className="flex justify-center center mt-1">
             <p>
-              Don't have a{" "}
+              {/* eslint react/no-unescaped-entities */}
+              Don't have a
               <a href="https://nostr.how/">
-                <b>nostr</b>
-              </a>{" "}
+                <b className="font-medium text-purple-500 ml-1 mr-1">Nostr</b>
+              </a>
               profile?
             </p>
             <a href="/signup" className="font-medium text-purple-500 ml-1">
