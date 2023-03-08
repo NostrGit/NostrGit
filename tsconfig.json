@@ -29,7 +29,6 @@
   "include": [
     ".eslintrc.js",
     "@types/**/*.d.ts",
-    ".eslintrc.js",
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
