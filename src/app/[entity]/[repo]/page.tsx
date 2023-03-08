@@ -164,20 +164,40 @@ export default function RepoCodePage({
         <Badge className="mr-2">git</Badge>
         <ul className="text-gray-400 space-y-2 border-b border-gray pt-4 pb-8 text-sm">
           <li>
-            <BookOpen className="mr-2 inline h-4 w-4" />
-            Readme
+            <Link
+              href="/nostr-protocol/nostr"
+              className="hover:text-purple-500"
+            >
+              <BookOpen className="mr-2 inline h-4 w-4" />
+              Readme
+            </Link>
           </li>
           <li>
-            <Star className="mr-2 inline h-4 w-4" />
-            <strong>7k</strong> stars
+            <Link
+              href="/nostr-protocol/nostr"
+              className="hover:text-purple-500"
+            >
+              <Star className="mr-2 inline h-4 w-4" />
+              <strong>7k</strong> stars
+            </Link>
           </li>
           <li>
-            <Eye className="mr-2 inline h-4 w-4" />
-            <strong>148</strong> watching
+            <Link
+              href="/nostr-protocol/nostr"
+              className="hover:text-purple-500"
+            >
+              <Eye className="mr-2 inline h-4 w-4" />
+              <strong>148</strong> watching
+            </Link>
           </li>
           <li>
-            <GitFork className="mr-2 inline h-4 w-4" />
-            <strong>209</strong> forks
+            <Link
+              href="/nostr-protocol/nostr"
+              className="hover:text-purple-500"
+            >
+              <GitFork className="mr-2 inline h-4 w-4" />
+              <strong>209</strong> forks
+            </Link>
           </li>
         </ul>
         <div className="">
