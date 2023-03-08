@@ -5,9 +5,9 @@ import { useLockBody } from "@/lib/hooks/use-lock-body";
 import { cn } from "@/lib/utils";
 
 import Link from "next/link";
-import { type MainNavItem } from "types";
 
 import { Input } from "./ui/input";
+import { type MainNavItem } from "./main-nav";
 
 interface MobileNavProps {
   items: MainNavItem[];
