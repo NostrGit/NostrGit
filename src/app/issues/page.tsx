@@ -33,7 +33,11 @@ export default function IssuesPage({}) {
     }
   }, [issueStatus]);
 
-  const handleSearch = useCallback((val: string) => setSearch(val), []);
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) =>
+      setSearch(e.currentTarget.value),
+    []
+  );
 
   return (
     <>
@@ -89,7 +93,7 @@ export default function IssuesPage({}) {
               className="block bg-[#0E1116] w-full h-full rounded-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
               type="text"
               value={search}
-              onChange={(e) => handleSearch(e.target.value)}
+              onChange={handleSearch}
             />
           </label>
         </div>
