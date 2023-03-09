@@ -106,7 +106,7 @@ export default function Login() {
           </div>
           <div className="flex justify-center center mt-1">
             <p>
-              Don't have a
+              Don&apos;t have a
               <a href="https://nostr.how/">
                 <b className="font-medium text-purple-500 ml-1 mr-1">Nostr</b>
               </a>
