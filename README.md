@@ -30,6 +30,8 @@ Have a question or a proposal? Create a [new discussion](https://github.com/Nost
 
 The NostrGit project operates an open contributor model where anyone is welcome to contribute towards development in the form of peer review, documentation, testing and patches. Anyone is invited to contribute without regard to technical experience, "expertise", OSS experience, age, or other concern.
 
+If you are new to contributing to open source projects, please see the [Open Source Guides](https://opensource.guide/how-to-contribute/) on how to get started.
+
 See [contribution guidelines](https://github.com/NostrGit/NostrGit/blob/main/documentation/development/contributing.md).
 
 ## Contributors
@@ -37,6 +39,10 @@ See [contribution guidelines](https://github.com/NostrGit/NostrGit/blob/main/doc
 <img src="https://contrib.rocks/image?repo=nostrgit/nostrgit" alt="list of contributors" />
 
 # Roadmap
+
+Product
+
+We need to define the product roadmap. We need to figure out what features we want to implement. If you have any idea, please feel free to create a new issue.
 
 UI
 
