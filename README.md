@@ -16,7 +16,7 @@ Read about the vision [here](https://github.com/NostrGit/NostrGit/tree/main/docu
 Fork the repo
 
 ```bash
-# install npm packages
+# install yarn packages
 $ yarn
 # run in development mode (localhost:3000)
 $ yarn dev
