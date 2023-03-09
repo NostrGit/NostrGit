@@ -9,6 +9,8 @@ Read about the vision [here](https://github.com/NostrGit/NostrGit/tree/main/docu
 - [tRPC](https://trpc.io)
 - [ui.shadcn.com](https://ui.shadcn.com)
 
+We use the [T3 stack](https://create.t3.gg/).
+
 <a href="https://nostrgit.com"><img src="https://user-images.githubusercontent.com/8019099/223422735-795b4341-5751-49ce-bffb-800ee81788d2.jpg" alt="NostrGit"></a>
 
 # Development
@@ -16,7 +18,7 @@ Read about the vision [here](https://github.com/NostrGit/NostrGit/tree/main/docu
 Fork the repo
 
 ```bash
-# install npm packages
+# install yarn packages
 $ yarn
 # run in development mode (localhost:3000)
 $ yarn dev
@@ -30,6 +32,8 @@ Have a question or a proposal? Create a [new discussion](https://github.com/Nost
 
 The NostrGit project operates an open contributor model where anyone is welcome to contribute towards development in the form of peer review, documentation, testing and patches. Anyone is invited to contribute without regard to technical experience, "expertise", OSS experience, age, or other concern.
 
+If you are new to contributing to open source projects, please see the [Open Source Guides](https://opensource.guide/how-to-contribute/) on how to get started.
+
 See [contribution guidelines](https://github.com/NostrGit/NostrGit/blob/main/documentation/development/contributing.md).
 
 ## Contributors
@@ -37,6 +41,10 @@ See [contribution guidelines](https://github.com/NostrGit/NostrGit/blob/main/doc
 <img src="https://contrib.rocks/image?repo=nostrgit/nostrgit" alt="list of contributors" />
 
 # Roadmap
+
+Product
+
+We need to define the product roadmap. We need to figure out what features we want to implement. If you have any idea, please feel free to create a new issue.
 
 UI
 

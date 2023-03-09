@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export function Contributors() {
   return (
     <div>
@@ -9,8 +11,10 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/1653275?s=64&amp;v=4"
+          width={64}
+          height={64}
           alt="@fiatjaf"
           className="rounded-full"
         />
@@ -23,9 +27,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/57707?s=64&amp;v=4"
           alt="@scsibug"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -37,9 +43,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/65864?s=64&amp;v=4"
           alt="@melvincarvalho"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -51,9 +59,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/18631614?s=64&amp;v=4"
           alt="@hieblmi"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -65,9 +75,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/3998?s=64&amp;v=4"
           alt="@srid"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -79,9 +91,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/7641?s=64&amp;v=4"
           alt="@asoltys"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -93,9 +107,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/45598?s=64&amp;v=4"
           alt="@jb55"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -107,9 +123,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/397451?s=64&amp;v=4"
           alt="@schulterklopfer"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -121,9 +139,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/967793?s=64&amp;v=4"
           alt="@GlenCooper"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -135,9 +155,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/1818366?s=64&amp;v=4"
           alt="@Kukks"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>
@@ -149,9 +171,11 @@ export function Contributors() {
         data-octo-click="hovercard-link-click"
         data-octo-dimensions="link_type:self"
       >
-        <img
+        <Image
           src="https://avatars.githubusercontent.com/u/10324237?s=64&amp;v=4"
           alt="@verretor"
+          width={64}
+          height={64}
           className="rounded-full"
         />
       </a>

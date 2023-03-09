@@ -14,6 +14,12 @@ const config = {
   reactStrictMode: true,
   images: {
     domains: ["void.cat"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
   },
 
   /**

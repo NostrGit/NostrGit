@@ -13,7 +13,7 @@ Do not use Discussions, only Issues. They are much easier to track.
 
 The codebase is maintained using the "contributor workflow" where everyone without exception contributes patch proposals using "pull requests". This facilitates social contribution, easy testing and peer review.
 
-To contribute a patch, the worflow is a as follows:
+To contribute a patch, the worflow is as follows:
 
 1. Fork Repository
 2. Create topic branch
@@ -27,7 +27,10 @@ To contribute a patch, the worflow is a as follows:
    - Always start your pull requests with a described list (Add, Remove, Bump, etc.)
    - Including screenshots or [loom](https://www.loom.com/) videos into PRs is highly recommended. This helps the reviewing process immensely, especially from casual contributions.
      - After you have signed up to [loom](https://www.loom.com/), you can record short videos easily of your screen to showcase what you have done. The videos can be shared by embedding a link to the PR.
-5. Be a part of the Nostr movement!
+5. Review and address comments on your pull request
+   - Reviewers will do their best to respond in a timely manner.
+   - If your pull request is not getting any attention, you can ping the reviewers asking for a review in the Nostr channel.
+6. Be a part of the Nostr movement!
 
 In general commits should be atomic and diffs should be easy to read. For this reason do not mix any formatting fixes or code moves with actual code changes. Further, each commit, individually, should compile and pass tests, in order to ensure git bisect and other automated tools function properly.
 
@@ -63,6 +66,8 @@ If you use npm instead of yarn, make sure not to include package-lock.json in th
 ## Tooling
 
 We use [prettier](https://prettier.io/) to format our code. It is recommended to use the [prettier extension](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) for VSCode. We also use `@trivago/prettier-plugin-sort-imports` to sort our imports.
+
+We use [eslint](https://eslint.org/) to lint our code. Do not hesitate to use issues to add new rules.
 
 ## Peer review
 
@@ -105,6 +110,8 @@ instead of this :
 ```javascript
 const home = () => {};
 ```
+
+Please do not use `any` as a type. If you are unsure of the type, use `unknown` instead.
 
 ```javascript
 // bad
