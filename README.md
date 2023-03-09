@@ -24,9 +24,9 @@ $ yarn
 $ yarn dev
 ```
 
-# Questions or Discussions
+# Questions or discussions
 
-Have a question or a proposal? Create a [new discussion](https://github.com/NostrGit/NostrGit/discussions/new?category=general) first
+Have a question or a proposal? Create a [new issue](https://github.com/NostrGit/NostrGit/issues/new).
 
 # Contributing
 
