@@ -23,8 +23,6 @@ import { MainNav } from "../main-nav";
 
 import { Button } from "./button";
 
-
-
 const HeaderConfig = {
   mainNav: [
     {
@@ -113,8 +111,8 @@ export function Header() {
       <div className="hidden items-center md:inline">
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className="flex cursor-pointer">
-              <Avatar className="h-6 w-6">
+            <div className="flex items-center cursor-pointer">
+              <Avatar className="">
                 <AvatarImage src={picture} />
                 <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
