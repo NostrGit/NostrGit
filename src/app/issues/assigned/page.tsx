@@ -1,4 +1,4 @@
-export default function RepoDiscussionsPage() {
+export default function IssuesAssignedPage() {
   return (
     <>
       <h1>assigned</h1>
