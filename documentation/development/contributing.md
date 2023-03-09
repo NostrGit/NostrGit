@@ -111,6 +111,8 @@ instead of this :
 const home = () => {};
 ```
 
+Please do not use `any` as a type. If you are unsure of the type, use `unknown` instead.
+
 ```javascript
 // bad
 <Link onClick={(e) => e.currentTarget.Value}>Click me</Link>;
