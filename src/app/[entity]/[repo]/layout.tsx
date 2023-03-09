@@ -245,7 +245,7 @@ export default function RepoLayout({
       <Banner
         title="Contribute"
         description="Join our GitHub project (until NostrGit is ready)"
-        link="https://github.com/NostrGit/NostrGit/discussions/77"
+        link="https://github.com/NostrGit/NostrGit/issues/145"
       />
     </>
   );
