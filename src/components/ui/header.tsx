@@ -149,7 +149,7 @@ export function Header() {
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
-            <div className="flex gap-1 bg">
+            <div className="flex gap-1">
               <Button
                 variant={"success"}
                 type="submit"
