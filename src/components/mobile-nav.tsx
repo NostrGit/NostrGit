@@ -1,13 +1,19 @@
 import * as React from "react";
+import { useCallback } from "react";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useLockBody } from "@/lib/hooks/use-lock-body";
 import { cn } from "@/lib/utils";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useNostrContext } from "@/lib/nostr/NostrContext";
 
 import { Input } from "./ui/input";
 import { type MainNavItem } from "./main-nav";
+import { Button } from "./ui/button";
+import useSession from "@/lib/nostr/useSession";
+import { DropdownMenuItem } from "./ui/dropdown-menu";
 
 interface MobileNavProps {
   items: MainNavItem[];
@@ -15,7 +21,19 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ items, children }: MobileNavProps) {
+
+  const { picture, name, initials, isLoggedIn } = useSession();
+
   useLockBody();
+
+  const { signOut } = useNostrContext();
+  const router = useRouter();
+  const handleSignOut = useCallback(() => {
+    if (signOut) {
+      signOut();
+      router.push("/");
+    }
+  }, [router, signOut]);
 
   return (
     <div
@@ -30,6 +48,15 @@ export function MobileNav({ items, children }: MobileNavProps) {
           placeholder="Search or jump to…"
         />
         <nav className="grid grid-flow-row auto-rows-max text-sm">
+          {isLoggedIn &&
+            <div className="flex items-center p-3">
+              <Avatar className="w-8 h-8">
+                <AvatarImage src={picture} />
+                <AvatarFallback>{initials}</AvatarFallback>
+              </Avatar>
+              <p>{name}</p>
+            </div>
+          }
           {items.map((item, index) => (
             <Link
               key={index}
@@ -42,12 +69,32 @@ export function MobileNav({ items, children }: MobileNavProps) {
               {item.title}
             </Link>
           ))}
-          <div className="flex items-center p-3">
-            <Avatar className="h-6 w-6">
-              <AvatarImage src="https://github.com/peerrich.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
+          {isLoggedIn ? (
+            <div className="flex items-center p-3">
+              <Button
+                variant={"outline"}
+                type="submit"
+                onClick={handleSignOut}
+              >Sign Out</Button>
+            </div>
+          ) : (
+            <div className="flex gap-1 mt-2">
+              <Button
+                variant={"success"}
+                type="submit"
+                className="mr-2"
+              >
+                <Link className="text-white" href="/login">Sign in</Link>
+              </Button>
+              <Button
+                variant={"outline"}
+                type="submit"
+              >
+                <Link className="text-white" href="/signup">Sign up</Link>
+              </Button>
+            </div>
+          )
+          }
         </nav>
         {children}
       </div>
