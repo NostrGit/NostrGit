@@ -36,9 +36,9 @@ export default function IssuesPage({}) {
 
   const searchParams = useSearchParams()!;
 
-  const is = searchParams.get("is");
+  const q = searchParams.get("q");
 
-  console.log("is ====> ", is);
+  console.log("q ====> ", q);
 
   useEffect(() => {
     if (issueStatus === "open") {
