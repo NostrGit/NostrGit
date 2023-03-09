@@ -29,6 +29,8 @@ import {
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+import RepositoryProvider from "@/lib/nostr/RepositoryContext";
+
 export default function RepoLayout({
   children,
   params,
@@ -239,8 +241,9 @@ export default function RepoLayout({
         </ul>
 
         <hr className="w-[calc(100% + 32px)] -mx-8 -mt-4 border-b-0 border-gray" />
-
-        {children}
+        <RepositoryProvider>
+          {children}
+        </RepositoryProvider>
       </section>
       <Banner
         title="Contribute"

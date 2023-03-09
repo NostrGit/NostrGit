@@ -18,6 +18,7 @@ const defaultRelays = [
   "wss://nostr.fmt.wiz.biz",
   "wss://nostr.bongbong.com",
   "wss://nos.lol",
+  "wss://relay.snort.social",
 ];
 
 const relayPool = new RelayPool(defaultRelays);

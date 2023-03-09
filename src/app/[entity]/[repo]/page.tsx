@@ -1,3 +1,4 @@
+"use client";
 import DemoReadme from "@/components/demo-readme";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
@@ -19,15 +20,19 @@ import {
   Settings,
   Star,
   Tag,
+  Globe,
+  Feather,
 } from "lucide-react";
 import Link from "next/link";
+
+import { useRepositoryContext } from "@/lib/nostr/RepositoryContext";
 
 export default function RepoCodePage({
   params,
 }: {
   params: { entity: string; repo: string };
 }) {
-  console.log(params); // fixing lint and debug only
+  const { metadata, followers, repo } = useRepositoryContext();
   return (
     <div className="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
       <div className="col-span-3 lg:col-span-3">
@@ -157,19 +162,30 @@ export default function RepoCodePage({
           <Settings className="text-gray-400 h-4 w-4" />
         </div>
         <p className="pb-2">
-          a truly censorship-resistant alternative to Twitter that has a chance
-          of working
+          {metadata?.about}
         </p>
         <Badge className="mr-2">nostr</Badge>
         <Badge className="mr-2">git</Badge>
         <ul className="text-gray-400 space-y-2 border-b border-gray pt-4 pb-8 text-sm">
+          <li>
+            <Globe className="mr-2 inline h-4 w-4" />
+            <a href={metadata?.website} target="_blank"  className="text-purple-500 hover:underline">
+              Website
+            </a>
+          </li>
+           <li>
+            <Feather className="mr-2 inline h-4 w-4" />
+            <a href={`https://snort.social/p/${repo?.pubkey || ""}`} target="_blank"  className="text-purple-500 hover:underline">
+              snort.social
+            </a>
+           </li>
           <li>
             <BookOpen className="mr-2 inline h-4 w-4" />
             Readme
           </li>
           <li>
             <Star className="mr-2 inline h-4 w-4" />
-            <strong>7k</strong> stars
+            <strong>{followers?.length}</strong> stars
           </li>
           <li>
             <Eye className="mr-2 inline h-4 w-4" />
