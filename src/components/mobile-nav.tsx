@@ -8,6 +8,8 @@ import Link from "next/link";
 
 import { Input } from "./ui/input";
 import { type MainNavItem } from "./main-nav";
+import { Button } from "./ui/button";
+import useSession from "@/lib/nostr/useSession";
 
 interface MobileNavProps {
   items: MainNavItem[];
@@ -15,6 +17,9 @@ interface MobileNavProps {
 }
 
 export function MobileNav({ items, children }: MobileNavProps) {
+
+  const { picture, initials, isLoggedIn } = useSession();
+
   useLockBody();
 
   return (
@@ -42,12 +47,31 @@ export function MobileNav({ items, children }: MobileNavProps) {
               {item.title}
             </Link>
           ))}
-          <div className="flex items-center p-3">
-            <Avatar className="h-6 w-6">
-              <AvatarImage src="https://github.com/peerrich.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </div>
+          {isLoggedIn ? (
+            <div className="flex items-center p-3">
+              <Avatar className="w-8 h-8">
+                <AvatarImage src={picture} />
+                <AvatarFallback>{initials}</AvatarFallback>
+              </Avatar>
+            </div>
+          ) : (
+            <div className="flex gap-1 mt-2">
+              <Button
+                variant={"success"}
+                type="submit"
+                className="mr-2"
+              >
+                <Link className="text-white" href="/login">Sign in</Link>
+              </Button>
+              <Button
+                variant={"outline"}
+                type="submit"
+              >
+                <Link className="text-white" href="/signup">Sign up</Link>
+              </Button>
+            </div>
+          )
+          }
         </nav>
         {children}
       </div>
