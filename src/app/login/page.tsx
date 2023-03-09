@@ -6,9 +6,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNostrContext } from "@/lib/nostr/NostrContext";
 
+import { Puzzle } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { Puzzle } from "lucide-react";
 
 export default function Login() {
   const { setAuthor } = useNostrContext();
