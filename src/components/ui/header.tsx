@@ -143,9 +143,11 @@ export function Header() {
               </DropdownMenuItem>
             </DropdownMenuContent>
           ) : (
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent className="w-56 mt-2 mr-10">
               <DropdownMenuItem>
-                <Link href="/login">Sign in</Link>
+                <Link className="text-white" href="/login">
+                  Sign in
+                </Link>
               </DropdownMenuItem>
             </DropdownMenuContent>
           )}
