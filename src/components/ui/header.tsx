@@ -112,7 +112,7 @@ export function Header() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <div className="flex items-center cursor-pointer">
-              <Avatar>
+              <Avatar className="w-8 h-8">
                 <AvatarImage src={picture} />
                 <AvatarFallback>{initials}</AvatarFallback>
               </Avatar>
