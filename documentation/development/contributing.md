@@ -117,3 +117,5 @@ const handleClick = useCallback((e) => e.currentTarget.Value, []);
 ## UI
 
 When designing the visual style of components, [shadcn](https://ui.shadcn.com/) should always be used when possible.
+
+Use [Lucide](https://lucide.dev/) icon components when able.
