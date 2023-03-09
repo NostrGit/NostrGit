@@ -122,7 +122,7 @@ export function Header() {
                 </div>
               </DropdownMenuTrigger>
               <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>Signed in as {name}</DropdownMenuLabel>
+                <DropdownMenuLabel>{name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
                   {PrimaryGitInfo?.map((item) => (
