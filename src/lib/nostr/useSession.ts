@@ -13,7 +13,7 @@ const useSession = () => {
 
   const isLoggedIn = !!pubkey;
 
-  const name = metadata.display_name || "Anonymous Nostrich";
+  const name = metadata.display_name || metadata.name || "Anonymous Nostrich";
   const initials = name
     .split(" ")
     .map((n) => n[0])
