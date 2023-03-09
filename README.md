@@ -36,6 +36,8 @@ If you are new to contributing to open source projects, please see the [Open Sou
 
 See [contribution guidelines](https://github.com/NostrGit/NostrGit/blob/main/documentation/development/contributing.md).
 
+You may also want to check out the [bitcoin-development](https://github.com/jonatack/bitcoin-development/blob/master/how-to-review-bitcoin-core-prs.md) repository about the principles of Bitcoin development in general. Most of them apply also here. 
+
 ## Contributors
 
 <img src="https://contrib.rocks/image?repo=nostrgit/nostrgit" alt="list of contributors" />
