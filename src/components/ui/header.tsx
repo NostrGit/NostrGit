@@ -27,7 +27,7 @@ const HeaderConfig = {
   mainNav: [
     {
       title: "Pull Requests",
-      href: "/pullrequests",
+      href: "/pulls",
     },
     {
       title: "Issues",
@@ -109,63 +109,60 @@ export function Header() {
     <header className="flex h-14 w-full items-center justify-between bg-[#171B21] px-8">
       <MainNav items={HeaderConfig.mainNav} />
       <div className="hidden items-center md:inline">
-        {
-          isLoggedIn ? (
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <div className="flex items-center cursor-pointer">
-                  <Avatar className="w-8 h-8">
-                    <AvatarImage src={picture} />
-                    <AvatarFallback>{initials}</AvatarFallback>
-                  </Avatar>
-                  <ChevronDown className="mt-1 h-4 w-4 hover:text-white/80" />
-                </div>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>{name}</DropdownMenuLabel>
+        {isLoggedIn ? (
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <div className="flex items-center cursor-pointer">
+                <Avatar className="w-8 h-8">
+                  <AvatarImage src={picture} />
+                  <AvatarFallback>{initials}</AvatarFallback>
+                </Avatar>
+                <ChevronDown className="mt-1 h-4 w-4 hover:text-white/80" />
+              </div>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="w-56">
+              <DropdownMenuLabel>{name}</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuGroup>
+                {PrimaryGitInfo?.map((item) => (
+                  <DropdownMenuItem key={item.title}>
+                    <span>{item.title}</span>
+                  </DropdownMenuItem>
+                ))}
                 <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                  {PrimaryGitInfo?.map((item) => (
-                    <DropdownMenuItem key={item.title}>
-                      <span>{item.title}</span>
-                    </DropdownMenuItem>
-                  ))}
-                  <DropdownMenuSeparator />
 
-                  {restGitInfo?.map((item) => (
-                    <DropdownMenuItem key={item.title}>
-                      <span>{item.title}</span>
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <Button
-                    variant={"outline"}
-                    type="submit"
-                    onClick={handleSignOut}
-                  >Sign Out</Button>
-                </DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-          ) : (
-            <div className="flex gap-1">
-              <Button
-                variant={"success"}
-                type="submit"
-                className="mr-2"
-              >
-                <Link className="text-white" href="/login">Sign in</Link>
-              </Button>
-              <Button
-                variant={"outline"}
-                type="submit"
-              >
-                <Link className="text-white" href="/signup">Sign up</Link>
-              </Button>
-            </div>
-          )
-        }
+                {restGitInfo?.map((item) => (
+                  <DropdownMenuItem key={item.title}>
+                    <span>{item.title}</span>
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem>
+                <Button
+                  variant={"outline"}
+                  type="submit"
+                  onClick={handleSignOut}
+                >
+                  Sign Out
+                </Button>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        ) : (
+          <div className="flex gap-1">
+            <Button variant={"success"} type="submit" className="mr-2">
+              <Link className="text-white" href="/login">
+                Sign in
+              </Link>
+            </Button>
+            <Button variant={"outline"} type="submit">
+              <Link className="text-white" href="/signup">
+                Sign up
+              </Link>
+            </Button>
+          </div>
+        )}
       </div>
     </header>
   );
