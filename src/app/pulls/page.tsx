@@ -132,7 +132,7 @@ export default function PullsPage({}) {
         <label className="relative w-full text-slate-400">
           <span className="sr-only">Search</span>
           <span className="absolute mt-2 lg:mt-0 lg:inset-y-0 lg:left-0 flex items-center px-2">
-            <Search className="h-4 w-4" />
+            <Search className="h-8 w-4" />
           </span>
           <input
             className="block bg-[#0E1116] w-full rounded-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
