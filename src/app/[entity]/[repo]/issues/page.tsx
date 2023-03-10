@@ -3,17 +3,21 @@
 import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 
+import { Button } from "@/components/ui/button";
+
 import { clsx } from "clsx";
 import {
   Check,
   CheckCircle2,
   ChevronDown,
   CircleDot,
-  GitMerge,
   GitPullRequest,
   MessageSquare,
   Search,
+  Tag,
 } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface IIssueData {
   id: string;
@@ -38,6 +42,8 @@ export default function RepoIssuesPage() {
 
   const [issues, setIssues] = useState<IIssueData[]>(openData);
 
+  const pathname = usePathname() || "";
+
   useEffect(() => {
     if (issueStatus === "open") {
       setIssues(openData);
@@ -60,28 +66,57 @@ export default function RepoIssuesPage() {
 
   return (
     <section className="sm:px-8 py-6 max-w-6xl m-auto">
-      <div className="md:flex justify-between gap-4 px-4 sm:px-0">
-        <div>filter</div>
-        <label className="relative w-full border-slate-600 text-slate-400 border rounded-md">
-          <span className="sr-only">Search</span>
-          <span className="absolute inset-y-0 left-0 flex items-center px-2">
-            <Search className="h-4 w-4" />
-          </span>
-          <input
-            className="block bg-[#0E1116] w-full h-full rounded-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
-            type="text"
-            value={search}
-            onChange={handleSearch}
-          />
-        </label>
-        <div>labels milestones</div>
-        <div>new issue</div>
+      <div className="flex flex-col md:flex-row justify-between gap-4 px-4 sm:px-0">
+        <div className="flex w-full order-last mb-4 md:mb-0 md:order-none">
+          <button className="flex items-center border dark:border-[#383B42] bg-[#171B21] px-4 rounded-l-md text-slate-200 font-semibold">
+            Filters <ChevronDown className="h-4 w-4 ml-1 mt-1" />
+          </button>
+          <label className="relative w-full text-slate-400">
+            <span className="sr-only">Search</span>
+            <span className="absolute inset-y-0 left-0 flex items-center px-2">
+              <Search className="h-4 w-4" />
+            </span>
+            <input
+              className="block bg-[#0E1116] w-full h-full rounded-r-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
+              type="text"
+              value={search}
+              onChange={handleSearch}
+            />
+          </label>
+        </div>
+
+        <div className="flex gap-4 justify-between">
+          <div className="flex">
+            <button
+              type="button"
+              className="flex items-center border dark:border-[#383B42] rounded-l-md px-4 text-slate-200 font-semibold"
+            >
+              <Tag className="h-4 w-4 mr-2" /> Labels
+            </button>
+            <button
+              type="button"
+              className="flex items-center border dark:border-[#383B42] rounded-r-md px-4 text-slate-200 font-semibold"
+            >
+              <Tag className="h-4 w-4 mr-2" /> Milestones
+            </button>
+          </div>
+
+          <Button
+            variant={"success"}
+            type="button"
+            className="whitespace-nowrap"
+          >
+            <Link className="text-white w-full" href={`${pathname}/new`}>
+              New issue
+            </Link>
+          </Button>
+        </div>
       </div>
 
       <main>
         <div className="mt-4">
-          <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-[#383B42] dark:text-slate-100">
-            <div className="md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
+          <div className="flex flex-col w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-[#383B42] dark:text-slate-100">
+            <div className="order-last md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
               <div className="flex items-center lg:flex-row space-x-4 font-medium">
                 <button
                   className={clsx("flex text-slate-400 hover:text-slate-200", {
@@ -107,10 +142,10 @@ export default function RepoIssuesPage() {
                 <span className="flex text-slate-400 hover:text-slate-200 cursor-pointer">
                   Label <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
-                <span className="flex text-slate-400 hover:text-slate-200 cursor-pointer">
+                <span className="hidden md:flex text-slate-400 hover:text-slate-200 cursor-pointer">
                   Projects <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
-                <span className="flex text-slate-400 hover:text-slate-200 cursor-pointer">
+                <span className="hidden md:flex text-slate-400 hover:text-slate-200 cursor-pointer">
                   Milestones <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
                 <span className="flex text-slate-400 hover:text-slate-200 cursor-pointer">
