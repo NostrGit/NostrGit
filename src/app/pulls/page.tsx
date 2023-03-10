@@ -30,7 +30,7 @@ interface IPullsData {
   comments: number;
 }
 
-export default function PullsPage({}) {
+export default function PullsPage({ }) {
   const [issueType, setIssueType] = useState<
     "created" | "assigned" | "mentioned" | "request"
   >("created");
