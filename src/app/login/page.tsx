@@ -132,7 +132,7 @@ export default function Login() {
                 </Button>
               </div>
             </form>
-            {(typeof(window) !== 'undefined') && window.nostr
+            {(typeof(window) !== 'undefined')
               ?
               <div className="mt-6">
                 <div className="relative">
