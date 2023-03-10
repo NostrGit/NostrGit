@@ -13,6 +13,21 @@ import useLocalStorage from "../hooks/useLocalStorage";
 
 import { WEB_STORAGE_KEYS } from "./localStorage";
 
+declare global {
+  interface Window { 
+    nostr: { 
+      getPublicKey() : string,
+      signEvent(event: Event): Event,
+      getRelays(): { [url: string]: {read: boolean, write: boolean} },
+      nip04: {
+        encrypt(pubkey : string, plaintext : string): string,
+        decrypt(pubkey : string, ciphertext : string): string
+      }
+    };
+  }
+}
+
+
 const defaultRelays = [
   "wss://relay.damus.io",
   "wss://nostr.fmt.wiz.biz",
