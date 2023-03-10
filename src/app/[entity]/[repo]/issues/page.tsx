@@ -65,7 +65,7 @@ export default function RepoIssuesPage() {
   );
 
   return (
-    <section className="sm:px-8 py-6 max-w-6xl m-auto">
+    <section className="py-6 m-auto">
       <div className="flex flex-col md:flex-row justify-between gap-4 px-4 sm:px-0">
         <div className="flex w-full order-last mb-4 md:mb-0 md:order-none">
           <button className="flex items-center border dark:border-[#383B42] bg-[#171B21] px-4 rounded-l-md text-slate-200 font-semibold">
