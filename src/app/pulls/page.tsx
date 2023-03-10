@@ -6,10 +6,8 @@ import { useCallback, useEffect, useState } from "react";
 import { clsx } from "clsx";
 import {
   Check,
-  CheckCircle2,
   ChevronDown,
   CircleDot,
-  GitFork,
   GitMerge,
   GitPullRequest,
   MessageSquare,
