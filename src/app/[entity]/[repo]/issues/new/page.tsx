@@ -230,7 +230,7 @@ export default function RepoIssueNewPage() {
                       })}
                       <div className='flex cursor-pointer p-1'>
                         <Edit />
-                        { /* todo: link to the /labels page */ }
+                        { /* todo: link to the /labels page */}
                         <Link href={"#"} className="ml-2">{'Edit labels'}</Link>
                       </div>
                     </DropdownMenuGroup>
@@ -238,7 +238,16 @@ export default function RepoIssueNewPage() {
                 </DropdownMenu>
               </div>
             </div>
-            <span className='text-gray-300'>None yet</span>
+            <div className='flex gap-2'>
+              {
+                selectedLabels.length > 0 ? (
+                  /* todo: different bg-color for each label */
+                  selectedLabels.map(label => <span className='p-1 pl-2 pr-2 text-black bg-white sm:rounded-lg'>{label}</span>)
+                ) : (
+                  <span className='text-gray-300'>None yet</span>
+                )
+              }
+            </div>
           </div>
         </div>
         <div className='flex'>
