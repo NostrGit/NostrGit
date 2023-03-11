@@ -25,7 +25,7 @@ import {
 import { Input } from "@/components/ui/input";
 
 import { useRouter } from "next/navigation";
-import { Check, ChevronDown, Settings } from 'lucide-react';
+import { Check, ChevronDown, Edit, Settings } from 'lucide-react';
 import { TextArea } from '@/components/ui/textarea';
 import {
   DropdownMenu,
@@ -36,6 +36,7 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu';
+import Link from 'next/link';
 
 export default function RepoIssueNewPage() {
   const router = useRouter();
@@ -214,18 +215,24 @@ export default function RepoIssueNewPage() {
                     <DropdownMenuSeparator />
                     {/* todo: fetch labels of this repo and replace mockLabels */}
                     {/* todo: publish labels with NostrContext when the dropdown menu hides */}
+                    {/* todo: filter labels based on labelsFilterRef */}
                     <DropdownMenuGroup>
                       {mockLabels.map(label => {
                         return (
-                          <>
-                            <div key={label} className='flex cursor-pointer' onClick={() => selectLabel(label)}>
+                          <div key={label}>
+                            <div className='flex cursor-pointer p-1' onClick={() => selectLabel(label)}>
                               <span className='mr-1'>{label}</span>
                               {selectedLabels.includes(label) && <Check />}
                             </div>
                             <DropdownMenuSeparator />
-                          </>
+                          </div>
                         )
                       })}
+                      <div className='flex cursor-pointer p-1'>
+                        <Edit />
+                        { /* todo: link to the /labels page */ }
+                        <Link href={"#"} className="ml-2">{'Edit labels'}</Link>
+                      </div>
                     </DropdownMenuGroup>
                   </DropdownMenuContent>
                 </DropdownMenu>
