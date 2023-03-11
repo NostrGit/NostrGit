@@ -65,10 +65,10 @@ export default function RepoIssuesPage() {
   );
 
   return (
-    <section className="py-6 m-auto">
+    <section className="mt-8">
       <div className="flex flex-col md:flex-row justify-between gap-4 px-4 sm:px-0">
         <div className="flex w-full order-last mb-4 md:mb-0 md:order-none">
-          <button className="flex items-center border dark:border-[#383B42] bg-[#171B21] px-4 rounded-l-md text-slate-200 font-semibold">
+          <button className="flex items-center h-8 border border-gray hover:border-slate-400 bg-dark px-4 rounded-l-md text-slate-200 font-semibold">
             Filters <ChevronDown className="h-4 w-4 ml-1 mt-1" />
           </button>
           <label className="relative w-full text-slate-400">
@@ -77,7 +77,7 @@ export default function RepoIssuesPage() {
               <Search className="h-4 w-4" />
             </span>
             <input
-              className="block bg-[#0E1116] w-full h-full rounded-r-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
+              className="block bg-[#0E1116] w-full h-8 rounded-r-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
               type="text"
               value={search}
               onChange={handleSearch}
@@ -89,13 +89,13 @@ export default function RepoIssuesPage() {
           <div className="flex">
             <button
               type="button"
-              className="flex items-center border dark:border-[#383B42] rounded-l-md px-4 text-slate-200 font-semibold"
+              className="flex h-8 items-center border !border-gray hover:bg-dark rounded-l-md px-4 text-slate-200 font-semibold"
             >
               <Tag className="h-4 w-4 mr-2" /> Labels
             </button>
             <button
               type="button"
-              className="flex items-center border dark:border-[#383B42] rounded-r-md px-4 text-slate-200 font-semibold"
+              className="flex h-8 items-center border !border-gray hover:bg-dark rounded-r-md px-4 text-slate-200 font-semibold"
             >
               <Tag className="h-4 w-4 mr-2" /> Milestones
             </button>
@@ -104,7 +104,7 @@ export default function RepoIssuesPage() {
           <Button
             variant={"success"}
             type="button"
-            className="whitespace-nowrap"
+            className="whitespace-nowrap h-8"
           >
             <Link className="text-white w-full" href={`${pathname}/new`}>
               New issue
@@ -115,7 +115,7 @@ export default function RepoIssuesPage() {
 
       <main>
         <div className="mt-4">
-          <div className="flex flex-col w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-[#383B42] dark:text-slate-100">
+          <div className="flex flex-col w-full rounded-md rounded-bl-none rounded-br-none border bg-dark py-2 px-4 !border-gray dark:text-slate-100">
             <div className="order-last md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
               <div className="flex items-center lg:flex-row space-x-4 font-medium">
                 <button
@@ -162,7 +162,7 @@ export default function RepoIssuesPage() {
               {issues.map((item) => (
                 <li
                   key={`${item.id} ${item.entity}`}
-                  className="text-gray-400 grid grid-cols-8 p-2 text-sm hover:bg-[#171B21]"
+                  className="text-gray-400 grid grid-cols-8 p-2 text-sm hover:bg-dark"
                 >
                   <div className="col-span-8 sm:col-span-6">
                     <div className="sm:flex items-center text-lg font-medium">
