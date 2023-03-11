@@ -263,20 +263,6 @@ export default function RepoIssueNewPage() {
             <span className='text-gray-300'>No milestone</span>
           </div>
         </div>
-        <div className='flex'>
-          <div className='flex flex-col w-full p-2'>
-            <div className='flex hover:text-purple-400 cursor-pointer'>
-              <p className='w-full mb-2'>Participants</p>
-              <div>
-                <Settings />
-              </div>
-            </div>
-            <Avatar className="w-8 h-8">
-              <AvatarImage src={picture} />
-              <AvatarFallback>{initials}</AvatarFallback>
-            </Avatar>
-          </div>
-        </div>
       </div>
     </div>
   );
