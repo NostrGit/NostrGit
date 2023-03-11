@@ -6,39 +6,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
 import { useNostrContext } from "@/lib/nostr/NostrContext";
-import { LoginType, fetchPublicKey, checkType } from "@/lib/utils";
+import { LoginType, checkType } from "@/lib/utils";
 
 import { Puzzle } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-import { nip19 } from "nostr-tools"
+import { nip19, nip05 } from "nostr-tools"
 
 
 export default function Login() {
 
-  const { setAuthor, addReplay } = useNostrContext();
+  const { setAuthor } = useNostrContext();
   const router = useRouter();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // TODO : setAuthor should be replaced in the future
+  // TODO : setAuthor needs to be tweaked (don't remove but tweak *_*)
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
 
     e.preventDefault();
-
-    let cred : string = inputRef.current?.value || '';
-    handleLogin(cred);
-    console.log("HandleSubmit")
+    await handleLogin();
+    console.log("HandleSubmit");
 
   };
 
-  const handleLogin = useCallback(async (cred : string = '') => {
+  const handleLogin = useCallback(async () => {
+
+    const cred = inputRef.current?.value || '';
+    let loginType = checkType(cred);
+    let npub = '';
+
+    console.log("Yay!")
+
+    // Checking for nip07 extension
+    loginType = (window.nostr && cred === '') ? LoginType.nip07 : loginType; 
     
-    const loginType = checkType(cred);
-    let npub;
-    
+    // Else use common npub credentials
     switch(loginType)
     {
       case LoginType.npub:
@@ -48,17 +53,18 @@ export default function Login() {
         npub = nip19.npubEncode(cred);
         break;
       case LoginType.nip07:
-        npub = nip19.npubEncode(await window.nostr.getPublicKey() || '');
+        const hex = await window.nostr.getPublicKey()
+        console.log(hex);
+        npub = nip19.npubEncode(hex);
         break;
       case LoginType.nip05:
-        npub = nip19.npubEncode(await fetchPublicKey(cred) || '');
-        break;
-      default:
+        const profile = await nip05.queryProfile(cred)
+        npub = nip19.npubEncode(profile?.pubkey || '')
+      default: break;
     }
-
-    console.log(npub)
-    //setAuthor && setAuthor(npub)
-    //router.push('/')
+    // Set Author and return to root
+    setAuthor && setAuthor(npub)
+    router.push('/')
 
   }, [setAuthor, router]);
 
@@ -133,7 +139,7 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="mt-6">
-                  <Button className="flex justify-center gap-2 items-center w-full" onClick={() => handleLogin}>
+                  <Button className="flex justify-center gap-2 items-center w-full" onClick={handleLogin}>
                     <Puzzle />
                     <p className="text-center">Continue with extension</p>
                   </Button>

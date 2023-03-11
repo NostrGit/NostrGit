@@ -16,12 +16,12 @@ import { WEB_STORAGE_KEYS } from "./localStorage";
 declare global {
   interface Window { 
     nostr: { 
-      getPublicKey() : string,
-      signEvent(event: Event): Event,
-      getRelays(): { [url: string]: {read: boolean, write: boolean} },
+      getPublicKey() : Promise<string>,
+      signEvent(event: Event): Promise<Event>,
+      getRelays(): Promise<{ [url: string]: {read: boolean, write: boolean} }>,
       nip04: {
-        encrypt(pubkey : string, plaintext : string): string,
-        decrypt(pubkey : string, ciphertext : string): string
+        encrypt(pubkey : string, plaintext : string): Promise<string>,
+        decrypt(pubkey : string, ciphertext : string): Promise<string>
       }
     };
   }
