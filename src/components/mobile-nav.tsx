@@ -13,7 +13,6 @@ import { Input } from "./ui/input";
 import { type MainNavItem } from "./main-nav";
 import { Button } from "./ui/button";
 import useSession from "@/lib/nostr/useSession";
-import { DropdownMenuItem } from "./ui/dropdown-menu";
 
 interface MobileNavProps {
   items: MainNavItem[];
