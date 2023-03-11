@@ -4,7 +4,9 @@ import { useCallback, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
 import { useNostrContext } from "@/lib/nostr/NostrContext";
+import { LoginType, fetchPublicKey, checkType } from "@/lib/utils";
 
 import { Puzzle } from "lucide-react";
 import Image from "next/image";
@@ -12,7 +14,6 @@ import { useRouter } from "next/navigation";
 
 import { nip19 } from "nostr-tools"
 
-const enum LoginType { nip07, default }
 
 export default function Login() {
 
@@ -23,43 +24,41 @@ export default function Login() {
 
   // TODO : setAuthor should be replaced in the future
 
-  const handleSubmit = useCallback(async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+
     e.preventDefault();
-    await handleLogin();
-  }, [setAuthor, router]);
 
-  const handleLogin = useCallback(async (loginType: LoginType = LoginType.default) => {
+    let cred : string = inputRef.current?.value || '';
+    handleLogin(cred);
+    console.log("HandleSubmit")
 
-    switch (loginType) {
-      case LoginType.nip07:
+  };
 
-        var hex: string = await window.nostr.getPublicKey()    // nip-07 uses public key to enter,
-        var npub: string = nip19.npubEncode(hex);              // Should consider using hex keys by default, npubs are encoded twice as needed
-        var relays: string[] = Object.keys(await window.nostr.getRelays());
-
-        setAuthor && setAuthor(npub || "");                   // Implement Default relays adds
-
-        relays.forEach((url) => {
-          addReplay && addReplay(url || "");
-          console.log(`added relay ${url}`);
-        });
-
+  const handleLogin = useCallback(async (cred : string = '') => {
+    
+    const loginType = checkType(cred);
+    let npub;
+    
+    switch(loginType)
+    {
+      case LoginType.npub:
+        npub = cred; 
         break;
-
+      case LoginType.hex: 
+        npub = nip19.npubEncode(cred);
+        break;
+      case LoginType.nip07:
+        npub = nip19.npubEncode(await window.nostr.getPublicKey() || '');
+        break;
+      case LoginType.nip05:
+        npub = nip19.npubEncode(await fetchPublicKey(cred) || '');
+        break;
       default:
-
-        let cred: string = inputRef.current?.value || '';
-
-        var hexRegex = /^[a-fA-F0-9]+$/i; // hex charset
-        var npubRegex = /^npub[0-3][qpzry9x8gf2tvdw0s3jn54khce6mua7l]+/i; // bip-36 charset
-
-        // Testing regex, if pubkey classic setAuthor, if hex key, nip19 encode then setAuthor
-        npubRegex.test(cred) && setAuthor && setAuthor(inputRef.current?.value || "");
-        hexRegex.test(cred) && setAuthor && setAuthor(nip19.npubEncode(inputRef.current?.value || ""));
-
     }
 
-    router.push("/");
+    console.log(npub)
+    //setAuthor && setAuthor(npub)
+    //router.push('/')
 
   }, [setAuthor, router]);
 
@@ -107,7 +106,7 @@ export default function Login() {
                   <Input
                     id="key"
                     name="key"
-                    type="password"
+                    type="text"
                     required
                     className="w-fulls block"
                     ref={inputRef}
@@ -125,7 +124,7 @@ export default function Login() {
                 </Button>
               </div>
             </form>
-            {(typeof (window.nostr) !== 'undefined')
+            {(typeof (window) !== 'undefined' && typeof (window.nostr) !== 'undefined')
               ?
               <div className="mt-6">
                 <div className="relative">
@@ -134,7 +133,7 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="mt-6">
-                  <Button className="flex justify-center gap-2 items-center w-full" onClick={() => { handleLogin(LoginType.nip07) }}>
+                  <Button className="flex justify-center gap-2 items-center w-full" onClick={() => handleLogin}>
                     <Puzzle />
                     <p className="text-center">Continue with extension</p>
                   </Button>
