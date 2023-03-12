@@ -30,7 +30,7 @@ interface IIssueData {
   comments: number;
 }
 
-export default function IssuesPage({}) {
+export default function IssuesPage({ }) {
   const [issueType, setIssueType] = useState<
     "created" | "assigned" | "mentioned"
   >("created");
@@ -74,54 +74,52 @@ export default function IssuesPage({}) {
   return (
     <section className="sm:px-8 py-6 max-w-6xl m-auto">
       <div className="md:flex justify-between gap-4 px-4 sm:px-0">
-        <div className="">
-          <span className="isolate inline-flex rounded-md shadow-sm w-full">
-            <button
-              type="button"
-              className={clsx(
-                "relative inline-flex w-full md:w-min items-center rounded-l-md px-4 py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-slate-600 focus:z-10",
-                {
-                  "bg-purple-600 text-slate-50": issueType === `created`,
-                }
-              )}
-              onClick={handleIssueTypeCreated}
-            >
-              Created
-            </button>
-            <button
-              type="button"
-              className={clsx(
-                "relative -ml-px inline-flex w-full md:w-min items-center px-4 py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-slate-600 focus:z-10",
-                {
-                  "bg-purple-600 text-slate-50": issueType === `assigned`,
-                }
-              )}
-              onClick={handleIssueTypeAssigned}
-            >
-              Assigned
-            </button>
-            <button
-              type="button"
-              className={clsx(
-                "relative -ml-px inline-flex w-full md:w-min items-center rounded-r-md px-4 py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-slate-600 focus:z-10",
-                {
-                  "bg-purple-600 text-slate-50": issueType === `mentioned`,
-                }
-              )}
-              onClick={handleIssueTypeMentioned}
-            >
-              Mentioned
-            </button>
-          </span>
+        <div className="isolate inline-flex rounded-md text-sm lg:text-base shadow-sm w-full mb-4 lg:mb-0">
+          <button
+            type="button"
+            className={clsx(
+              "relative w-full rounded-l-md py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-gray focus:z-10",
+              {
+                "bg-purple-600 text-slate-50": issueType === `created`,
+              }
+            )}
+            onClick={handleIssueTypeCreated}
+          >
+            Created
+          </button>
+          <button
+            type="button"
+            className={clsx(
+              "relative -ml-px w-full py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-gray focus:z-10",
+              {
+                "bg-purple-600 text-slate-50": issueType === `assigned`,
+              }
+            )}
+            onClick={handleIssueTypeAssigned}
+          >
+            Assigned
+          </button>
+          <button
+            type="button"
+            className={clsx(
+              "relative -ml-px w-full py-1.5 font-semibold rounded-r-md md:rounded-none text-slate-300 ring-1 ring-inset ring-gray focus:z-10",
+              {
+                "bg-purple-600 text-slate-50": issueType === `mentioned`,
+              }
+            )}
+            onClick={handleIssueTypeMentioned}
+          >
+            Mentioned
+          </button>
         </div>
 
-        <label className="relative w-full border-slate-600 text-slate-400 border rounded-md">
+        <label className="relative w-full text-slate-400">
           <span className="sr-only">Search</span>
-          <span className="absolute inset-y-0 left-0 flex items-center px-2">
-            <Search className="h-4 w-4" />
+          <span className="absolute  lg:inset-y-0 lg:left-0 flex items-center px-2">
+            <Search className="h-8 w-4" />
           </span>
           <input
-            className="block bg-[#0E1116] w-full h-full rounded-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
+            className="block bg-[#0E1116] w-full rounded-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
             type="text"
             value={search}
             onChange={handleSearch}
@@ -131,7 +129,7 @@ export default function IssuesPage({}) {
 
       <main>
         <div className="mt-4">
-          <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-[#383B42] dark:text-slate-100">
+          <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-gray dark:text-slate-100">
             <div className="md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
               <div className="flex items-center lg:flex-row space-x-4 font-medium">
                 <button
