@@ -30,13 +30,13 @@ interface IPullsData {
   comments: number;
 }
 
-export default function PullsPage({ }) {
+export default function PullsPage({}) {
   const [issueType, setIssueType] = useState<
     "created" | "assigned" | "mentioned" | "request"
   >("created");
 
   const [search, setSearch] = useState<string>(
-    `is:open is:issue author:xxxxx archived:false`
+    `is:open is:pr author:xxxxx archived:false`
   );
   const [issues, setIssues] = useState<IPullsData[]>(openData);
   const [issueStatus, setIssueStatus] = useState<"open" | "closed">("open");
@@ -82,7 +82,7 @@ export default function PullsPage({ }) {
           <button
             type="button"
             className={clsx(
-              "relative w-full rounded-l-md py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-slate-600 focus:z-10",
+              "relative w-full rounded-l-md py-1.5 font-semibold text-slate-300 ring-1 ring-inset !ring-gray focus:z-10",
               {
                 "bg-purple-600 text-slate-50": issueType === `created`,
               }
@@ -94,7 +94,7 @@ export default function PullsPage({ }) {
           <button
             type="button"
             className={clsx(
-              "relative -ml-px w-full py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-slate-600 focus:z-10",
+              "relative -ml-px w-full py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-gray focus:z-10",
               {
                 "bg-purple-600 text-slate-50": issueType === `assigned`,
               }
@@ -106,7 +106,7 @@ export default function PullsPage({ }) {
           <button
             type="button"
             className={clsx(
-              "relative -ml-px w-full py-1.5 font-semibold rounded-r-md md:rounded-none text-slate-300 ring-1 ring-inset ring-slate-600 focus:z-10",
+              "relative -ml-px w-full py-1.5 font-semibold rounded-r-md md:rounded-none text-slate-300 ring-1 ring-inset ring-gray focus:z-10",
               {
                 "bg-purple-600 text-slate-50": issueType === `mentioned`,
               }
@@ -118,7 +118,7 @@ export default function PullsPage({ }) {
           <button
             type="button"
             className={clsx(
-              "hidden relative md:block -ml-px w-full rounded-r-md py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-slate-600 focus:z-10",
+              "hidden relative md:block -ml-px w-full rounded-r-md py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-gray focus:z-10",
               {
                 "bg-purple-600 text-slate-50": issueType === `request`,
               }
@@ -131,7 +131,7 @@ export default function PullsPage({ }) {
 
         <label className="relative w-full text-slate-400">
           <span className="sr-only">Search</span>
-          <span className="absolute mt-2 lg:mt-0 lg:inset-y-0 lg:left-0 flex items-center px-2">
+          <span className="absolute  lg:inset-y-0 lg:left-0 flex items-center px-2">
             <Search className="h-8 w-4" />
           </span>
           <input
@@ -144,7 +144,7 @@ export default function PullsPage({ }) {
       </div>
       <main>
         <div className="mt-4">
-          <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-[#383B42] dark:text-slate-100">
+          <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-gray dark:text-slate-100">
             <div className="md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
               <div className="flex items-center lg:flex-row space-x-4 font-medium">
                 <button
