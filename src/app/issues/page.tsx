@@ -30,7 +30,7 @@ interface IIssueData {
   comments: number;
 }
 
-export default function IssuesPage({}) {
+export default function IssuesPage({ }) {
   const [issueType, setIssueType] = useState<
     "created" | "assigned" | "mentioned"
   >("created");
