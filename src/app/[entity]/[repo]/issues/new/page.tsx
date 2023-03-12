@@ -63,7 +63,7 @@ const privateKey = localStorage.getItem('nostr:privkey')
         return
       }
 
-      let event = {
+      const event = {
         kind: 1,
         created_at: Math.floor(Date.now() / 1000),
         tags: [],
