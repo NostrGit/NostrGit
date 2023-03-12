@@ -117,7 +117,7 @@ const privateKey = localStorage.getItem('nostr:privkey')
                     type="text"
                     required
                     placeholder="Title"
-                    className="w-full block w-96"
+                    className="w-full block"
                     ref={titleRef}
                   />
                   <TextArea
@@ -126,7 +126,7 @@ const privateKey = localStorage.getItem('nostr:privkey')
                     type="textbox"
                     required
                     placeholder="Leave a comment"
-                    className="w-full block w-96 h-96 mt-2"
+                    className="w-full block h-96 mt-2"
                     ref={commentRef}
                   />
                 </div>
