@@ -4,19 +4,15 @@ import { useCallback, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-
 import { useNostrContext } from "@/lib/nostr/NostrContext";
 import { LoginType, checkType } from "@/lib/utils";
 
 import { Puzzle } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-
-import { nip19, nip05 } from "nostr-tools"
-
+import { nip05, nip19 } from "nostr-tools";
 
 export default function Login() {
-
   const { setAuthor } = useNostrContext();
   const router = useRouter();
 
@@ -25,47 +21,43 @@ export default function Login() {
   // TODO : setAuthor needs to be tweaked (don't remove but tweak *_*)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-
     e.preventDefault();
     await handleLogin();
     console.log("HandleSubmit");
-
   };
 
   const handleLogin = useCallback(async () => {
-
-    const cred = inputRef.current?.value || '';
+    const cred = inputRef.current?.value || "";
     let loginType = checkType(cred);
-    let npub = '';
+    let npub = "";
 
-    console.log("Yay!")
+    console.log("Yay!");
 
     // Checking for nip07 extension
-    loginType = (window.nostr && cred === '') ? LoginType.nip07 : loginType; 
-    
+    loginType = window.nostr && cred === "" ? LoginType.nip07 : loginType;
+
     // Else use common npub credentials
-    switch(loginType)
-    {
+    switch (loginType) {
       case LoginType.npub:
-        npub = cred; 
+        npub = cred;
         break;
-      case LoginType.hex: 
+      case LoginType.hex:
         npub = nip19.npubEncode(cred);
         break;
       case LoginType.nip07:
-        const hex = await window.nostr.getPublicKey()
+        const hex = await window.nostr.getPublicKey();
         console.log(hex);
         npub = nip19.npubEncode(hex);
         break;
       case LoginType.nip05:
-        const profile = await nip05.queryProfile(cred)
-        npub = nip19.npubEncode(profile?.pubkey || '')
-      default: break;
+        const profile = await nip05.queryProfile(cred);
+        npub = nip19.npubEncode(profile?.pubkey || "");
+      default:
+        break;
     }
     // Set Author and return to root
-    setAuthor && setAuthor(npub)
-    router.push('/')
-
+    setAuthor && setAuthor(npub);
+    router.push("/");
   }, [setAuthor, router]);
 
   return (
@@ -130,22 +122,29 @@ export default function Login() {
                 </Button>
               </div>
             </form>
-            {(typeof (window) !== 'undefined' && typeof (window.nostr) !== 'undefined')
-              ?
+            {typeof window !== "undefined" &&
+            typeof window.nostr !== "undefined" ? (
               <div className="mt-6">
                 <div className="relative">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-gray" />
+                  </div>
                   <div className="relative flex justify-center text-sm">
-                    <span className="px-2">Or</span>
+                    <span className="bg-[#171B21] px-2 text-gray-500">OR</span>
                   </div>
                 </div>
                 <div className="mt-6">
-                  <Button className="flex justify-center gap-2 items-center w-full" onClick={handleLogin}>
+                  <Button
+                    variant="outline"
+                    className="flex justify-center gap-2 items-center w-full"
+                    onClick={handleLogin}
+                  >
                     <Puzzle />
                     <p className="text-center">Continue with extension</p>
                   </Button>
                 </div>
               </div>
-              :
+            ) : (
               <div className="mt-6">
                 <div className="relative">
                   <div className="relative flex justify-center text-sm">
@@ -156,17 +155,29 @@ export default function Login() {
                   <div className="relative">
                     <div className="relative flex justify-center text-center text-sm">
                       <span className="px-2">
-                        <span className="mr-1">For better security, download a NIP-07 extension like</span>
-                        <a className="underline" href="https://www.getflamingo.org">Flamingo</a>
+                        <span className="mr-1">
+                          For better security, download a NIP-07 extension like
+                        </span>
+                        <a
+                          className="underline"
+                          href="https://www.getflamingo.org"
+                        >
+                          Flamingo
+                        </a>
                         <span className="ml-1 mr-1">or</span>
-                        <a className="underline" href="https://addons.mozilla.org/en-US/firefox/addon/nos2x-fox/">nos2x-fox</a>.
+                        <a
+                          className="underline"
+                          href="https://addons.mozilla.org/en-US/firefox/addon/nos2x-fox/"
+                        >
+                          nos2x-fox
+                        </a>
+                        .
                       </span>
                     </div>
                   </div>
                 </div>
               </div>
-            }
-
+            )}
           </div>
           <div className="flex justify-center center mt-1">
             <p>

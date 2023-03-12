@@ -40,7 +40,7 @@ export default function RepoLayout({
 
   return (
     <>
-      <section className="px-8 py-6">
+      <section className="max-w-7xl mx-auto px-4 md:px-6 py-6">
         <div className="justify-between overflow-hidden flex flex-col lg:flex-row">
           <div className="mb-4 flex items-center text-lg">
             <Book className="mr-2 inline h-4 w-4 text-gray-400" />
@@ -57,7 +57,7 @@ export default function RepoLayout({
             >
               {params.repo}
             </Link>
-            <span className="border-gray-200/40 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
+            <span className="border-gray-200 opacity-50 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
               Public
             </span>
           </div>
