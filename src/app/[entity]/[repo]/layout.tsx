@@ -140,7 +140,7 @@ export default function RepoLayout({
           </div>
         </div>
 
-        <ul className="my-4 flex w-full items-center gap-x-4 overflow-hidden">
+        <ul className="my-4 flex w-full items-center gap-x-4 overflow-x-scroll scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100">
           <li>
             <Link
               href={`/${params.entity}/${params.repo}`}
@@ -238,7 +238,7 @@ export default function RepoLayout({
           </li>
         </ul>
 
-        <hr className="w-[calc(100% + 32px)] -mx-8 -mt-4 border-b-0 border-gray" />
+        <hr className="w-full -mt-[17px] border-b-0 border-gray" />
 
         {children}
       </section>
