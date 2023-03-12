@@ -4,6 +4,7 @@ import * as React from "react";
 import { useCallback, useEffect, useState } from "react";
 
 import { Button } from "@/components/ui/button";
+import FilterBar from "@/components/filter-bar";
 
 import { clsx } from "clsx";
 import {
@@ -68,25 +69,11 @@ export default function RepoIssuesPage() {
     <section className="mt-4">
       <div className="flex flex-col md:flex-row justify-between gap-4 px-4 sm:px-0">
         <div className="flex w-full order-last mb-4 md:mb-0 md:order-none">
-          <button className="flex items-center h-8 border border-gray hover:border-slate-400 bg-dark px-4 rounded-l-md text-slate-200 font-semibold">
-            Filters <ChevronDown className="h-4 w-4 ml-1 mt-1" />
-          </button>
-          <label className="relative w-full text-slate-400">
-            <span className="sr-only">Search</span>
-            <span className="absolute inset-y-0 left-0 flex items-center px-2">
-              <Search className="h-4 w-4" />
-            </span>
-            <input
-              className="block bg-[#0E1116] w-full h-8 rounded-r-md py-1 pl-9 pr-3 focus:outline-none focus:border-purple-500 focus:ring-purple-500 focus:ring-1 text-sm md:text-base"
-              type="text"
-              value={search}
-              onChange={handleSearch}
-            />
-          </label>
+          <FilterBar search={search} handleSearch={handleSearch} />
         </div>
 
         <div className="flex gap-4 justify-between">
-          <div className="flex">
+          <div className="flex text-sm">
             <button
               type="button"
               className="flex h-8 items-center border !border-gray hover:bg-dark rounded-l-md px-4 text-slate-200 font-semibold"
@@ -95,7 +82,7 @@ export default function RepoIssuesPage() {
             </button>
             <button
               type="button"
-              className="flex h-8 items-center border !border-gray hover:bg-dark rounded-r-md px-4 text-slate-200 font-semibold"
+              className="flex h-8 items-center border-l-0 border !border-gray hover:bg-dark rounded-r-md px-4 text-slate-200 font-semibold"
             >
               <Tag className="h-4 w-4 mr-2" /> Milestones
             </button>
