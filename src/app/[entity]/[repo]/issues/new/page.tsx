@@ -53,7 +53,7 @@ export default function RepoIssueNewPage() {
       e.preventDefault();
 
       // todo: check the correct localstorage key for nsec
-      let privateKey = localStorage.getItem('nostr:privkey')
+const privateKey = localStorage.getItem('nostr:privkey')
 
       if (!isLoggedIn || !privateKey) {
         setErrorMsg('Sign in with your private key to create issues.')
