@@ -6,7 +6,7 @@ import useMetadata from "@/lib/nostr/useMetadata";
 import useSession from "@/lib/nostr/useSession";
 import { cn } from "@/lib/utils";
 
-import { Bell, Brush, Cog, User } from "lucide-react";
+import { Bell, Brush, Cog, User, Server } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -22,6 +22,11 @@ const links = [
     name: "Account",
     href: "/settings/account",
     Icon: Cog,
+  },
+  {
+    name: "Relays",
+    href: "/settings/relays",
+    Icon: Server,
   },
   {
     name: "Appearance",
