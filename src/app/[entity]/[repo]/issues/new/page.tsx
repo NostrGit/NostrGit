@@ -76,8 +76,8 @@ const privateKey = localStorage.getItem('nostr:privkey')
       event.id = getEventHash(event)
       event.sig = signEvent(event, privateKey)
 
-      let ok = validateEvent(event)
-      let veryOk = verifySignature(event)
+      const ok = validateEvent(event)
+      const veryOk = verifySignature(event)
 
       // todo: publlish to defaultRelays with NostrContext
       console.log('Event created but not published: ', event.id)
