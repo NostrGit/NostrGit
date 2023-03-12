@@ -78,9 +78,15 @@ export function MobileNav({ items, children }: MobileNavProps) {
                 </Link>
               </Button>
               <Button variant="ghost" type="submit">
-                <Link className="text-white" href="/signup">
+                <a
+                  href="https://nostr.how/get-started#create-your-account"
+                  target="_blank"
+                >
                   Sign up
-                </Link>
+                </a>
+                {/* link to nostr.how until we have a signup page <Link className="text-white" href="/signup">
+                  Sign up
+                </Link> */}
               </Button>
             </div>
           )}

@@ -155,7 +155,13 @@ export function Header() {
               <Link href="/login">Sign in</Link>
             </Button>
             <Button variant="outline" type="submit" className="max-h-8">
-              <Link href="/signup">Sign up</Link>
+              <a
+                href="https://nostr.how/get-started#create-your-account"
+                target="_blank"
+              >
+                Sign up
+              </a>
+              {/* link to nostr.how until we have a signup page <Link href="/signup">Sign up</Link> */}
             </Button>
           </div>
         )}
