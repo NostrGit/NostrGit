@@ -95,6 +95,8 @@ Always open an issue first, and then the branch. It makes organising branches mu
   ](https://docs.github.com/en/issues/tracking-your-work-with-issues/linking-a-pull-request-to-an-issue).
 - Be sure to fill the PR Template accordingly.
 
+Always squash commits before merging a branch to main to keep the commit history readable.
+
 # Coding conventions
 
 Use function components instead of arrow functions.
@@ -111,6 +113,8 @@ instead of this :
 const home = () => {};
 ```
 
+Use double quotes " " instead of single quotes ' '.
+
 Please do not use `any` as a type. If you are unsure of the type, use `unknown` instead.
 
 ```javascript
@@ -123,6 +127,8 @@ const handleClick = useCallback((e) => e.currentTarget.Value, []);
 
 ## UI
 
-When designing the visual style of components, [shadcn](https://ui.shadcn.com/) should always be used when possible.
+Use [Tailwind CSS](https://tailwindcss.com).
+
+When designing the visual style of components, [shadcn](https://ui.shadcn.com/) should always be used when possible. If you can't find a good component on [shadcn](https://ui.shadcn.com/), consider using [tailwindui](https://tailwindui.com/) 
 
 Use [Lucide](https://lucide.dev/) icon components when able.
