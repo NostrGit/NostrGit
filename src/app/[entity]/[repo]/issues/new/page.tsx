@@ -135,7 +135,7 @@ export default function RepoIssueNewPage() {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-3 w-96 p-2 divide-y divide-slate-200 bg-[#171B21] shadow sm:rounded-lg sm:px-3">
+      <div className="flex flex-col gap-3 w-96 p-2 divide-y divide-zinc-200 bg-[#171B21] shadow sm:rounded-lg sm:px-3">
         <div className="flex">
           <div className="flex flex-col w-full p-2">
             <div className="flex hover:text-purple-400 cursor-pointer">
