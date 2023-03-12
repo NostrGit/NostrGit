@@ -107,7 +107,7 @@ const privateKey = localStorage.getItem('nostr:privkey')
       </Avatar>
       <div>
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-[#171B21] py-2 px-4 shadow sm:rounded-lg sm:px-10">
+          <div className="bg-[#171B21] w-96 py-2 px-4 shadow sm:rounded-lg sm:px-2">
             <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <div className="mt-2">
@@ -126,7 +126,7 @@ const privateKey = localStorage.getItem('nostr:privkey')
                     type="textbox"
                     required
                     placeholder="Leave a comment"
-                    className="w-full block h-96 mt-2"
+                    className="block h-96 mt-2"
                     ref={commentRef}
                   />
                 </div>
@@ -135,7 +135,7 @@ const privateKey = localStorage.getItem('nostr:privkey')
                 <Button
                   variant={"success"}
                   type="submit"
-                  className="flex w-96 mb-2 justify-center"
+                  className="flex w-full mb-2 justify-center"
                 >
                   Submit new issue
                 </Button>
@@ -242,7 +242,7 @@ const privateKey = localStorage.getItem('nostr:privkey')
               {
                 selectedLabels.length > 0 ? (
                   /* todo: different bg-color for each label */
-                  selectedLabels.map(label => <span className='p-1 pl-2 pr-2 text-black bg-white sm:rounded-lg'>{label}</span>)
+                  selectedLabels.map(label => <span key={label} className='p-1 pl-2 pr-2 text-black bg-white sm:rounded-lg'>{label}</span>)
                 ) : (
                   <span className='text-gray-300'>None yet</span>
                 )
