@@ -1,3 +1,5 @@
+import SettingsHero from "@/components/settings-hero";
+
 export default function AppearancePage() {
-  return "Appearance";
+  return <SettingsHero title="Appearance" />;
 }

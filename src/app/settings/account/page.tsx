@@ -1,3 +1,5 @@
+import SettingsHero from "@/components/settings-hero";
+
 export default function AccountPage() {
-  return "Account";
+  return <SettingsHero title="Account" />;
 }

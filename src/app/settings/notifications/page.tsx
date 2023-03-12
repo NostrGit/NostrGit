@@ -1,3 +1,5 @@
+import SettingsHero from "@/components/settings-hero";
+
 export default function NotificationsPage() {
-  return "Notifications";
+  return <SettingsHero title="Notifications" />;
 }
