@@ -67,7 +67,7 @@ const privateKey = localStorage.getItem('nostr:privkey')
         kind: 1,
         created_at: Math.floor(Date.now() / 1000),
         tags: [],
-        content: `${titleRef.current?.value}\n\n${commentRef.current?.value}` || "",
+        content: `${titleRef.current?.value || ""}\n\n${commentRef.current?.value || ""}` || "",
         pubkey: getPublicKey(privateKey),
         id: "",
         sig: ""
