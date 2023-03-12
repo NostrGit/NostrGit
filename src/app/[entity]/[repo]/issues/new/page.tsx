@@ -14,7 +14,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { TextArea } from "@/components/ui/textarea";
+import { Textarea } from "@/components/ui/textarea";
 import useSession from "@/lib/nostr/useSession";
 
 import { Check, ChevronDown, Edit, Settings } from "lucide-react";
@@ -110,10 +110,9 @@ export default function RepoIssueNewPage() {
                     className="w-full block"
                     ref={titleRef}
                   />
-                  <TextArea
+                  <Textarea
                     id="comment"
                     name="comment"
-                    type="textbox"
                     required
                     placeholder="Leave a comment"
                     className="block h-96 mt-2"

@@ -6,7 +6,7 @@ import useMetadata from "@/lib/nostr/useMetadata";
 import useSession from "@/lib/nostr/useSession";
 import { cn } from "@/lib/utils";
 
-import { Bell, Brush, Cog, User } from "lucide-react";
+import { Bell, Brush, Cog, Server, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -22,6 +22,11 @@ const links = [
     name: "Account",
     href: "/settings/account",
     Icon: Cog,
+  },
+  {
+    name: "Relays",
+    href: "/settings/relays",
+    Icon: Server,
   },
   {
     name: "Appearance",
@@ -46,7 +51,7 @@ export default function SettingsLayout({
 
   return (
     <>
-      <section className="px-8 my-8">
+      <section className="px-5 my-8">
         <div className="flex justify-between">
           <div className="space-x-4 items-center flex">
             <Avatar className="w-12 h-12">
@@ -61,7 +66,7 @@ export default function SettingsLayout({
           <Button variant="outline">Go to your profile</Button>
         </div>
 
-        <div className="flex">
+        <div className="md:flex space-x-6">
           <nav className="my-6 w-full max-w-xs">
             <ul>
               {links.map((link) => (
@@ -76,8 +81,8 @@ export default function SettingsLayout({
                 >
                   <Link
                     className={cn(
-                      pathname == link.href && "!bg-zinc-900",
-                      "flex w-full rounded hover:bg-zinc-900 transition-all px-2 py-1"
+                      pathname == link.href && "!bg-zinc-800/50",
+                      "flex w-full rounded hover:bg-zinc-900/50 text-sm items-center transition-all px-2 py-1"
                     )}
                     href={link.href}
                   >
@@ -88,7 +93,7 @@ export default function SettingsLayout({
               ))}
             </ul>
           </nav>
-          <main>{children}</main>
+          <main className="w-full">{children}</main>
         </div>
       </section>
     </>
