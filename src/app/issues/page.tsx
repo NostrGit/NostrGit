@@ -129,7 +129,7 @@ export default function IssuesPage({}) {
 
       <main>
         <div className="mt-4">
-          <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-gray dark:text-zinc-100">
+          <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-lightgray dark:text-zinc-100">
             <div className="md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
               <div className="flex items-center lg:flex-row space-x-4 font-medium">
                 <button
@@ -162,8 +162,8 @@ export default function IssuesPage({}) {
               </div>
             </div>
           </div>
-          <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-gray">
-            <ul className="divide-y dark:divide-gray">
+          <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-lightgray">
+            <ul className="divide-y dark:divide-lightgray">
               {issues.map((item) => (
                 <li
                   key={`${item.id} ${item.entity}`}

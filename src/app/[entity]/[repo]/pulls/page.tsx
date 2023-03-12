@@ -77,13 +77,13 @@ export default function RepoPullsPage() {
           <div className="flex text-sm">
             <button
               type="button"
-              className="flex h-8 items-center border !border-gray hover:bg-dark rounded-l-md px-4 text-zinc-200 font-semibold"
+              className="flex h-8 items-center border !border-lightgray hover:bg-dark rounded-l-md px-4 text-zinc-200 font-semibold"
             >
               <Tag className="h-4 w-4 mr-2" /> Labels
             </button>
             <button
               type="button"
-              className="flex h-8 items-center border-l-0 border !border-gray hover:bg-dark rounded-r-md px-4 text-zinc-200 font-semibold"
+              className="flex h-8 items-center border-l-0 border !border-lightgray hover:bg-dark rounded-r-md px-4 text-zinc-200 font-semibold"
             >
               <Tag className="h-4 w-4 mr-2" /> Milestones
             </button>
@@ -103,7 +103,7 @@ export default function RepoPullsPage() {
 
       <main>
         <div className="mt-4">
-          <div className="flex flex-col w-full rounded-md rounded-bl-none rounded-br-none border bg-dark py-2 px-4 !border-gray dark:text-zinc-100">
+          <div className="flex flex-col w-full rounded-md rounded-bl-none rounded-br-none border bg-dark py-2 px-4 !border-lightgray dark:text-zinc-100">
             <div className="order-last md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
               <div className="flex items-center lg:flex-row space-x-4 font-medium">
                 <button
@@ -145,8 +145,8 @@ export default function RepoPullsPage() {
               </div>
             </div>
           </div>
-          <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-gray">
-            <ul className="divide-y dark:divide-gray">
+          <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-lightgray">
+            <ul className="divide-y dark:divide-lightgray">
               {issues.map((item) => (
                 <li
                   key={`${item.id} ${item.entity}`}
