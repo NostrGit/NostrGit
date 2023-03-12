@@ -57,7 +57,7 @@ export default function RepoLayout({
             >
               {params.repo}
             </Link>
-            <span className="border-gray-200 opacity-50 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
+            <span className="border-lightgray-200 opacity-50 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
               Public
             </span>
           </div>
@@ -238,7 +238,7 @@ export default function RepoLayout({
           </li>
         </ul>
 
-        <hr className="w-full -mt-[17px] border-b-0 border-gray" />
+        <hr className="w-full -mt-[17px] border-b-0 border-lightgray" />
 
         {children}
       </section>

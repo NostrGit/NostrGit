@@ -5,7 +5,7 @@ const config = {
   theme: {
     extend: {
       colors: {
-        gray: "#383B42",
+        lightgray: "#383B42",
         dark: "#22262C",
       },
     },

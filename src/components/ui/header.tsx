@@ -87,7 +87,7 @@ const DropdownItems = [
   },
   {
     title: "Settings",
-    href: "/settings",
+    href: "settings",
   },
 ];
 
@@ -126,14 +126,14 @@ export function Header() {
               <DropdownMenuGroup>
                 {PrimaryGitInfo?.map((item) => (
                   <DropdownMenuItem key={item.title}>
-                    <span>{item.title}</span>
+                    <Link href={item.href}>{item.title}</Link>
                   </DropdownMenuItem>
                 ))}
                 <DropdownMenuSeparator />
 
                 {restGitInfo?.map((item) => (
                   <DropdownMenuItem key={item.title}>
-                    <span>{item.title}</span>
+                    <Link href={item.href}>{item.title}</Link>
                   </DropdownMenuItem>
                 ))}
               </DropdownMenuGroup>
