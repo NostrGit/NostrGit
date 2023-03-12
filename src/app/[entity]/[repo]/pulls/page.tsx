@@ -68,7 +68,7 @@ export default function RepoPullsPage() {
 
   return (
     <section className="mt-4">
-      <div className="flex flex-col md:flex-row justify-between gap-4 px-4 sm:px-0">
+      <div className="flex flex-col md:flex-row justify-between gap-4">
         <div className="flex w-full order-last mb-4 md:mb-0 md:order-none">
           <FilterBar search={search} handleSearch={handleSearch} />
         </div>

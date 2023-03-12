@@ -1,6 +1,6 @@
 import { ChevronDown, Search } from "lucide-react";
 
-export default function FilterBar({placeholder, search, handleSearch} : {placeholder: string, search: string, handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void}) {
+export default function FilterBar({search, handleSearch} : {search: string, handleSearch: (e: React.ChangeEvent<HTMLInputElement>) => void}) {
   return (
     <>
       <button className="flex items-center h-8 border border-r-0 text-sm border-gray hover:border-slate-400 bg-dark px-4 rounded-l-md text-slate-200 font-semibold">
