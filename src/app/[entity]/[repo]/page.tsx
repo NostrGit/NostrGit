@@ -34,7 +34,7 @@ export default function RepoCodePage({
 }) {
   const { metadata, followers, repo } = useRepositoryContext();
   return (
-    <div className="mt-8 grid grid-cols-2 gap-6 lg:grid-cols-4">
+    <div className="mt-4 grid grid-cols-2 gap-6 lg:grid-cols-4">
       <div className="col-span-3 lg:col-span-3">
         <div className="flex flex-col justify-between gap-y-4 overflow-hidden lg:flex-row lg:gap-y-0">
           <div>

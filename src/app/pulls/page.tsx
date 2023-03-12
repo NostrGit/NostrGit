@@ -6,15 +6,15 @@ import { useCallback, useEffect, useState } from "react";
 import { clsx } from "clsx";
 import {
   Check,
-  CheckCircle2,
   ChevronDown,
   CircleDot,
   GitMerge,
+  GitPullRequest,
   MessageSquare,
   Search,
 } from "lucide-react";
 
-interface IIssueData {
+interface IPullsData {
   id: string;
   entity: string;
   repo: string;
@@ -30,15 +30,15 @@ interface IIssueData {
   comments: number;
 }
 
-export default function IssuesPage({ }) {
+export default function PullsPage({}) {
   const [issueType, setIssueType] = useState<
-    "created" | "assigned" | "mentioned"
+    "created" | "assigned" | "mentioned" | "request"
   >("created");
 
   const [search, setSearch] = useState<string>(
-    `is:open is:issue author:xxxxx archived:false`
+    `is:open is:pr author:xxxxx archived:false`
   );
-  const [issues, setIssues] = useState<IIssueData[]>(openData);
+  const [issues, setIssues] = useState<IPullsData[]>(openData);
   const [issueStatus, setIssueStatus] = useState<"open" | "closed">("open");
 
   useEffect(() => {
@@ -70,15 +70,19 @@ export default function IssuesPage({ }) {
     () => setIssueType("mentioned"),
     []
   );
+  const handleRequestTypeMentioned = useCallback(
+    () => setIssueType("request"),
+    []
+  );
 
   return (
     <section className="sm:px-8 py-6 max-w-6xl m-auto">
-      <div className="md:flex justify-between gap-4 px-4 sm:px-0">
+      <div className="lg:flex justify-between gap-4 px-4 sm:px-0">
         <div className="isolate inline-flex rounded-md text-sm lg:text-base shadow-sm w-full mb-4 lg:mb-0">
           <button
             type="button"
             className={clsx(
-              "relative w-full rounded-l-md py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-gray focus:z-10",
+              "relative w-full rounded-l-md py-1.5 font-semibold text-slate-300 ring-1 ring-inset !ring-gray focus:z-10",
               {
                 "bg-purple-600 text-slate-50": issueType === `created`,
               }
@@ -111,6 +115,18 @@ export default function IssuesPage({ }) {
           >
             Mentioned
           </button>
+          <button
+            type="button"
+            className={clsx(
+              "hidden relative md:block -ml-px w-full rounded-r-md py-1.5 font-semibold text-slate-300 ring-1 ring-inset ring-gray focus:z-10",
+              {
+                "bg-purple-600 text-slate-50": issueType === `request`,
+              }
+            )}
+            onClick={handleRequestTypeMentioned}
+          >
+            Review requests
+          </button>
         </div>
 
         <label className="relative w-full text-slate-400">
@@ -126,7 +142,6 @@ export default function IssuesPage({ }) {
           />
         </label>
       </div>
-
       <main>
         <div className="mt-4">
           <div className="flex w-full rounded-md rounded-bl-none rounded-br-none border bg-[#171B21] py-2 px-4 dark:border-gray dark:text-slate-100">
@@ -173,9 +188,9 @@ export default function IssuesPage({ }) {
                     <div className="sm:flex items-center text-lg font-medium">
                       <span className="flex">
                         {issueStatus === "open" ? (
-                          <CircleDot className="h-5 w-5 mr-2 mt-1 text-green-600" />
+                          <GitPullRequest className="h-5 w-5 mr-2 mt-1 text-green-600" />
                         ) : (
-                          <CheckCircle2 className="h-5 w-5 mr-2 mt-1 text-purple-600" />
+                          <GitMerge className="h-5 w-5 mr-2 mt-1 text-purple-600" />
                         )}
                         <a
                           className="text-slate-400 hover:text-purple-500"
@@ -192,23 +207,25 @@ export default function IssuesPage({ }) {
                         {item.title}
                       </a>
                     </div>
-                    <div className="ml-7 text-slate-400">
-                      #{item.number} opened {item.date} by{" "}
-                      <a className="hover:text-purple-500" href="#">
-                        {item.author}
-                      </a>
-                    </div>
+                    {issueStatus === "open" ? (
+                      <div className="ml-7 text-slate-400">
+                        #{item.number} opened {item.date} by{" "}
+                        <a className="hover:text-purple-500" href="#">
+                          {item.author}
+                        </a>
+                      </div>
+                    ) : (
+                      <div className="ml-7 text-slate-400">
+                        #{item.number} by{" "}
+                        <a className="hover:text-purple-500" href="#">
+                          {item.author}
+                        </a>{" "}
+                        was merged {item.date}
+                      </div>
+                    )}
                   </div>
 
                   <div className="hidden sm:flex col-span-2 text-slate-400 justify-between pt-2 text-right pr-3 no-wrap">
-                    <span className="ml-2 flex hover:text-purple-500 cursor-pointer font-medium">
-                      {item.linkedPR ? (
-                        <>
-                          <GitMerge className="h-5 w-5 mr-2" />
-                          {item.linkedPR}
-                        </>
-                      ) : null}
-                    </span>
                     <span className="ml-2 "></span>
                     <span className="ml-2 flex hover:text-purple-500 cursor-pointer font-medium">
                       {item.comments ? (

@@ -51,7 +51,7 @@ export default function RepoLayout({
   const pathname = usePathname() || "";
   return (
     <>
-      <section className="px-8 py-6">
+      <section className="max-w-7xl mx-auto px-4 md:px-6 py-6">
         <div className="justify-between overflow-hidden flex flex-col lg:flex-row">
           <div className="mb-4 flex items-center text-lg">
             <Book className="mr-2 inline h-4 w-4 text-gray-400" />
@@ -68,7 +68,7 @@ export default function RepoLayout({
             >
               {params.repo}
             </Link>
-            <span className="border-gray-200/40 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
+            <span className="border-gray-200 opacity-50 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
               Public
             </span>
           </div>
@@ -153,7 +153,7 @@ export default function RepoLayout({
           </div>
         </div>
 
-        <ul className="my-4 flex w-full items-center gap-x-4 overflow-hidden">
+        <ul className="my-4 flex w-full items-center gap-x-4 overflow-x-scroll scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100">
           <li>
             <Link
               href={`/${params.entity}/${params.repo}`}
@@ -251,10 +251,11 @@ export default function RepoLayout({
           </li>
         </ul>
 
-        <hr className="w-[calc(100% + 32px)] -mx-8 -mt-4 border-b-0 border-gray" />
+        <hr className="w-full -mt-[17px] border-b-0 border-gray" />
         <RepositoryProvider>
           {children}
         </RepositoryProvider>
+
       </section>
       <Banner
         title="Contribute"
