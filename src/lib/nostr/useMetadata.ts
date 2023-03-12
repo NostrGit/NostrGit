@@ -28,7 +28,6 @@ const useMetadata = (relays: string[] = []) => {
       ],
       [...defaultRelays, ...relays],
       (event, isAfterEose, relayURL) => {
-        console.log(event, isAfterEose, relayURL);
 
         if (!isAfterEose && event.kind === 0) {
           const data = JSON.parse(event.content) as Metadata;
@@ -36,9 +35,8 @@ const useMetadata = (relays: string[] = []) => {
         }
       },
       undefined,
-      (events, relayURL) => {
-        console.log("EOSE", events, relayURL);
-      }
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      (events, relayURL) => {}
     );
     return () => {
       unsub();
