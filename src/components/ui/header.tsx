@@ -151,10 +151,18 @@ export function Header() {
           </DropdownMenu>
         ) : (
           <div className="flex gap-1 items-center">
-            <Button variant="ghost" type="submit" className="mr-2 max-h-8">
+            <Button
+              variant="ghost"
+              type="submit"
+              className="mr-2 max-h-8 min-w-max"
+            >
               <Link href="/login">Sign in</Link>
             </Button>
-            <Button variant="outline" type="submit" className="max-h-8">
+            <Button
+              variant="outline"
+              type="submit"
+              className="max-h-8 min-w-max"
+            >
               <a
                 href="https://nostr.how/get-started#create-your-account"
                 target="_blank"

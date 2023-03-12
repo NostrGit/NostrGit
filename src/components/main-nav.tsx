@@ -38,7 +38,7 @@ export function MainNav({ items, children }: MainNavProps) {
       <Logo className="hidden md:flex" />
 
       <div className="hidden max-h-12 md:inline">
-        <SearchBar className="w-[172px] lg:w-[272px] focus:w-[600px]" />
+        <SearchBar className="w-[162px] lg:w-[272px] focus:w-[600px]" />
       </div>
 
       {items?.length ? (
