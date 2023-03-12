@@ -57,7 +57,7 @@ export default function RepoLayout({
             >
               {params.repo}
             </Link>
-            <span className="border-gray-200/40 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
+            <span className="border-gray-200 opacity-50 text-gray-400 ml-1.5 mt-px rounded-full border px-1.5 text-xs">
               Public
             </span>
           </div>
