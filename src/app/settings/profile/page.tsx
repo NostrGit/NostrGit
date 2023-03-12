@@ -26,7 +26,7 @@ export default function ProfilePage() {
               placeholder="John Doe"
               value={metadata.display_name}
             />
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-zinc-500">
               Your display will be shown on all Nostr clients, and on NostrGit.
             </p>
           </div>
@@ -47,7 +47,7 @@ export default function ProfilePage() {
               placeholder="satoshi@nakamoto.com"
               value={metadata.nip05}
             />
-            <p className="text-sm text-slate-500">
+            <p className="text-sm text-zinc-500">
               To learn more about NIP5 and how to get verified, visit{" "}
               <a
                 className="text-purple-500 underline"

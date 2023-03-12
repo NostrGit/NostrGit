@@ -77,13 +77,13 @@ export default function RepoPullsPage() {
           <div className="flex text-sm">
             <button
               type="button"
-              className="flex h-8 items-center border !border-lightgray hover:bg-dark rounded-l-md px-4 text-slate-200 font-semibold"
+              className="flex h-8 items-center border !border-lightgray hover:bg-dark rounded-l-md px-4 text-zinc-200 font-semibold"
             >
               <Tag className="h-4 w-4 mr-2" /> Labels
             </button>
             <button
               type="button"
-              className="flex h-8 items-center border-l-0 border !border-lightgray hover:bg-dark rounded-r-md px-4 text-slate-200 font-semibold"
+              className="flex h-8 items-center border-l-0 border !border-lightgray hover:bg-dark rounded-r-md px-4 text-zinc-200 font-semibold"
             >
               <Tag className="h-4 w-4 mr-2" /> Milestones
             </button>
@@ -103,20 +103,20 @@ export default function RepoPullsPage() {
 
       <main>
         <div className="mt-4">
-          <div className="flex flex-col w-full rounded-md rounded-bl-none rounded-br-none border bg-dark py-2 px-4 !border-lightgray dark:text-slate-100">
+          <div className="flex flex-col w-full rounded-md rounded-bl-none rounded-br-none border bg-dark py-2 px-4 !border-lightgray dark:text-zinc-100">
             <div className="order-last md:flex w-full flex-col text-md py-2 items-start justify-between lg:flex-row lg:items-center">
               <div className="flex items-center lg:flex-row space-x-4 font-medium">
                 <button
-                  className={clsx("flex text-slate-400 hover:text-slate-200", {
-                    "text-slate-50": issueStatus === `open`,
+                  className={clsx("flex text-zinc-400 hover:text-zinc-200", {
+                    "text-zinc-50": issueStatus === `open`,
                   })}
                   onClick={handleIssueStatusOpen}
                 >
                   <CircleDot className="h-5 w-5 mr-2 mt-0.5" /> 3 Open
                 </button>
                 <button
-                  className={clsx("flex text-slate-400 hover:text-slate-200", {
-                    "text-slate-50": issueStatus === `closed`,
+                  className={clsx("flex text-zinc-400 hover:text-zinc-200", {
+                    "text-zinc-50": issueStatus === `closed`,
                   })}
                   onClick={handleIssueStatusClosed}
                 >
@@ -124,22 +124,22 @@ export default function RepoPullsPage() {
                 </button>
               </div>
               <div className="mt-2 flex text-gray-400 lg:mt-0 space-x-6">
-                <span className="flex text-slate-400 hover:text-slate-200 cursor-pointer">
+                <span className="flex text-zinc-400 hover:text-zinc-200 cursor-pointer">
                   Author <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
-                <span className="flex text-slate-400 hover:text-slate-200 cursor-pointer">
+                <span className="flex text-zinc-400 hover:text-zinc-200 cursor-pointer">
                   Label <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
-                <span className="hidden md:flex text-slate-400 hover:text-slate-200 cursor-pointer">
+                <span className="hidden md:flex text-zinc-400 hover:text-zinc-200 cursor-pointer">
                   Projects <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
-                <span className="hidden md:flex text-slate-400 hover:text-slate-200 cursor-pointer">
+                <span className="hidden md:flex text-zinc-400 hover:text-zinc-200 cursor-pointer">
                   Milestones <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
-                <span className="flex text-slate-400 hover:text-slate-200 cursor-pointer">
+                <span className="flex text-zinc-400 hover:text-zinc-200 cursor-pointer">
                   Assignee <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
-                <span className="flex text-slate-400 hover:text-slate-200 cursor-pointer">
+                <span className="flex text-zinc-400 hover:text-zinc-200 cursor-pointer">
                   Sort <ChevronDown className="h-4 w-4 ml-1 mt-1.5" />
                 </span>
               </div>
@@ -161,7 +161,7 @@ export default function RepoPullsPage() {
                           <GitMerge className="h-5 w-5 mr-2 mt-1 text-purple-600" />
                         )}
                         <a
-                          className="text-slate-400 hover:text-purple-500"
+                          className="text-zinc-400 hover:text-purple-500"
                           href="#"
                         >
                           {item.entity}/{item.repo}
@@ -169,13 +169,13 @@ export default function RepoPullsPage() {
                       </span>
 
                       <a
-                        className="text-slate-200 hover:text-purple-500 pl-7 sm:pl-3"
+                        className="text-zinc-200 hover:text-purple-500 pl-7 sm:pl-3"
                         href="#"
                       >
                         {item.title}
                       </a>
                     </div>
-                    <div className="ml-7 text-slate-400">
+                    <div className="ml-7 text-zinc-400">
                       #{item.number} opened {item.date} by{" "}
                       <a className="hover:text-purple-500" href="#">
                         {item.author}
@@ -183,7 +183,7 @@ export default function RepoPullsPage() {
                     </div>
                   </div>
 
-                  <div className="hidden sm:flex col-span-2 text-slate-400 justify-between pt-2 text-right pr-3 no-wrap">
+                  <div className="hidden sm:flex col-span-2 text-zinc-400 justify-between pt-2 text-right pr-3 no-wrap">
                     <span className="ml-2 flex hover:text-purple-500 cursor-pointer font-medium">
                       {item.linkedPR ? (
                         <>

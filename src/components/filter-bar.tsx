@@ -9,10 +9,10 @@ export default function FilterBar({
 }) {
   return (
     <>
-      <button className="flex items-center h-8 border border-r-0 text-sm border-lightgray hover:border-slate-400 bg-dark px-4 rounded-l-md text-slate-200 font-semibold">
+      <button className="flex items-center h-8 border border-r-0 text-sm border-lightgray hover:border-zinc-400 bg-dark px-4 rounded-l-md text-zinc-200 font-semibold">
         Filters <ChevronDown className="h-4 w-4 ml-1 mt-px" />
       </button>
-      <label className="relative w-full text-slate-400">
+      <label className="relative w-full text-zinc-400">
         <span className="sr-only">Search</span>
         <span className="absolute inset-y-0 left-0 flex items-center px-2">
           <Search className="h-4 w-4" />

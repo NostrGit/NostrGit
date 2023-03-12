@@ -6,7 +6,7 @@ import useMetadata from "@/lib/nostr/useMetadata";
 import useSession from "@/lib/nostr/useSession";
 import { cn } from "@/lib/utils";
 
-import { Bell, Brush, Cog, User, Server } from "lucide-react";
+import { Bell, Brush, Cog, Server, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -60,7 +60,7 @@ export default function SettingsLayout({
             </Avatar>
             <header>
               {metadata.display_name && <h2>{metadata.display_name}</h2>}
-              {name && <h3 className="text-slate-500 text-xs">@{name}</h3>}
+              {name && <h3 className="text-zinc-500 text-xs">@{name}</h3>}
             </header>
           </div>
           <Button variant="outline">Go to your profile</Button>
@@ -86,7 +86,7 @@ export default function SettingsLayout({
                     )}
                     href={link.href}
                   >
-                    <link.Icon className="w-4 mr-2 text-slate-400" />
+                    <link.Icon className="w-4 mr-2 text-zinc-400" />
                     {link.name}
                   </Link>
                 </li>
