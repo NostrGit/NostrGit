@@ -97,7 +97,10 @@ export default function Login() {
               </div>
 
               <div className="mt-6">
-                <Button className="flex justify-center gap-2 items-center w-full">
+                <Button
+                  variant="outline"
+                  className="flex justify-center gap-2 items-center w-full"
+                >
                   <Puzzle />
                   <p className="text-center">Continue with extension</p>
                 </Button>

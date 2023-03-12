@@ -150,16 +150,12 @@ export function Header() {
             </DropdownMenuContent>
           </DropdownMenu>
         ) : (
-          <div className="flex gap-1">
-            <Button variant={"success"} type="submit" className="mr-2">
-              <Link className="text-white" href="/login">
-                Sign in
-              </Link>
+          <div className="flex gap-1 items-center">
+            <Button variant="ghost" type="submit" className="mr-2 max-h-8">
+              <Link href="/login">Sign in</Link>
             </Button>
-            <Button variant={"outline"} type="submit">
-              <Link className="text-white" href="/signup">
-                Sign up
-              </Link>
+            <Button variant="outline" type="submit" className="max-h-8">
+              <Link href="/signup">Sign up</Link>
             </Button>
           </div>
         )}
