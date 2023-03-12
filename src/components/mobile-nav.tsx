@@ -13,8 +13,6 @@ import { useRouter } from "next/navigation";
 import { type MainNavItem } from "./main-nav";
 import SearchBar from "./search-bar";
 import { Button } from "./ui/button";
-import useSession from "@/lib/nostr/useSession";
-import { Input } from "./ui/input";
 
 interface MobileNavProps {
   items: MainNavItem[];
