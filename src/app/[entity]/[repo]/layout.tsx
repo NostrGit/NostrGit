@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRepositoryContext } from "@/lib/nostr/RepositoryContext";
 
 import { clsx } from "clsx";
 import {
@@ -31,6 +32,15 @@ import { usePathname } from "next/navigation";
 
 import RepositoryProvider from "@/lib/nostr/RepositoryContext";
 
+
+const FollowersBadge = () => {  
+  
+  const { followers } = useRepositoryContext();
+  
+  return ( <><Star className="mr-2 h-4 w-4 text-yellow-500" /> Starred
+  <Badge className="ml-2">{followers?.length}</Badge></>)
+}
+
 export default function RepoLayout({
   children,
   params,
@@ -39,7 +49,6 @@ export default function RepoLayout({
   params: { entity: string; repo: string; subpage?: string };
 }) {
   const pathname = usePathname() || "";
-
   return (
     <>
       <section className="px-8 py-6">
@@ -95,8 +104,9 @@ export default function RepoLayout({
                 <Badge className="ml-2">209</Badge>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Star className="mr-2 h-4 w-4 text-yellow-500" /> Starred
-                <Badge className="ml-2">7k</Badge>
+                <RepositoryProvider>
+                  <FollowersBadge />
+                </RepositoryProvider>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -135,8 +145,9 @@ export default function RepoLayout({
                 className="h-8 !border-[#383B42] bg-[#22262C] text-xs"
                 variant="outline"
               >
-                <Star className="mr-2 h-4 w-4 text-yellow-500" /> Starred
-                <Badge className="ml-2">7k</Badge>
+                <RepositoryProvider>
+                  <FollowersBadge />
+                </RepositoryProvider>
               </Button>
             </div>
           </div>
