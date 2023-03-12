@@ -35,8 +35,6 @@
     "**/*.cjs",
     "**/*.mjs",
     ".next/types/**/*.ts",
-    "src/components/comments",
-    "src/components/comments.jsx"
   ],
   "exclude": ["node_modules"]
 }
