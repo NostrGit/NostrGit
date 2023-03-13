@@ -23,15 +23,12 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await handleLogin();
-    console.log("HandleSubmit");
   };
 
   const handleLogin = useCallback(async () => {
     const cred = inputRef.current?.value || "";
     let loginType = checkType(cred);
     let npub = "";
-
-    console.log("Yay!");
 
     // Checking for nip07 extension
     loginType = window.nostr && cred === "" ? LoginType.nip07 : loginType;
@@ -46,7 +43,6 @@ export default function Login() {
         break;
       case LoginType.nip07:
         const hex = await window.nostr.getPublicKey();
-        console.log(hex);
         npub = nip19.npubEncode(hex);
         break;
       case LoginType.nip05:
