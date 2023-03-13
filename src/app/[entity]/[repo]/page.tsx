@@ -34,7 +34,10 @@ export default function RepoCodePage({
         <div className="flex flex-col justify-between gap-y-4 overflow-hidden lg:flex-row lg:gap-y-0">
           <div>
             <div className="flex items-center  gap-4 text-sm">
-              <Button className="h-8 !border-gray bg-dark " variant="outline">
+              <Button
+                className="h-8 !border-lightgray bg-dark "
+                variant="outline"
+              >
                 <GitBranch className="text-gray-400 mr-2 h-4 w-4" /> main{" "}
                 <ChevronDown className="ml-2 h-4 w-4 text-white" />
               </Button>
@@ -49,10 +52,10 @@ export default function RepoCodePage({
             </div>
           </div>
           <div className="flex gap-2">
-            <Button className="h-8 !border-gray bg-dark" variant="outline">
+            <Button className="h-8 !border-lightgray bg-dark" variant="outline">
               Go to file
             </Button>
-            <Button className="h-8 !border-gray bg-dark" variant="outline">
+            <Button className="h-8 !border-lightgray bg-dark" variant="outline">
               Add file
               <ChevronDown className="ml-2 h-4 w-4 text-white" />
             </Button>
@@ -95,8 +98,8 @@ export default function RepoCodePage({
               </div>
             }
           />
-          <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-gray">
-            <ul className="divide-y dark:divide-gray">
+          <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-lightgray">
+            <ul className="divide-y dark:divide-lightgray">
               <li className="text-gray-400 grid grid-cols-4 p-2 text-sm hover:bg-[#171B21]">
                 <div className="flex items-center gap-2">
                   <Folder className="text-gray-400 ml-2 h-4 w-4" />{" "}
@@ -162,7 +165,7 @@ export default function RepoCodePage({
         </p>
         <Badge className="mr-2">nostr</Badge>
         <Badge className="mr-2">git</Badge>
-        <ul className="text-gray-400 space-y-2 border-b border-gray pt-4 pb-8 text-sm">
+        <ul className="text-gray-400 space-y-2 border-b border-lightgray pt-4 pb-8 text-sm">
           <li>
             <BookOpen className="mr-2 inline h-4 w-4" />
             Readme
