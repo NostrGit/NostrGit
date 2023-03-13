@@ -105,10 +105,6 @@ export function Header() {
     }
   }, [router, signOut]);
 
-  const handleProfileClick = () => {
-    router.push("/profile");
-  };
-
   return (
     <header className="flex h-14 w-full items-center justify-between bg-[#171B21] px-8">
       <MainNav items={HeaderConfig.mainNav} />
@@ -125,11 +121,8 @@ export function Header() {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel
-                className="cursor-pointer"
-                onClick={handleProfileClick}
-              >
-                {name}
+              <DropdownMenuLabel className="cursor-pointer">
+                <Link href="/profile">{name}</Link>
               </DropdownMenuLabel>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
