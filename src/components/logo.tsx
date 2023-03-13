@@ -11,7 +11,7 @@ export default function Logo({ className }: { className?: string }) {
         alt="NostrGit"
         width={32}
         height={32}
-        className="hover:opacity-80"
+        className="hover:opacity-80 h-8"
       />
     </Link>
   );
