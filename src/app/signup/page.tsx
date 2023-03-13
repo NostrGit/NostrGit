@@ -121,7 +121,7 @@ export default function Signup() {
         </div>
       </div>
       {showMsg &&
-        <div className="bg-[#171B21] py-6 flex flex-col items-center">
+        <div className="bg-[#171B21] py-6 px-4 flex flex-col items-center">
           <p className="text-xl">Great! </p>
           <p>Now backup your private key safely. It&apos;s recommended to store it in a password manager.</p>
           <p>If you lose your private key,{" "}
