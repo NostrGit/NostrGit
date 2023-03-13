@@ -1,38 +1,38 @@
 "use client";
 
-import { generatePrivateKey, getPublicKey, nip05, nip19 } from 'nostr-tools'
+import { generatePrivateKey, getPublicKey, nip19 } from "nostr-tools";
 import { useNostrContext } from "@/lib/nostr/NostrContext";
 import Image from "next/image";
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
-import { useState } from 'react';
-import { Check, Copy } from 'lucide-react';
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { useState } from "react";
+import { Copy } from "lucide-react";
 
 export default function Signup() {
 
   const { setAuthor } = useNostrContext();
   const [showMsg, setShowMsg] = useState<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
-  const [sk, setSk] = useState<string>('');
-  const [pk, setPk] = useState<string>('');
+  const [sk, setSk] = useState<string>("");
+  const [pk, setPk] = useState<string>("");
 
   const generateKeys = () => {
     setShowMsg(true);
-    let sk = generatePrivateKey(); // `sk` is a hex string
+    const sk = generatePrivateKey(); // `sk` is a hex string
     setSk(sk);
-    let pk = getPublicKey(sk); // `pk` is a hex string
+    const pk = getPublicKey(sk); // `pk` is a hex string
     const npub = nip19.npubEncode(pk);
     setPk(npub);
     setAuthor && setAuthor(npub);
-  }
+  };
 
-  const handleCopy = (key: string) => {
-    setCopied(true)
-    navigator.clipboard.writeText(key)
+  const handleCopy = async (key: string) => {
+    setCopied(true);
+    await navigator.clipboard.writeText(key);
     setTimeout(() => {
-      setCopied(false)
+      setCopied(false);
     }, 3000)
-  }
+  };
 
   return (
     <>
@@ -104,7 +104,7 @@ export default function Signup() {
                   onClick={() => handleCopy(sk)} />
               </div>
             </div>
-            <div className='mt-4'>
+            <div className="mt-4">
               <Button
                 variant={"success"}
                 type="submit"
@@ -115,17 +115,17 @@ export default function Signup() {
               </Button>
             </div>
           </div>
-          {copied && <div className='flex justify-center mt-2'>
-            <span className='text-xs'>Copied to clipboard.</span>
+          {copied && <div className="flex justify-center mt-2">
+            <span className="text-xs">Copied to clipboard.</span>
           </div>}
         </div>
       </div>
       {showMsg &&
         <div className="bg-[#171B21] py-6 flex flex-col items-center">
           <p className="text-xl">Great! </p>
-          <p>Now backup your private key safely. It's recommended to store it in a password manager.</p>
+          <p>Now backup your private key safely. It&apos;s recommended to store it in a password manager.</p>
           <p>If you lose your private key,{" "}
-            <span className="text-red-400">you won't be able to recover your account</span>,
+            <span className="text-red-400">you won&apos;t be able to recover your account</span>,
             {" "}
             so keep it safe!</p>
         </div>}
