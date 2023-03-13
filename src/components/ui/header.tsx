@@ -121,22 +121,26 @@ export function Header() {
               </div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
-              <DropdownMenuLabel className="cursor-pointer">
-                <Link href="/profile">{name}</Link>
-              </DropdownMenuLabel>
+              <Link href="/profile">
+                <DropdownMenuLabel className="cursor-pointer">
+                  {name}
+                </DropdownMenuLabel>
+              </Link>
               <DropdownMenuSeparator />
               <DropdownMenuGroup>
                 {PrimaryGitInfo?.map((item) => (
-                  <DropdownMenuItem key={item.title}>
-                    <Link href={item.href}>{item.title}</Link>
-                  </DropdownMenuItem>
+                  <Link key={item.title} href={item.href}>
+                    <DropdownMenuItem key={item.title}>
+                      {item.title}
+                    </DropdownMenuItem>
+                  </Link>
                 ))}
                 <DropdownMenuSeparator />
 
                 {restGitInfo?.map((item) => (
-                  <DropdownMenuItem key={item.title}>
-                    <Link href={item.href}>{item.title}</Link>
-                  </DropdownMenuItem>
+                  <Link key={item.title} href={item.href}>
+                    <DropdownMenuItem>{item.title}</DropdownMenuItem>
+                  </Link>
                 ))}
               </DropdownMenuGroup>
               <DropdownMenuSeparator />
