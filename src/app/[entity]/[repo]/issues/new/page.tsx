@@ -78,7 +78,7 @@ export default function RepoIssueNewPage() {
       // todo: route to issues page of the correct repo
       router.push("/issues");
     },
-    [router]
+    [router, isLoggedIn]
   );
 
   const selectLabel = (label: string) => {
