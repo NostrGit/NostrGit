@@ -6,13 +6,14 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { Copy } from "lucide-react";
+import { Check, Copy } from "lucide-react";
 
 export default function Signup() {
 
   const { setAuthor } = useNostrContext();
   const [showMsg, setShowMsg] = useState<boolean>(false);
-  const [copied, setCopied] = useState<boolean>(false);
+  const [skCopied, setSkCopied] = useState<boolean>(false);
+  const [pkCopied, setPkCopied] = useState<boolean>(false);
   const [sk, setSk] = useState<string>("");
   const [pk, setPk] = useState<string>("");
 
@@ -26,11 +27,13 @@ export default function Signup() {
     setAuthor && setAuthor(npub);
   };
 
-  const handleCopy = async (key: string) => {
-    setCopied(true);
+  const handleCopy = async (type: string, key: string) => {
+    if (type === 'sk') setSkCopied(true);
+    if (type === 'pk') setPkCopied(true);
     await navigator.clipboard.writeText(key);
     setTimeout(() => {
-      setCopied(false);
+      setSkCopied(false);
+      setPkCopied(false);
     }, 3000)
   };
 
@@ -80,9 +83,13 @@ export default function Signup() {
                   readOnly
                   className="w-fulls block"
                 />
-                <Copy
-                  className="ml-2 cursor-pointer"
-                  onClick={() => handleCopy(pk)} />
+                {!pkCopied ?
+                  <Copy
+                    className="ml-2 cursor-pointer"
+                    onClick={() => handleCopy('pk', pk)}
+                  /> :
+                  <Check className="ml-2" />
+                }
               </div>
               <label
                 htmlFor="key"
@@ -99,9 +106,13 @@ export default function Signup() {
                   readOnly
                   className="w-fulls block"
                 />
-                <Copy
-                  className="ml-2 cursor-pointer"
-                  onClick={() => handleCopy(sk)} />
+                {!skCopied ?
+                  <Copy
+                    className="ml-2 cursor-pointer"
+                    onClick={() => handleCopy('sk', sk)}
+                  /> :
+                  <Check className="ml-2" />
+                }
               </div>
             </div>
             <div className="mt-4">
@@ -115,9 +126,6 @@ export default function Signup() {
               </Button>
             </div>
           </div>
-          {copied && <div className="flex justify-center mt-2">
-            <span className="text-xs">Copied to clipboard.</span>
-          </div>}
         </div>
       </div>
       {showMsg &&
