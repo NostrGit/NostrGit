@@ -170,7 +170,7 @@ export function Header() {
               className="max-h-8 min-w-max"
             >
               <a
-                href="https://nostr.how/get-started#create-your-account"
+                href="/signup"
                 target="_blank"
               >
                 Sign up

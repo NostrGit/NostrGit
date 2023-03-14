@@ -14,7 +14,6 @@ import {
   CircleDot,
   GitPullRequest,
   MessageSquare,
-  Search,
   Tag,
 } from "lucide-react";
 import Link from "next/link";
