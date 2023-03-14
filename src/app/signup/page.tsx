@@ -1,24 +1,28 @@
 "use client";
 
-import { generatePrivateKey, getPublicKey, nip19 } from "nostr-tools";
-import { useNostrContext } from "@/lib/nostr/NostrContext";
-import Image from "next/image";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
+
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useNostrContext } from "@/lib/nostr/NostrContext";
+
 import { Check, Copy } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { generatePrivateKey, getPublicKey, nip19 } from "nostr-tools";
 
 export default function Signup() {
-
   const { setAuthor } = useNostrContext();
-  const [showMsg, setShowMsg] = useState<boolean>(false);
+  const [success, setSuccess] = useState<boolean>(false);
   const [skCopied, setSkCopied] = useState<boolean>(false);
   const [pkCopied, setPkCopied] = useState<boolean>(false);
   const [sk, setSk] = useState<string>("");
   const [pk, setPk] = useState<string>("");
+  const router = useRouter();
 
   const generateKeys = () => {
-    setShowMsg(true);
+    setSuccess(true);
     const sk = generatePrivateKey(); // `sk` is a hex string
     setSk(sk);
     const pk = getPublicKey(sk); // `pk` is a hex string
@@ -28,13 +32,13 @@ export default function Signup() {
   };
 
   const handleCopy = async (type: string, key: string) => {
-    if (type === 'sk') setSkCopied(true);
-    if (type === 'pk') setPkCopied(true);
+    if (type === "sk") setSkCopied(true);
+    if (type === "pk") setPkCopied(true);
     await navigator.clipboard.writeText(key);
     setTimeout(() => {
       setSkCopied(false);
       setPkCopied(false);
-    }, 3000)
+    }, 3000);
   };
 
   return (
@@ -62,10 +66,7 @@ export default function Signup() {
                 >
                   <span>Public key (npub)</span>
                 </label>
-                <label
-                  htmlFor="key"
-                  className="text-sm font-medium leading-6"
-                >
+                <label htmlFor="key" className="text-sm font-medium leading-6">
                   <a
                     href="https://nostr.how/get-started#create-your-account"
                     className="font-bold font-medium text-purple-500"
@@ -83,13 +84,14 @@ export default function Signup() {
                   readOnly
                   className="w-fulls block"
                 />
-                {!pkCopied ?
+                {!pkCopied ? (
                   <Copy
                     className="ml-2 cursor-pointer"
-                    onClick={() => handleCopy('pk', pk)}
-                  /> :
+                    onClick={() => handleCopy("pk", pk)}
+                  />
+                ) : (
                   <Check className="ml-2" />
-                }
+                )}
               </div>
               <label
                 htmlFor="key"
@@ -106,37 +108,55 @@ export default function Signup() {
                   readOnly
                   className="w-fulls block"
                 />
-                {!skCopied ?
+                {!skCopied ? (
                   <Copy
                     className="ml-2 cursor-pointer"
-                    onClick={() => handleCopy('sk', sk)}
-                  /> :
+                    onClick={() => handleCopy("sk", sk)}
+                  />
+                ) : (
                   <Check className="ml-2" />
-                }
+                )}
               </div>
             </div>
             <div className="mt-4">
               <Button
-                variant={"success"}
+                variant={success ? "outline" : "success"}
                 type="submit"
                 className="flex w-full justify-center"
                 onClick={() => generateKeys()}
               >
-                Generate keys
+                {success ? "Generate a different key" : "Generate keys"}
               </Button>
+              {success && (
+                <Link target="_blank" href="/login">
+                  <Button
+                    className="w-full mt-4 transition-all"
+                    variant="success"
+                  >
+                    Continue to Sign In
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {showMsg &&
+      {success && (
         <div className="bg-[#171B21] py-6 px-4 flex flex-col items-center">
           <p className="text-xl">Great! </p>
-          <p>Now backup your private key safely. It&apos;s recommended to store it in a password manager.</p>
-          <p>If you lose your private key,{" "}
-            <span className="text-red-400">you won&apos;t be able to recover your account</span>,
-            {" "}
-            so keep it safe!</p>
-        </div>}
+          <p>
+            Now backup your private key safely. It&apos;s recommended to store
+            it in a password manager.
+          </p>
+          <p>
+            If you lose your private key,{" "}
+            <span className="text-red-400">
+              you won&apos;t be able to recover your account
+            </span>
+            , so keep it safe!
+          </p>
+        </div>
+      )}
     </>
   );
 }
