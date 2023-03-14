@@ -14,19 +14,18 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { WEB_STORAGE_KEYS } from "./localStorage";
 
 declare global {
-  interface Window { 
-    nostr: { 
-      getPublicKey() : Promise<string>,
+  interface Window {
+    nostr: {
+      getPublicKey(): Promise<string>,
       signEvent(event: Event): Promise<Event>,
-      getRelays(): Promise<{ [url: string]: {read: boolean, write: boolean} }>,
+      getRelays(): Promise<{ [url: string]: { read: boolean, write: boolean } }>,
       nip04: {
-        encrypt(pubkey : string, plaintext : string): Promise<string>,
-        decrypt(pubkey : string, ciphertext : string): Promise<string>
+        encrypt(pubkey: string, plaintext: string): Promise<string>,
+        decrypt(pubkey: string, ciphertext: string): Promise<string>
       }
     };
   }
 }
-
 
 const defaultRelays = [
   "wss://relay.damus.io",
@@ -34,12 +33,16 @@ const defaultRelays = [
   "wss://nostr.bongbong.com",
   "wss://nos.lol",
 ];
-
-const relayPool = new RelayPool(defaultRelays);
+const relays = localStorage.getItem("relays");
+if (relays === null) localStorage.setItem("relays", JSON.stringify(defaultRelays));
+const relayPool = relays
+  ? new RelayPool(JSON.parse(relays as string))
+  : new RelayPool(defaultRelays);
 
 const NostrContext = createContext<{
   subscribe?: typeof relayPool.subscribe;
-  addReplay?: (url: string) => void;
+  addRelay?: (url: string) => void;
+  removeRelay?: (url: string) => void;
   defaultRelays: string[];
   setAuthor?: (author: string) => void;
   pubkey: string | null;
@@ -55,11 +58,14 @@ export const useNostrContext = () => {
 };
 
 const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const addReplay = useCallback((url: string) => {
+  const addRelay = useCallback(async (url: string) => {
+    const relays = await JSON.parse(localStorage.getItem("relays") || "[]");
+    relays.push(url);
+    localStorage.setItem("relays", JSON.stringify(relays));
     relayPool.addOrGetRelay(url);
   }, []);
 
-  const replayPoolSubscribe = useCallback(
+  const relayPoolSubscribe = useCallback(
     (
       filters: (Filter & { relay?: string; noCache?: boolean })[],
       relays: string[],
@@ -101,6 +107,19 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     [setPubKey]
   );
 
+  const removeRelay = useCallback(
+    (url: string) => {
+      let relays: string[] = [];
+      const localStorageRelays = localStorage.getItem("relays");
+      if (localStorageRelays !== null) {
+        relays = JSON.parse(localStorageRelays);
+      }
+      relays = relays.filter((relay) => relay !== url);
+      localStorage.setItem("relays", JSON.stringify(relays))
+    },
+    []
+  )
+
   const signOut = useCallback(() => {
     removePubKey();
   }, [removePubKey]);
@@ -108,8 +127,9 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <NostrContext.Provider
       value={{
-        subscribe: replayPoolSubscribe,
-        addReplay,
+        subscribe: relayPoolSubscribe,
+        addRelay,
+        removeRelay,
         defaultRelays: defaultRelays,
         setAuthor,
         pubkey,
