@@ -21,10 +21,12 @@ export default function RelaysPage() {
 
   const onFormSubmit = (data: FieldValues) => {
     if (addRelay && data.relay !== undefined) {
-      setRelays(JSON.stringify([
-        data?.relay as string,
-        ...JSON.parse(relays as string || JSON.stringify(defaultRelays) as string)
-      ] as string[]))
+      setRelays(
+        JSON.stringify([
+          data?.relay,
+          ...(JSON.parse(relays || JSON.stringify(defaultRelays)) as string),
+        ])
+      );
       addRelay(data?.relay as string);
       reset();
     }
