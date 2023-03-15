@@ -30,7 +30,7 @@ declare global {
 const defaultRelays = [
   "wss://relay.damus.io",
   "wss://nostr.fmt.wiz.biz",
-  "wss://nostr.bongbong.com",
+  // "wss://nostr.bongbong.com", // relay is down
   "wss://nos.lol",
 ];
 const relayPool = new RelayPool(defaultRelays);
