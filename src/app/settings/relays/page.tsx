@@ -6,32 +6,25 @@ import SettingsHero from "@/components/settings-hero";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { XIcon } from "lucide-react";
-import { useState } from "react";
+import useLocalStorage from "@/lib/hooks/useLocalStorage";
 
 export default function RelaysPage() {
 
-  const { addRelay, removeRelay } = useNostrContext();
+  const { addRelay, removeRelay, defaultRelays } = useNostrContext();
   const { register, handleSubmit, reset } = useForm();
-  const [relays, setRelays] = useState<string[]>(() => {
-    const relaysFromLocalStorage = localStorage.getItem("relays");
-    return relaysFromLocalStorage ? JSON.parse(relaysFromLocalStorage) : [];
-  });
-  const [connecting, setConnecting] = useState<string>("");
-
-  const fetchRelays = () => {
-    const relaysFromStorage = localStorage.getItem("relays");
-    if (relaysFromStorage !== null) {
-      setRelays(JSON.parse(relaysFromStorage));
-    }
-  }
+  const [relays, setRelays] = useLocalStorage<string | null>(
+    "relays",
+    localStorage.getItem("relays") !== null ?
+      localStorage.getItem("relays") :
+      JSON.stringify(defaultRelays)
+  );
 
   const onFormSubmit = (data: FieldValues) => {
     if (addRelay && data.relay !== undefined) {
-      setConnecting(data?.relay);
-      setTimeout(() => {
-        setConnecting("")
-        fetchRelays();
-      }, 500)
+      setRelays(JSON.stringify([
+        data?.relay,
+        ...JSON.parse(relays || JSON.stringify(defaultRelays))
+      ]))
       addRelay(data?.relay);
       reset();
     }
@@ -40,7 +33,8 @@ export default function RelaysPage() {
   const handleRemoval = (url: string) => {
     if (removeRelay && url !== undefined) {
       removeRelay(url);
-      fetchRelays();
+      const newRelays = relays ? relays.replace(`"${url}",`, "") : JSON.stringify(defaultRelays)
+      setRelays(newRelays)
     }
   };
 
@@ -69,10 +63,9 @@ export default function RelaysPage() {
           >
             Add
           </Button>
-          {connecting && <p className="ml-2 mt-2">Connecting...</p>}
         </div>
       </form>
-      {relays.map((relay) => <div key={relay} className="flex mt-4">
+      {relays && JSON.parse(relays).map((relay: string) => <div key={relay} className="flex mt-4">
         <XIcon
           className="text-red-400 cursor-pointer"
           onClick={() => handleRemoval(relay)}

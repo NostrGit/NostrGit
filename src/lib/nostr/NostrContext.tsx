@@ -33,11 +33,7 @@ const defaultRelays = [
   "wss://nostr.bongbong.com",
   "wss://nos.lol",
 ];
-const relays = localStorage.getItem("relays");
-if (relays === null) localStorage.setItem("relays", JSON.stringify(defaultRelays));
-const relayPool = relays
-  ? new RelayPool(JSON.parse(relays as string))
-  : new RelayPool(defaultRelays);
+const relayPool = new RelayPool(defaultRelays);
 
 const NostrContext = createContext<{
   subscribe?: typeof relayPool.subscribe;
@@ -58,12 +54,17 @@ export const useNostrContext = () => {
 };
 
 const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+
   const addRelay = useCallback(async (url: string) => {
-    const relays = await JSON.parse(localStorage.getItem("relays") || "[]");
-    relays.push(url);
-    localStorage.setItem("relays", JSON.stringify(relays));
     relayPool.addOrGetRelay(url);
   }, []);
+
+  const removeRelay = useCallback(
+    (url: string) => {
+      relayPool.removeRelay(url)
+    },
+    []
+  );
 
   const relayPoolSubscribe = useCallback(
     (
@@ -107,18 +108,6 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     [setPubKey]
   );
 
-  const removeRelay = useCallback(
-    (url: string) => {
-      let relays: string[] = [];
-      const localStorageRelays = localStorage.getItem("relays");
-      if (localStorageRelays !== null) {
-        relays = JSON.parse(localStorageRelays);
-      }
-      relays = relays.filter((relay) => relay !== url);
-      localStorage.setItem("relays", JSON.stringify(relays))
-    },
-    []
-  )
 
   const signOut = useCallback(() => {
     removePubKey();
