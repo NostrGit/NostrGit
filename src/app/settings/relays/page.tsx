@@ -1,6 +1,6 @@
 "use client";
 
-import { FieldValues, useForm } from "react-hook-form";
+import { type FieldValues, useForm } from "react-hook-form";
 import { useNostrContext } from "../../../lib/nostr/NostrContext";
 import SettingsHero from "@/components/settings-hero";
 import { Input } from "@/components/ui/input";
