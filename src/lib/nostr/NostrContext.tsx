@@ -55,7 +55,7 @@ export const useNostrContext = () => {
 
 const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
 
-  const addRelay = useCallback(async (url: string) => {
+  const addRelay = useCallback((url: string) => {
     relayPool.addOrGetRelay(url);
   }, []);
 

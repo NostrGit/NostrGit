@@ -19,7 +19,6 @@ export default function Signup() {
   const [pkCopied, setPkCopied] = useState<boolean>(false);
   const [sk, setSk] = useState<string>("");
   const [pk, setPk] = useState<string>("");
-  const router = useRouter();
 
   const generateKeys = () => {
     setSuccess(true);

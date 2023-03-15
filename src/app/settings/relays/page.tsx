@@ -22,10 +22,10 @@ export default function RelaysPage() {
   const onFormSubmit = (data: FieldValues) => {
     if (addRelay && data.relay !== undefined) {
       setRelays(JSON.stringify([
-        data?.relay,
-        ...JSON.parse(relays || JSON.stringify(defaultRelays))
-      ]))
-      addRelay(data?.relay);
+        data?.relay as string,
+        ...JSON.parse(relays as string || JSON.stringify(defaultRelays) as string)
+      ] as string[]))
+      addRelay(data?.relay as string);
       reset();
     }
   };
@@ -65,7 +65,7 @@ export default function RelaysPage() {
           </Button>
         </div>
       </form>
-      {relays && JSON.parse(relays).map((relay: string) => <div key={relay} className="flex mt-4">
+      {relays !== null && JSON.parse(relays).map((relay: string) => <div key={relay} className="flex mt-4">
         <XIcon
           className="text-red-400 cursor-pointer"
           onClick={() => handleRemoval(relay)}
