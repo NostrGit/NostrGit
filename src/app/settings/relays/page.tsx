@@ -71,7 +71,7 @@ export default function RelaysPage() {
       {relays !== null &&
         JSON.parse(relays).map((relay: string) => {
           return (
-            <div className="flex mt-4">
+            <div key={relay} className="flex mt-4">
               <XIcon
                 className="text-red-400 cursor-pointer"
                 onClick={() => handleRemoval(relay)}
