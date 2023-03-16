@@ -37,4 +37,4 @@ What we have in mind for nrepo:
 
 ## Nostr
 
-Read about the vision of Nostr [here](https://github.com/NostrGit/NostrGit/blob/main/documentation/development/nostr.md).
+Read about the vision of Nostr [here](https://github.com/NostrGit/NostrGit/blob/main/documentation/nostr/nostr.md).
