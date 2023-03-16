@@ -140,7 +140,7 @@ export default function RepoLayout({
           </div>
         </div>
 
-        <ul className="my-4 flex w-full items-center gap-x-4 overflow-x-scroll scrollbar scrollbar-thumb-gray-900 scrollbar-track-gray-100">
+        <ul className="my-4 flex w-full items-center gap-x-4 overflow-x-scroll no-scrollbar">
           <li>
             <Link
               href={`/${params.entity}/${params.repo}`}
