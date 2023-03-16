@@ -43,6 +43,8 @@ export default function RelaysPage() {
     }
   };
 
+  const parsedRelays = (relays: string) => JSON.parse(relays) as string[];
+
   return (
     <div>
       <SettingsHero title="Relays" />
@@ -69,7 +71,7 @@ export default function RelaysPage() {
         </div>
       </form>
       {relays !== null &&
-        JSON.parse(relays).map((relay: string) => {
+        parsedRelays(relays).map((relay: string) => {
           return (
             <div key={relay} className="flex mt-4">
               <XIcon
