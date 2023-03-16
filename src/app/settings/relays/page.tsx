@@ -1,22 +1,23 @@
 "use client";
 
-import { type FieldValues, useForm } from "react-hook-form";
-import { useNostrContext } from "../../../lib/nostr/NostrContext";
 import SettingsHero from "@/components/settings-hero";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { XIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import useLocalStorage from "@/lib/hooks/useLocalStorage";
 
-export default function RelaysPage() {
+import { XIcon } from "lucide-react";
+import { type FieldValues, useForm } from "react-hook-form";
 
+import { useNostrContext } from "../../../lib/nostr/NostrContext";
+
+export default function RelaysPage() {
   const { addRelay, removeRelay, defaultRelays } = useNostrContext();
   const { register, handleSubmit, reset } = useForm();
   const [relays, setRelays] = useLocalStorage<string | null>(
     "relays",
-    localStorage.getItem("relays") !== null ?
-      localStorage.getItem("relays") :
-      JSON.stringify(defaultRelays)
+    localStorage.getItem("relays") !== null
+      ? localStorage.getItem("relays")
+      : JSON.stringify(defaultRelays)
   );
 
   const onFormSubmit = (data: FieldValues) => {
@@ -35,8 +36,10 @@ export default function RelaysPage() {
   const handleRemoval = (url: string) => {
     if (removeRelay && url !== undefined) {
       removeRelay(url);
-      const newRelays = relays ? relays.replace(`"${url}",`, "") : JSON.stringify(defaultRelays)
-      setRelays(newRelays)
+      const newRelays = relays
+        ? relays.replace(`"${url}",`, "")
+        : JSON.stringify(defaultRelays);
+      setRelays(newRelays);
     }
   };
 
@@ -44,9 +47,7 @@ export default function RelaysPage() {
     <div>
       <SettingsHero title="Relays" />
       <form onSubmit={handleSubmit(onFormSubmit)}>
-        <label>
-          Add relay
-        </label>
+        <label>Add relay</label>
         <Input
           type="text"
           id="relay"
@@ -67,13 +68,18 @@ export default function RelaysPage() {
           </Button>
         </div>
       </form>
-        parsedRelays(relays).map((relay: string) => (
-        <XIcon
-          className="text-red-400 cursor-pointer"
-          onClick={() => handleRemoval(relay)}
-        />
-        <p className="ml-2">{relay}</p>
-      </div>)}
+      {relays !== null &&
+        JSON.parse(relays).map((relay: string) => {
+          return (
+            <div className="flex mt-4">
+              <XIcon
+                className="text-red-400 cursor-pointer"
+                onClick={() => handleRemoval(relay)}
+              />
+              <p className="ml-2">{relay}</p>
+            </div>
+          );
+        })}
     </div>
   );
 }
