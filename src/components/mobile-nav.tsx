@@ -58,7 +58,7 @@ export function MobileNav({ items, children, onClick }: MobileNavProps) {
               href={item.disabled ? "#" : item.href}
               onClick={onClick}
               className={cn(
-                "hover:text-gray-400 flex w-full items-center border-b border-b-gray p-3 text-sm font-medium ",
+                "hover:text-gray-400 flex w-full items-center border-b border-b-lightgray p-3 text-sm font-medium ",
                 item.disabled && "cursor-not-allowed opacity-60"
               )}
             >
