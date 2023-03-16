@@ -1,0 +1,37 @@
+version: "3.8"
+
+services:
+  git-nostr-bridge:
+    image: git-nostr-bridge
+    build:
+      context: ./gitnostr
+      dockerfile: Dockerfile
+    ports: [
+      3001:3001
+    ]
+    volumes:
+      - ./gitnostr/:/home/git-nostr
+    container_name: git-nostr-bridge
+  nginx:
+    image: nginx:1.20.1
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    ports: [
+      8080:80
+    ]
+    depends_on:
+      - nostrgit
+      - git-nostr-bridge
+    container_name: nginx-nostrgit
+  nostrgit:
+    image: nostrgit
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports: [
+      3000:80
+    ]
+    volumes:
+      - ./:/usr/src/nostrgit
+    tty: true
+    container_name: nostrgit

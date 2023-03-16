@@ -2,7 +2,7 @@
 FROM golang:latest
 
 # Set the working directory
-WORKDIR /usr/src/gitnostr
+WORKDIR /usr/gitnostr
 
 # Copy the source code
 COPY . .
@@ -12,17 +12,11 @@ RUN CGO_ENABLED=0 go build -tags netgo -ldflags="-s -w" -trimpath -o ./bin/git-n
 RUN CGO_ENABLED=0 go build -tags netgo -ldflags="-s -w" -trimpath -o ./bin/git-nostr-ssh ./cmd/git-nostr-ssh
 RUN CGO_ENABLED=0 go build -tags netgo -ldflags="-s -w" -trimpath -o ./bin/gn ./cmd/git-nostr-cli
 
-# Create a non-root user
-RUN adduser --disabled-password --gecos '' git-nostr
-
-# Change ownership of config directory to appuser
-RUN mkdir -p /home/git-nostr/.config/git-nostr && chown -R git-nostr:git-nostr /home/git-nostr/.config
-
-# Switch to the appuser
-USER git-nostr
+# Create config
+RUN mkdir -p /root/.config/git-nostr
 
 # Configure git-nostr-bridge
-RUN echo `{"repositoryDir": "~/git-nostr-repositories","DbFile": "~/.config/git-nostr/git-nostr-db.sqlite","relays": ["wss://relay.damus.io", "wss://nostr.fmt.wiz.biz", "wss://nos.lol"],"gitRepoOwners": ["d110dbcc4f87d21e367987f5348eb763228e8a6eec79a2f97ebe728b3d7874a7"]}` >> ~/.config/git-nostr/git-nostr-bridge.json
+RUN echo '{"repositoryDir": "/root/git-nostr-repositories","DbFile": "/root/.config/git-nostr/git-nostr-db.sqlite","relays": ["wss://relay.damus.io", "wss://nostr.fmt.wiz.biz", "wss://nos.lol"],"gitRepoOwners": ["d110dbcc4f87d21e367987f5348eb763228e8a6eec79a2f97ebe728b3d7874a7"]}' > /root/.config/git-nostr/git-nostr-bridge.json
 
 # Set the default command to run when the container starts
-CMD ["./bin/git-nostr-bridge", "-config=/home/appuser/.config/git-nostr/git-nostr-bridge.json"]
+CMD ["/usr/gitnostr/bin/git-nostr-bridge", "-config=/root/.config/git-nostr/git-nostr-bridge.json"]
