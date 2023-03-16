@@ -9,7 +9,6 @@ import { useNostrContext } from "@/lib/nostr/NostrContext";
 import { Check, Copy } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { generatePrivateKey, getPublicKey, nip19 } from "nostr-tools";
 
 export default function Signup() {
