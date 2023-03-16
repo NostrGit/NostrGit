@@ -66,13 +66,13 @@ export function MobileNav({ items, children, onClick }: MobileNavProps) {
             </Link>
           ))}
           {isLoggedIn ? (
-            <div className="flex items-center p-3">
+            <div onClick={onClick} className="flex items-center p-3">
               <Button variant={"outline"} type="submit" onClick={handleSignOut}>
                 Sign Out
               </Button>
             </div>
           ) : (
-            <div className="flex gap-1 mt-2">
+            <div onClick={onClick} className="flex gap-1 mt-2">
               <Button variant="outline" type="submit" className="mr-2">
                 <Link className="text-white" href="/login">
                   Sign in
