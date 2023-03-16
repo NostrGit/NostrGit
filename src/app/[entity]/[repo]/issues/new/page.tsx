@@ -24,8 +24,6 @@ import {
   getEventHash,
   getPublicKey,
   signEvent,
-  validateEvent,
-  verifySignature,
 } from "nostr-tools";
 
 export default function RepoIssueNewPage() {
@@ -68,9 +66,6 @@ export default function RepoIssueNewPage() {
 
       event.id = getEventHash(event);
       event.sig = signEvent(event, privateKey);
-
-      const ok = validateEvent(event);
-      const veryOk = verifySignature(event);
 
       // todo: publlish to defaultRelays with NostrContext
       console.log("Event created but not published: ", event.id);
