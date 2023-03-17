@@ -9,7 +9,6 @@ import { useNostrContext } from "@/lib/nostr/NostrContext";
 import { Check, Copy } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { generatePrivateKey, getPublicKey, nip19 } from "nostr-tools";
 
 export default function Signup() {
@@ -19,7 +18,6 @@ export default function Signup() {
   const [pkCopied, setPkCopied] = useState<boolean>(false);
   const [sk, setSk] = useState<string>("");
   const [pk, setPk] = useState<string>("");
-  const router = useRouter();
 
   const generateKeys = () => {
     setSuccess(true);

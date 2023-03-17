@@ -24,8 +24,6 @@ import {
   getEventHash,
   getPublicKey,
   signEvent,
-  validateEvent,
-  verifySignature,
 } from "nostr-tools";
 
 export default function RepoIssueNewPage() {
@@ -37,6 +35,7 @@ export default function RepoIssueNewPage() {
   const [errorMsg, setErrorMsg] = useState<string>("");
   const [selectedLabels, setSelectedLabels] = useState<string[]>([]);
   const { picture, initials, isLoggedIn } = useSession();
+  const [filteredLabels, setFilteredLabels] = useState<string[]>(mockLabels);
 
   const handleSubmit = useCallback(
     (e: React.FormEvent<HTMLFormElement>) => {
@@ -69,9 +68,6 @@ export default function RepoIssueNewPage() {
       event.id = getEventHash(event);
       event.sig = signEvent(event, privateKey);
 
-      const ok = validateEvent(event);
-      const veryOk = verifySignature(event);
-
       // todo: publlish to defaultRelays with NostrContext
       console.log("Event created but not published: ", event.id);
 
@@ -87,6 +83,14 @@ export default function RepoIssueNewPage() {
     } else {
       setSelectedLabels(selectedLabels.filter((l) => l !== label));
     }
+  };
+
+  const handleFilter = () => {
+    const value = labelsFilterRef.current?.value || "";
+    const updatedLabels = mockLabels.filter((label) =>
+      label.toLowerCase().includes(value.toLowerCase())
+    );
+    setFilteredLabels(updatedLabels);
   };
 
   return (
@@ -187,7 +191,7 @@ export default function RepoIssueNewPage() {
             <div className="flex hover:text-purple-400 cursor-pointer">
               <p className="w-full mb-2">Labels</p>
               <div className="hidden items-center md:inline">
-                <DropdownMenu>
+                <DropdownMenu onOpenChange={handleFilter}>
                   <DropdownMenuTrigger asChild>
                     <div className="flex items-center cursor-pointer">
                       <Settings />
@@ -205,14 +209,14 @@ export default function RepoIssueNewPage() {
                       type="text"
                       placeholder="Filter labels"
                       className="w-full block"
+                      onChange={handleFilter}
                       ref={labelsFilterRef}
                     />
                     <DropdownMenuSeparator />
                     {/* todo: fetch labels of this repo and replace mockLabels */}
                     {/* todo: publish labels with NostrContext when the dropdown menu hides */}
-                    {/* todo: filter labels based on labelsFilterRef */}
                     <DropdownMenuGroup>
-                      {mockLabels.map((label) => {
+                      {filteredLabels.map((label) => {
                         return (
                           <div key={label}>
                             <div
