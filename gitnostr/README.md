@@ -184,5 +184,5 @@ Create a test repository and clone it. replace <publickey> with the hex represen
 You can set write permission for your repository with the following command. replace <publickey> with the hex represenation of your public key. If you are using a nip05 capable public key you can use the nip05 identifier instead.
 
 ```bash
-./bin/gn repo permissions test <publickey> WRITE
+./bin/gn repo permission test <publickey> WRITE
 ```

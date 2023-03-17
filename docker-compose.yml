@@ -7,7 +7,7 @@ services:
       context: ./gitnostr
       dockerfile: Dockerfile
     ports: [
-      3001:3001
+      22:22
     ]
     volumes:
       - ./gitnostr/:/home/git-nostr
