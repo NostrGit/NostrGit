@@ -18,6 +18,7 @@ We use the [T3 stack](https://create.t3.gg/).
 ## Docker containers
 
 Install [Docker](https://www.docker.com/products/docker-desktop/).
+These instructions assume you are not running openSSH Server on port 22 on your machine.
 
 ```bash
 # clone the repository
@@ -26,7 +27,7 @@ $ git clone https://github.com/NostrGit/NostrGit.git
 
 Edit the `gitnostr/Dockerfile`
   - replace the public key (hex) with your public key (hex) in the "gitRepoOwners" section of the JSON
-  - optional: add/remove some relays in the "relays" section of the JSON 
+  - optional: add/remove some relays in the "relays" section of the JSON
 
 ```bash
 # change the directory to NostrGit
