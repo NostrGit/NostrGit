@@ -259,7 +259,7 @@ function Feed() {
     },
   ];
   return (
-    <div className="p-4 md:p-8 max-w-screen-sm">
+    <div className="px-4 md:px-8 pt-6 max-w-screen-sm">
       {events.map((event) => (
         <div key={event.id} className="mb-8">
           <div className="flex items-center text-sm">
