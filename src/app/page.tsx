@@ -4,8 +4,14 @@ import SearchBar from "@/components/search-bar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import useSession from "@/lib/nostr/useSession";
+import { cn } from "@/lib/utils";
 
-import { Album } from "lucide-react";
+import {
+  Album,
+  CircleDot,
+  GitPullRequest,
+  GitPullRequestDraft,
+} from "lucide-react";
 import Link from "next/link";
 
 const repos = [
@@ -29,6 +35,36 @@ const repos = [
   },
 ];
 
+const activities = [
+  {
+    id: "1",
+    org: "NostrGit",
+    name: "NostrGit",
+    title: "landing page after signing in",
+    href: "/nostrgit/nostrgit/pull/1",
+    type: "PULL-REQUEST-DRAFT",
+    icon: GitPullRequestDraft, // GitPullRequest, GitBranch, GitCommit, GitMerge, GitPullRequestDraft, GitFork, GitPullRequestClosed
+  },
+  {
+    id: "2",
+    org: "NostrGit",
+    name: "NostrGit",
+    title: "Landing page (after login)",
+    href: "/nostrgit/nostrgit/pull/1",
+    type: "NEW-ISSUE",
+    icon: CircleDot, // CircleDot GitPullRequest, GitBranch, GitCommit, GitMerge, GitPullRequestDraft, GitFork, GitPullRequestClosed
+  },
+  {
+    id: "2",
+    org: "NostrGit",
+    name: "NostrGit",
+    title: "Landing page (after login)",
+    href: "/nostrgit/nostrgit/pull/1",
+    type: "PULL-REQUEST",
+    icon: GitPullRequest, // CircleDot GitPullRequest, GitBranch, GitCommit, GitMerge, GitPullRequestDraft, GitFork, GitPullRequestClosed
+  },
+];
+
 export default function IndexRedirect() {
   const { isLoggedIn, picture, initials, name } = useSession();
   if (!isLoggedIn) return <div>logged out</div>;
@@ -43,7 +79,7 @@ export default function IndexRedirect() {
           <span>{name}</span>
         </div>
         <div className="flex justify-between items-center">
-          <h4 className="text-sm">Top Repositories</h4>
+          <h4 className="text-sm font-bold">Top Repositories</h4>
           <Button variant="success" size="xs">
             <Album className="w-4 h-4 mr-1" /> New Repo
           </Button>
@@ -70,8 +106,39 @@ export default function IndexRedirect() {
             </li>
           ))}
         </ul>
-        <div className="flex justify-between items-center">
-          <h4 className="text-sm mt-4">Recent Activity</h4>
+        <div>
+          <h4 className="text-sm mt-4 font-bold">Recent Activity</h4>
+          <ul>
+            {activities.map((activity) => (
+              <li
+                key={activity.id}
+                className="flex space-x-2 items-center mt-4"
+              >
+                <activity.icon
+                  className={cn(
+                    "w-4 h-4",
+                    activity.type.includes("DRAFT")
+                      ? "text-gray-500"
+                      : "text-green-500"
+                  )}
+                />
+                <div className="leading-none">
+                  <Link
+                    href={activity.href}
+                    className="text-xs text-gray-400 block hover:text-purple-500"
+                  >
+                    {activity.name}
+                  </Link>
+                  <Link
+                    href={activity.org + "/" + activity.name}
+                    className="text-sm  hover:underline"
+                  >
+                    {activity.title}
+                  </Link>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
       </aside>
       <main></main>
