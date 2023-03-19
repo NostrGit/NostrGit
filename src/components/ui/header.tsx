@@ -40,10 +40,15 @@ const HeaderConfig = {
   ],
 };
 
-const DropdownItems = [
+export const DropdownItems = [
   {
     title: "Your Profile",
     href: "/profile",
+    mobile: false,
+  },
+  {
+    title: "Settings",
+    href: "settings",
   },
   {
     title: "Your Repositories",
@@ -72,22 +77,17 @@ const DropdownItems = [
   {
     title: "Your sponsors",
     href: "/sponsors",
+    mobile: false,
   },
   {
     title: "Upgrade",
     href: "/upgrade",
-  },
-  {
-    title: "Feature Preview",
-    href: "/feature-preview",
+    mobile: false,
   },
   {
     title: "Help",
     href: "/help",
-  },
-  {
-    title: "Settings",
-    href: "settings",
+    mobile: false,
   },
 ];
 
