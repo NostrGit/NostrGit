@@ -44,7 +44,7 @@ export function MobileNav({ items, children, onClick }: MobileNavProps) {
         <SearchBar />
         <nav className="grid grid-flow-row auto-rows-max text-sm">
           {isLoggedIn && (
-            <div className="flex items-center p-3">
+            <div className="flex items-center p-3 space-x-2">
               <Avatar className="w-8 h-8">
                 <AvatarImage src={picture} />
                 <AvatarFallback>{initials}</AvatarFallback>
@@ -79,15 +79,9 @@ export function MobileNav({ items, children, onClick }: MobileNavProps) {
                 </Link>
               </Button>
               <Button variant="ghost" type="submit">
-                <a
-                  href="https://nostr.how/get-started#create-your-account"
-                  target="_blank"
-                >
+                <Link className="text-white" href="/signup">
                   Sign up
-                </a>
-                {/* link to nostr.how until we have a signup page <Link className="text-white" href="/signup">
-                  Sign up
-                </Link> */}
+                </Link>
               </Button>
             </div>
           )}
