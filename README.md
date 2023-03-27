@@ -15,13 +15,13 @@ We use the [T3 stack](https://create.t3.gg/).
 
 # How to run locally (production)
 
-## Docker containers
+## Docker container git-nostr-bridge
 
 Install [Docker](https://www.docker.com/products/docker-desktop/).
 These instructions assume you are not running openSSH Server on port 22 on your machine.
 
 ```bash
-# clone the repository
+# clone the NostrGit repository
 $ git clone https://github.com/NostrGit/NostrGit.git
 ```
 
@@ -32,8 +32,8 @@ Edit the `gitnostr/Dockerfile`
 ```bash
 # change the directory to NostrGit
 $ cd NostrGit
-# run the containers
-$ docker compose up &
+# run the git-nostr-bridge container
+$ docker compose up > /dev/null 2>&1 &
 ```
 
 ## git-nostr-cli
@@ -45,7 +45,11 @@ Make sure you have go installed
 $ go version
 ```
 
-If the command above doesnt print out something like `go version go1.20.2 linux/amd64`, you can follow [these instructions](https://go.dev/doc/install) to install go on your system.
+If the command above doesnt print out something like 
+
+`go version go1.20.2 linux/amd64`, 
+
+you can follow [these instructions](https://go.dev/doc/install) to install go on your system.
 
 ```bash
 # change directory to gitnostr
@@ -75,7 +79,7 @@ You may need to replace id_rsa.pub with the correct public key file.
 ./bin/gn ssh-key add ~/.ssh/id_rsa.pub
 ```
 
-Create a test repository and clone it. replace with the hex represenation of your public key. If you are using a nip05 capable public key you can use the nip05 identifier instead.
+Create repository and clone it. Replace `<publickey>` with the hex representation of your public key. If you are using a nip05 capable public key you can use the nip05 identifier instead.
 
 ```bash
 $ ./bin/gn repo create <repo_name>

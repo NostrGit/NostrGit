@@ -12,15 +12,3 @@ services:
     volumes:
       - ./gitnostr/:/home/git-nostr
     container_name: git-nostr-bridge
-  nostrgit:
-    image: nostrgit
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports: [
-      3000:3000
-    ]
-    volumes:
-      - ./:/usr/src/nostrgit
-    tty: true
-    container_name: nostrgit
