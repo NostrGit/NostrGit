@@ -41,7 +41,7 @@ export default function Signup() {
 
   return (
     <>
-      <div className="flex min-h-full flex-col justify-center py-6 sm:px-6 lg:px-8">
+      <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <Image
             width={500}
@@ -67,28 +67,34 @@ export default function Signup() {
                 <label htmlFor="key" className="text-sm font-medium leading-6">
                   <a
                     href="https://nostr.how/get-started#create-your-account"
-                    className="font-bold font-medium text-purple-500"
+                    className="font-medium text-purple-500"
                   >
                     What are these?
                   </a>
                 </label>
               </div>
-              <div className="flex mt-2">
+              <div className="flex mt-2 items-center">
                 <Input
                   id="pk"
                   name="pk"
                   type="text"
+                  disabled={!success}
                   value={pk}
                   readOnly
                   className="w-fulls block"
                 />
-                {!pkCopied ? (
-                  <Copy
-                    className="ml-2 cursor-pointer"
-                    onClick={() => handleCopy("pk", pk)}
-                  />
-                ) : (
-                  <Check className="ml-2" />
+
+                {success && (
+                  <>
+                    {!pkCopied ? (
+                      <Copy
+                        className="ml-2 cursor-pointer w-5 h-5"
+                        onClick={() => handleCopy("pk", pk)}
+                      />
+                    ) : (
+                      <Check className="ml-2 w-5 h-5" />
+                    )}
+                  </>
                 )}
               </div>
               <label
@@ -97,22 +103,27 @@ export default function Signup() {
               >
                 <span>Private key (hex)</span>
               </label>
-              <div className="flex mt-2">
+              <div className="flex mt-2 items-center">
                 <Input
                   id="sk"
                   name="sk"
                   type="password"
+                  disabled={!success}
                   value={sk}
                   readOnly
                   className="w-fulls block"
                 />
-                {!skCopied ? (
-                  <Copy
-                    className="ml-2 cursor-pointer"
-                    onClick={() => handleCopy("sk", sk)}
-                  />
-                ) : (
-                  <Check className="ml-2" />
+                {success && (
+                  <>
+                    {!skCopied ? (
+                      <Copy
+                        className="ml-2 cursor-pointer w-5 h-5"
+                        onClick={() => handleCopy("sk", sk)}
+                      />
+                    ) : (
+                      <Check className="ml-2 w-5 h-5" />
+                    )}
+                  </>
                 )}
               </div>
             </div>
@@ -135,26 +146,27 @@ export default function Signup() {
                   </Button>
                 </Link>
               )}
+
+              {success && (
+                <div className="mt-4 text-sm space-y-2">
+                  <p className="text-xl">Great!</p>
+                  <p>
+                    Now backup your private key safely. It&apos;s recommended to
+                    store it in a password manager.
+                  </p>
+                  <p>
+                    If you lose your private key,{" "}
+                    <span className="text-red-400">
+                      you won&apos;t be able to recover your account
+                    </span>
+                    , so keep it safe!
+                  </p>
+                </div>
+              )}
             </div>
           </div>
         </div>
       </div>
-      {success && (
-        <div className="bg-[#171B21] py-6 px-4 flex flex-col items-center">
-          <p className="text-xl">Great! </p>
-          <p>
-            Now backup your private key safely. It&apos;s recommended to store
-            it in a password manager.
-          </p>
-          <p>
-            If you lose your private key,{" "}
-            <span className="text-red-400">
-              you won&apos;t be able to recover your account
-            </span>
-            , so keep it safe!
-          </p>
-        </div>
-      )}
     </>
   );
 }
