@@ -5,6 +5,7 @@ import {
   type OnEvent,
   RelayPool,
   type SubscriptionOptions,
+  Event,
 } from "nostr-relaypool";
 import { type Filter } from "nostr-tools";
 import { nip19 } from "nostr-tools";
@@ -43,6 +44,7 @@ const NostrContext = createContext<{
   setAuthor?: (author: string) => void;
   pubkey: string | null;
   signOut?: () => void;
+  publish?: (event: Event) => void;
 }>({ defaultRelays, pubkey: null });
 
 export const useNostrContext = () => {
@@ -108,6 +110,12 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     [setPubKey]
   );
 
+  const publish = useCallback(
+    (event: Event) => {
+      const relays = localStorage.getItem("relays");
+      relays === null ? relayPool.publish(event, defaultRelays) : relayPool.publish(event, JSON.parse(relays))
+  }, []);
+
 
   const signOut = useCallback(() => {
     removePubKey();
@@ -123,6 +131,7 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
         setAuthor,
         pubkey,
         signOut,
+        publish,
       }}
     >
       {children}
