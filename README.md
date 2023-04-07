@@ -68,7 +68,7 @@ Edit the config file at `~/.config/git-nostr/git-nostr-cli.json`. The file shoul
 {
     "relays": ["wss://relay.damus.io", "wss://nostr.fmt.wiz.biz", "wss://nos.lol"],
     "privateKey": "", // your nostr private key (hex)
-    "gitSshBase": "git-nostr@localhost" // the docker containers expect this
+    "gitSshBase": "root@localhost" // the docker containers expect this
 }
 ```
 
