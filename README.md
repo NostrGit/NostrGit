@@ -13,6 +13,92 @@ We use the [T3 stack](https://create.t3.gg/).
 
 <a href="https://nostrgit.com"><img src="https://user-images.githubusercontent.com/8019099/223422735-795b4341-5751-49ce-bffb-800ee81788d2.jpg" alt="NostrGit"></a>
 
+# How to run locally (production)
+
+## Docker container git-nostr-bridge
+
+Install [Docker](https://www.docker.com/products/docker-desktop/).
+These instructions assume you are not running openSSH Server on port 22 on your machine.
+
+```bash
+# clone the NostrGit repository
+$ git clone https://github.com/NostrGit/NostrGit.git
+```
+
+Edit the `gitnostr/Dockerfile`
+  - replace the public key (hex) with your public key (hex) in the "gitRepoOwners" section of the JSON
+  - optional: add/remove some relays in the "relays" section of the JSON
+
+```bash
+# change the directory to NostrGit
+$ cd NostrGit
+# run the git-nostr-bridge container
+$ docker compose up > /dev/null 2>&1 &
+```
+
+## git-nostr-cli
+
+To run the cli tool for managing git repositories over nostr:
+
+Make sure you have go installed
+```bash
+$ go version
+```
+
+If the command above doesnt print out something like 
+
+`go version go1.20.2 linux/amd64`, 
+
+you can follow [these instructions](https://go.dev/doc/install) to install go on your system.
+
+```bash
+# change directory to gitnostr
+$ cd ../gitnostr/
+# compile the cli tool (requires go installation)
+$ make git-nostr-cli
+# Run the git-nostr-cli command once to create the default config file
+$ ./bin/gn
+```
+
+You should get the message `no relays connected`.
+
+Edit the config file at `~/.config/git-nostr/git-nostr-cli.json`. The file should look something like this
+
+```JSON
+{
+    "relays": ["wss://relay.damus.io", "wss://nostr.fmt.wiz.biz", "wss://nos.lol"],
+    "privateKey": "", // your nostr private key (hex)
+    "gitSshBase": "root@localhost" // the docker containers expect this
+}
+```
+
+You need to publish your public ssh key to the nostr relays to be able to interact with the git-nostr-bridge docker container.
+You may need to replace id_rsa.pub with the correct public key file.
+
+```bash
+./bin/gn ssh-key add ~/.ssh/id_rsa.pub
+```
+
+Create repository and clone it. Replace `<publickey>` with the hex representation of your public key. If you are using a nip05 capable public key you can use the nip05 identifier instead.
+
+```bash
+$ ./bin/gn repo create <repo_name>
+$ ./bin/gn repo clone  <publickey>:<repo_name>
+```
+
+To be able to push to the repository you can set write permission with the following command.
+
+```bash
+# public key must be in the hex format
+$ ./bin/gn repo permission <repo_name> <publickey> WRITE
+```
+
+If you are using a nip05 capable public key you can use the nip05 identifier instead.
+
+```bash
+$ ./bin/gn repo permission username@relayaddr WRITE
+```
+
 # Development
 
 Fork the repo
