@@ -63,7 +63,7 @@ export default function newRepositoryPage() {
       // @ts-expect-error: Argument of type '{ kind: number; created_at: number; tags: never[]; content: string; }' is not assignable to parameter of type 'Event'.
       const signedEvent = await window?.nostr.signEvent(repositoryEvent);
       if (signedEvent !== undefined) {
-        publish(signedEvent);
+        publish && publish(signedEvent);
         redirect("/new/published");
       }
     } else {
