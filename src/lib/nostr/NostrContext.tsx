@@ -113,9 +113,8 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const publish = useCallback(
     (event: Event) => {
       const relays = localStorage.getItem("relays");
-      relays === null ? relayPool.publish(event, defaultRelays) : relayPool.publish(event, JSON.parse(relays))
+      relays === null ? relayPool.publish(event, defaultRelays) : relayPool.publish(event, JSON.parse(relays) as string[])
   }, []);
-
 
   const signOut = useCallback(() => {
     removePubKey();

@@ -27,7 +27,7 @@ type RepositoryFormInputs = {
   publicRead: string;
 };
 
-export default function newRepositoryPage() {
+export default function NewRepositoryPage() {
   const { picture, initials, name, isLoggedIn } = useSession();
 
   if (!isLoggedIn) redirect("/login");

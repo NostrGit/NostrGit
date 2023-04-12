@@ -73,6 +73,7 @@ export default function ProfileLayout({
           <nav className="flex">
             {links.map((link) => (
               <Link
+                key={link.href}
                 className={cn(
                   pathname == link.href && "!bg-zinc-800/50",
                   "flex w-full rounded hover:bg-zinc-900/50 text-l items-center transition-all px-2 py-1"

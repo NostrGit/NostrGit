@@ -4,8 +4,8 @@ import useSession from "@/lib/nostr/useSession";
 
 import { redirect } from "next/navigation";
 
-export default function publishedPage() {
-  const { isLoggedIn, name } = useSession();
+export default function PublishedPage() {
+  const { isLoggedIn } = useSession();
 
   if (!isLoggedIn) redirect("/login");
 
