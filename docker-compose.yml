@@ -1,0 +1,14 @@
+version: "3.8"
+
+services:
+  git-nostr-bridge:
+    image: git-nostr-bridge
+    build:
+      context: ./gitnostr
+      dockerfile: Dockerfile
+    ports: [
+      22:22
+    ]
+    volumes:
+      - ./gitnostr/:/home/git-nostr
+    container_name: git-nostr-bridge

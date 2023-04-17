@@ -100,28 +100,28 @@ export default function RepoCodePage({
           />
           <div className="overflow-hidden rounded-md rounded-tr-none rounded-tl-none border border-t-0 dark:border-lightgray">
             <ul className="divide-y dark:divide-lightgray">
-              <li className="text-gray-400 grid grid-cols-4 p-2 text-sm hover:bg-[#171B21]">
+              <li className="text-gray-400 grid grid-cols-2 p-2 text-sm sm:grid-cols-4 hover:bg-[#171B21]">
                 <div className="flex items-center gap-2">
                   <Folder className="text-gray-400 ml-2 h-4 w-4" />{" "}
                   <a className="hover:text-purple-500 hover:underline" href="#">
                     nips
                   </a>
                 </div>
-                <div className="col-span-2">
+                <div className="hidden col-span-2 sm:block">
                   <a className="hover:text-purple-500 hover:underline" href="#">
                     move nips to the dedicated nips repo and update readme.
                   </a>
                 </div>
                 <div className="text-right">last year</div>
               </li>
-              <li className="text-gray-400 grid grid-cols-4 p-2 text-sm hover:bg-[#171B21]">
+              <li className="text-gray-400 grid grid-cols-2 p-2 text-sm sm:grid-cols-4 hover:bg-[#171B21]">
                 <div className="flex items-center gap-2 ">
                   <File className="text-gray-400 ml-2 h-4 w-4" />{" "}
-                  <a className="hover:text-purple-500 hover:underline" href="#">
+                  <a className="truncate hover:text-purple-500 hover:underline" href="#">
                     README.md
                   </a>
                 </div>
-                <div className="col-span-2">
+                <div className="hidden col-span-2 sm:block">
                   <a className="hover:text-purple-500 hover:underline" href="#">
                     Fixed grammatical and sentence structure issues. (
                     <span className="text-purple-500 hover:underline">

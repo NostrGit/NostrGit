@@ -31,6 +31,10 @@ interface MainNavProps {
 export function MainNav({ items, children }: MainNavProps) {
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false);
 
+  const handleToggleMobileMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+  };
+
   return (
     <div className="w-full md:w-auto flex items-center justify-center gap-6 md:gap-10">
       <Logo className="hidden md:flex" />
@@ -68,7 +72,9 @@ export function MainNav({ items, children }: MainNavProps) {
         <Logo className="flex md:hidden" />
 
         {showMobileMenu && items && (
-          <MobileNav items={items}>{children}</MobileNav>
+          <MobileNav onClick={handleToggleMobileMenu} items={items}>
+            {children}
+          </MobileNav>
         )}
         <Bell className="flex md:hidden w-4 h-4" />
       </div>
