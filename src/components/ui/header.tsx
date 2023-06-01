@@ -52,7 +52,7 @@ export const DropdownItems = [
   },
   {
     title: "Your Repositories",
-    href: "/repositories",
+    href: "/profile/repositories",
   },
   {
     title: "Your organizations",
