@@ -9,7 +9,7 @@ export const Badge = ({
 }) => (
   <span
     className={cn(
-      "rounded-full bg-slate-500/40 px-1.5 py-0.5 text-xs",
+      "rounded-full bg-zinc-500/40 px-1.5 py-0.5 text-xs",
       className
     )}
   >

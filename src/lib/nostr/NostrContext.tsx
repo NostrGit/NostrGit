@@ -14,33 +14,32 @@ import useLocalStorage from "../hooks/useLocalStorage";
 import { WEB_STORAGE_KEYS } from "./localStorage";
 
 declare global {
-  interface Window { 
-    nostr: { 
-      getPublicKey() : Promise<string>,
+  interface Window {
+    nostr: {
+      getPublicKey(): Promise<string>,
       signEvent(event: Event): Promise<Event>,
-      getRelays(): Promise<{ [url: string]: {read: boolean, write: boolean} }>,
+      getRelays(): Promise<{ [url: string]: { read: boolean, write: boolean } }>,
       nip04: {
-        encrypt(pubkey : string, plaintext : string): Promise<string>,
-        decrypt(pubkey : string, ciphertext : string): Promise<string>
+        encrypt(pubkey: string, plaintext: string): Promise<string>,
+        decrypt(pubkey: string, ciphertext: string): Promise<string>
       }
     };
   }
 }
 
-
 const defaultRelays = [
   "wss://relay.damus.io",
   "wss://nostr.fmt.wiz.biz",
-  "wss://nostr.bongbong.com",
+  // "wss://nostr.bongbong.com", // relay is down
   "wss://nos.lol",
   "wss://relay.snort.social",
 ];
-
 const relayPool = new RelayPool(defaultRelays);
 
 const NostrContext = createContext<{
   subscribe?: typeof relayPool.subscribe;
-  addReplay?: (url: string) => void;
+  addRelay?: (url: string) => void;
+  removeRelay?: (url: string) => void;
   defaultRelays: string[];
   setAuthor?: (author: string) => void;
   pubkey: string | null;
@@ -56,11 +55,19 @@ export const useNostrContext = () => {
 };
 
 const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const addReplay = useCallback((url: string) => {
+
+  const addRelay = useCallback((url: string) => {
     relayPool.addOrGetRelay(url);
   }, []);
 
-  const replayPoolSubscribe = useCallback(
+  const removeRelay = useCallback(
+    (url: string) => {
+      relayPool.removeRelay(url)
+    },
+    []
+  );
+
+  const relayPoolSubscribe = useCallback(
     (
       filters: (Filter & { relay?: string; noCache?: boolean })[],
       relays: string[],
@@ -102,6 +109,7 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
     [setPubKey]
   );
 
+
   const signOut = useCallback(() => {
     removePubKey();
   }, [removePubKey]);
@@ -109,8 +117,9 @@ const NostrProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <NostrContext.Provider
       value={{
-        subscribe: replayPoolSubscribe,
-        addReplay,
+        subscribe: relayPoolSubscribe,
+        addRelay,
+        removeRelay,
         defaultRelays: defaultRelays,
         setAuthor,
         pubkey,

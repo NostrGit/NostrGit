@@ -127,8 +127,12 @@ const handleClick = useCallback((e) => e.currentTarget.Value, []);
 
 ## UI
 
+### css
 Use [Tailwind CSS](https://tailwindcss.com).
 
-When designing the visual style of components, [shadcn](https://ui.shadcn.com/) should always be used when possible. If you can't find a good component on [shadcn](https://ui.shadcn.com/), consider using [tailwindui](https://tailwindui.com/) 
+### Icons
+Use [Lucide](https://lucide.dev/) icon components.
 
-Use [Lucide](https://lucide.dev/) icon components when able.
+### Components
+When designing the visual style of components, [shadcn](https://ui.shadcn.com/) should always be used when possible. If you can't find a good component on [shadcn](https://ui.shadcn.com/), consider using [tailwindui](https://tailwindui.com/). However, don't use tailwindui components that require headlessui.com, it's an inferior version of radixui and we shouldn't mix both. Instead, try to rebuild the component using radix-ui.
+

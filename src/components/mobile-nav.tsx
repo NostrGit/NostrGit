@@ -13,13 +13,15 @@ import { useRouter } from "next/navigation";
 import { type MainNavItem } from "./main-nav";
 import SearchBar from "./search-bar";
 import { Button } from "./ui/button";
+import { DropdownItems } from "./ui/header";
 
 interface MobileNavProps {
   items: MainNavItem[];
   children?: React.ReactNode;
+  onClick: () => void;
 }
 
-export function MobileNav({ items, children }: MobileNavProps) {
+export function MobileNav({ items, children, onClick }: MobileNavProps) {
   const { picture, name, initials, isLoggedIn } = useSession();
 
   useLockBody();
@@ -43,7 +45,7 @@ export function MobileNav({ items, children }: MobileNavProps) {
         <SearchBar />
         <nav className="grid grid-flow-row auto-rows-max text-sm">
           {isLoggedIn && (
-            <div className="flex items-center p-3">
+            <div className="flex items-center p-3 space-x-2">
               <Avatar className="w-8 h-8">
                 <AvatarImage src={picture} />
                 <AvatarFallback>{initials}</AvatarFallback>
@@ -51,41 +53,52 @@ export function MobileNav({ items, children }: MobileNavProps) {
               <p>{name}</p>
             </div>
           )}
+
+          {DropdownItems.filter((item) => item.mobile !== false).map(
+            (filteredItem, index) => (
+              <Link
+                key={index}
+                href={filteredItem.href}
+                onClick={onClick}
+                className={cn(
+                  "hover:text-gray-400 flex w-full items-center border-b border-b-lightgray p-3 text-sm font-medium "
+                )}
+              >
+                {filteredItem.title}
+              </Link>
+            )
+          )}
+
           {items.map((item, index) => (
             <Link
               key={index}
-              href={item.disabled ? "#" : item.href}
+              href={item.href}
+              onClick={onClick}
               className={cn(
-                "hover:text-gray-400 flex w-full items-center border-b border-b-gray p-3 text-sm font-medium ",
-                item.disabled && "cursor-not-allowed opacity-60"
+                "hover:text-gray-400 flex w-full items-center border-b border-b-lightgray p-3 text-sm font-medium "
               )}
             >
               {item.title}
             </Link>
           ))}
+
           {isLoggedIn ? (
-            <div className="flex items-center p-3">
+            <div onClick={onClick} className="flex items-center p-3">
               <Button variant={"outline"} type="submit" onClick={handleSignOut}>
                 Sign Out
               </Button>
             </div>
           ) : (
-            <div className="flex gap-1 mt-2">
+            <div onClick={onClick} className="flex gap-1 mt-2">
               <Button variant="outline" type="submit" className="mr-2">
                 <Link className="text-white" href="/login">
                   Sign in
                 </Link>
               </Button>
               <Button variant="ghost" type="submit">
-                <a
-                  href="https://nostr.how/get-started#create-your-account"
-                  target="_blank"
-                >
+                <Link className="text-white" href="/signup">
                   Sign up
-                </a>
-                {/* link to nostr.how until we have a signup page <Link className="text-white" href="/signup">
-                  Sign up
-                </Link> */}
+                </Link>
               </Button>
             </div>
           )}
