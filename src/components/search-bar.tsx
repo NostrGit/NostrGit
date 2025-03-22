@@ -1,7 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
-export default function SearchBar({ className }: { className?: string }) {
+export default function SearchBar({
+  className,
+  placeholder,
+}: {
+  className?: string;
+  placeholder?: string;
+}) {
   return (
     <Input
       className={cn(
@@ -9,7 +15,7 @@ export default function SearchBar({ className }: { className?: string }) {
         className
       )}
       type="text"
-      placeholder="Search or jump to…"
+      placeholder={placeholder || "Search or jump to…"}
     />
   );
 }
