@@ -11,6 +11,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useRepositoryContext } from "@/lib/nostr/RepositoryContext";
 
 import { clsx } from "clsx";
 import {
@@ -31,6 +32,21 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import RepositoryProvider from "@/lib/nostr/RepositoryContext";
+
+
+const FollowersBadge = () => {  
+  const { followers } = useRepositoryContext();
+  return ( 
+    <>
+      <Star className="mr-2 h-4 w-4 text-yellow-500" /> 
+      Starred
+      <Badge className="ml-2">
+        {followers?.length}
+      </Badge>
+    </>
+  )
+}
 
 const menuItems = [
   {
@@ -149,8 +165,9 @@ export default function RepoLayout({
                 <Badge className="ml-2">209</Badge>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Star className="mr-2 h-4 w-4 text-yellow-500" /> Starred
-                <Badge className="ml-2">7k</Badge>
+                <RepositoryProvider>
+                  <FollowersBadge />
+                </RepositoryProvider>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -189,8 +206,9 @@ export default function RepoLayout({
                 className="h-8 !border-[#383B42] bg-[#22262C] text-xs"
                 variant="outline"
               >
-                <Star className="mr-2 h-4 w-4 text-yellow-500" /> Starred
-                <Badge className="ml-2">7k</Badge>
+                <RepositoryProvider>
+                  <FollowersBadge />
+                </RepositoryProvider>
               </Button>
             </div>
           </div>
@@ -269,9 +287,14 @@ export default function RepoLayout({
           </DropdownMenu>
         </div>
 
+        <hr className="w-full -mt-[17px] border-b-0 border-gray" />
+        
+        <RepositoryProvider>
+          {children}
+        </RepositoryProvider>
+
         <hr className="w-full -mt-[17px] border-b-0 border-lightgray" />
 
-        {children}
       </section>
       <Banner
         title="Contribute"

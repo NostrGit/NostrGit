@@ -32,6 +32,7 @@ const defaultRelays = [
   "wss://nostr.fmt.wiz.biz",
   // "wss://nostr.bongbong.com", // relay is down
   "wss://nos.lol",
+  "wss://relay.snort.social",
 ];
 const relayPool = new RelayPool(defaultRelays);
 
