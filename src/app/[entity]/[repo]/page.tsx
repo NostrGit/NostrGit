@@ -3,6 +3,13 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Contributors } from "@/components/ui/contributors";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { ListHeader } from "@/components/ui/list-header";
 
 import {
@@ -16,6 +23,7 @@ import {
   GitFork,
   History,
   List,
+  MoreHorizontal,
   Settings,
   Star,
   Tag,
@@ -31,7 +39,7 @@ export default function RepoCodePage({
   return (
     <div className="mt-4 grid grid-cols-2 gap-6 lg:grid-cols-4">
       <div className="col-span-3 lg:col-span-3">
-        <div className="flex flex-col justify-between gap-y-4 overflow-hidden lg:flex-row lg:gap-y-0">
+        <div className="flex justify-between flex-row">
           <div>
             <div className="flex items-center  gap-4 text-sm">
               <Button
@@ -41,29 +49,54 @@ export default function RepoCodePage({
                 <GitBranch className="text-gray-400 mr-2 h-4 w-4" /> main{" "}
                 <ChevronDown className="ml-2 h-4 w-4 text-white" />
               </Button>
-              <div>
+              <div className="hidden lg:inline-block">
                 <GitBranch className="text-gray-400 inline h-4 w-4" /> 3{" "}
                 <span className="text-gray-400">branches</span>
               </div>
-              <div>
+              <div className="hidden lg:inline-block">
                 <Tag className="text-gray-400 inline h-4 w-4" /> 1{" "}
                 <span className="text-gray-400">tags</span>
               </div>
             </div>
           </div>
-          <div className="flex gap-2">
-            <Button className="h-8 !border-lightgray bg-dark" variant="outline">
+          <div className="hidden md:flex md:gap-2">
+            <Button
+              className="truncate h-8 !border-lightgray bg-dark"
+              variant="outline"
+            >
               Go to file
             </Button>
-            <Button className="h-8 !border-lightgray bg-dark" variant="outline">
+            <Button
+              className="truncate h-8 !border-lightgray bg-dark"
+              variant="outline"
+            >
               Add file
               <ChevronDown className="ml-2 h-4 w-4 text-white" />
             </Button>
-            <Button className="h-8" variant="success">
+            <Button className="truncate h-8" variant="success">
               <Code className="mr-2 h-4 w-4 text-white" /> Code
               <ChevronDown className="ml-2 h-4 w-4 text-white" />
             </Button>
           </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild className="md:hidden">
+              <Button
+                className="h-8 !border-lightgray bg-dark"
+                variant="outline"
+              >
+                <MoreHorizontal className="text-gray-500" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent className="py-2 relative -left-6 top-1 w-[9.5rem]">
+              <DropdownMenuItem className="mt-1 mb-2 text-white font-normal">
+                <Link href={""}>Go to file</Link>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="text-white font-normal">
+                <Link href={""}>Add file</Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
         <main className="mt-4">
@@ -87,13 +120,25 @@ export default function RepoCodePage({
                 </span> */}
               </>
             }
-            description="Fixed grammatical and sentence structure issues."
+            description="Fixed grammatical and sentence12 Fixed grammatical and sentence "
+            lastCommitHash="cdcc98f"
+            lastCommitMessage="implement landing page"
             actionArea={
               <div className="text-gray-400">
-                <Link href="#">cdcc98f last month</Link>{" "}
+                <Link href="#" className="text-sm font-normal">
+                  <span className="hidden text-xs xl:inline-flex">
+                    cdcc98f &nbsp;{" "}
+                  </span>
+                  last month
+                </Link>{" "}
                 <Link href="#" className="text-white hover:text-purple-500">
-                  <History className="ml-2 mr-1 -mt-0.5 inline h-4 w-4" /> 128
-                  commits
+                  <History className="ml-2 mr-1 -mt-0.5 inline h-4 w-4" />
+                  <span className="hidden min-[508px]:inline-block">
+                    128&nbsp;
+                  </span>
+                  <span className="hidden font-normal text-gray-400 xl:inline-flex">
+                    commits
+                  </span>
                 </Link>
               </div>
             }
@@ -117,7 +162,10 @@ export default function RepoCodePage({
               <li className="text-gray-400 grid grid-cols-2 p-2 text-sm sm:grid-cols-4 hover:bg-[#171B21]">
                 <div className="flex items-center gap-2 ">
                   <File className="text-gray-400 ml-2 h-4 w-4" />{" "}
-                  <a className="truncate hover:text-purple-500 hover:underline" href="#">
+                  <a
+                    className="truncate hover:text-purple-500 hover:underline"
+                    href="#"
+                  >
                     README.md
                   </a>
                 </div>

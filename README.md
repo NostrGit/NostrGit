@@ -11,7 +11,7 @@ Read about the vision [here](https://github.com/NostrGit/NostrGit/tree/main/docu
 
 We use the [T3 stack](https://create.t3.gg/).
 
-<a href="https://nostrgit.com"><img src="https://user-images.githubusercontent.com/8019099/223422735-795b4341-5751-49ce-bffb-800ee81788d2.jpg" alt="NostrGit"></a>
+<a href="https://nostrgit.org"><img src="https://user-images.githubusercontent.com/8019099/223422735-795b4341-5751-49ce-bffb-800ee81788d2.jpg" alt="NostrGit"></a>
 
 # How to run locally (production)
 
