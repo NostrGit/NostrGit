@@ -1,0 +1,48 @@
+{
+  "name": "NostrGit - Decentralized Git on Nostr",
+  "short_name": "NostrGit",
+  "description": "A truly censorship-resistant alternative to GitHub built on the Nostr protocol",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0E1116",
+  "theme_color": "#9333ea",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%230E1116'/%3E%3Cpath d='M50 20 L35 50 L50 50 L50 80 L65 50 L50 50 Z' fill='%239333ea' stroke='%23ffffff' stroke-width='2'/%3E%3C/svg%3E",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' fill='%230E1116'/%3E%3Cpath d='M256 102 L179 256 L256 256 L256 410 L333 256 L256 256 Z' fill='%239333ea' stroke='%23ffffff' stroke-width='8'/%3E%3C/svg%3E",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["development", "productivity", "utilities"],
+  "screenshots": [
+    {
+      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1280 720'%3E%3Crect width='1280' height='720' fill='%230E1116'/%3E%3Ctext x='640' y='360' font-family='Arial' font-size='48' fill='%239333ea' text-anchor='middle'%3ENostrGit - Explore%3C/text%3E%3C/svg%3E",
+      "sizes": "1280x720",
+      "type": "image/svg+xml",
+      "form_factor": "wide"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Explore Repositories",
+      "short_name": "Explore",
+      "description": "Browse decentralized repositories",
+      "url": "/#explore",
+      "icons": [
+        {
+          "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 20 L35 50 L50 50 L50 80 L65 50 L50 50 Z' fill='%239333ea'/%3E%3C/svg%3E",
+          "sizes": "96x96",
+          "type": "image/svg+xml"
+        }
+      ]
+    }
+  ]
+}

@@ -1,215 +1,113 @@
-# NostrGit
+# NostrGit Experimental - Standalone Version
 
-A truly censorship-resistant alternative to GitHub that has a chance of working.
+A single-file, zero-build Preact/HTM version of NostrGit Explore page.
 
-Read about the vision [here](https://github.com/NostrGit/NostrGit/tree/main/documentation/vision.md).
+## Why?
 
-- [Next.js](https://nextjs.org)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
-- [ui.shadcn.com](https://ui.shadcn.com)
+The main NostrGit project has a complex setup:
+- Next.js 13 (app directory)
+- TypeScript compilation
+- 450+ npm packages
+- Outdated dependencies
+- Build/deployment complexity
 
-We use the [T3 stack](https://create.t3.gg/).
+This experimental version is:
+- **One HTML file** - Just `index.html`
+- **No build step** - Open directly in browser
+- **No npm** - All dependencies from CDN
+- **Same functionality** - Real Nostr integration
+- **Same look** - Identical purple theme
 
-<a href="https://nostrgit.org"><img src="https://user-images.githubusercontent.com/8019099/223422735-795b4341-5751-49ce-bffb-800ee81788d2.jpg" alt="NostrGit"></a>
-
-# How to run locally (production)
-
-## Docker container git-nostr-bridge
-
-Install [Docker](https://www.docker.com/products/docker-desktop/).
-These instructions assume you are not running openSSH Server on port 22 on your machine.
-
-```bash
-# clone the NostrGit repository
-$ git clone https://github.com/NostrGit/NostrGit.git
-```
-
-Edit the `gitnostr/Dockerfile`
-  - replace the public key (hex) with your public key (hex) in the "gitRepoOwners" section of the JSON
-  - optional: add/remove some relays in the "relays" section of the JSON
+## How to Run
 
 ```bash
-# change the directory to NostrGit
-$ cd NostrGit
-# run the git-nostr-bridge container
-$ docker compose up > /dev/null 2>&1 &
+# Option 1: Just open it
+open experimental/index.html
+
+# Option 2: Local server (recommended for CORS)
+cd experimental
+python3 -m http.server 8000
+# Visit: http://localhost:8000
 ```
 
-## git-nostr-cli
+That's it! No `npm install`, no build, no nothing.
 
-To run the cli tool for managing git repositories over nostr:
+## What Works
 
-Make sure you have go installed
-```bash
-$ go version
+✅ **Complete Site with 4 Pages**
+
+**Navigation:**
+- Sticky header with NostrGit branding
+- Hash-based routing (no server needed!)
+- Active page highlighting
+
+**Home Page:**
+- Hero section with gradient background
+- 3 feature cards (Decentralized, Censorship Resistant, Community Owned)
+- Call-to-action buttons
+- Clean, modern landing page design
+
+**Explore Page (Fully Functional):**
+- Connects to 9 Nostr relays via WebSocket
+- Displays kind 30617 repository announcements (NIP-34)
+- Live stats (connected relays, repo count, events)
+- Interactive repository cards
+- Copy-to-clipboard git clone
+- Clickable maintainer/owner profiles (nostr.eu)
+- Topic tags
+- Visit website buttons
+- Filter tabs (All/Trending/New UI ready)
+- Responsive design
+
+**About Page:**
+- Explanation of NostrGit and Nostr protocol
+- Problem/Solution format
+- NIP-34 information
+- Styled content cards
+
+**Docs Page (Stub):**
+- "Under construction" notice
+- 4 placeholder cards for future docs
+- Links to NIP-34 spec
+
+## Tech Stack
+
+- **Preact + HTM** - React-like UI from CDN
+- **Tailwind CSS** - Styling from CDN
+- **Native WebSockets** - No libraries needed
+- **Vanilla JS** - No TypeScript, no compilation
+
+## File Structure
+
+```
+experimental/
+├── index.html    # Everything in one file!
+└── README.md     # This file
 ```
 
-If the command above doesnt print out something like 
+## Next Steps
 
-`go version go1.20.2 linux/amd64`, 
+1. ✅ Explore page with full Nostr integration
+2. ✅ Navigation and hash-based routing
+3. ✅ Home, About, Docs pages
+4. ⏳ Make filters functional (Trending/New sorting)
+5. ⏳ Add search functionality
+6. ⏳ Repo detail pages?
+7. ⏳ Make it a PWA?
+8. ⏳ Deploy to GitHub Pages?
 
-you can follow [these instructions](https://go.dev/doc/install) to install go on your system.
+## Comparison
 
-```bash
-# change directory to gitnostr
-$ cd ../gitnostr/
-# compile the cli tool (requires go installation)
-$ make git-nostr-cli
-# Run the git-nostr-cli command once to create the default config file
-$ ./bin/gn
-```
+| Feature | Main Project | Experimental |
+|---------|-------------|--------------|
+| Files | 100+ | 1 |
+| npm packages | 456 | 0 |
+| Build time | ~30s | 0s |
+| Dev server | Next.js | Any (or none) |
+| TypeScript | Yes | No |
+| Dependencies | Outdated | Always latest (CDN) |
+| Setup time | 5-10 min | 0 sec |
 
-You should get the message `no relays connected`.
+## Philosophy
 
-Edit the config file at `~/.config/git-nostr/git-nostr-cli.json`. The file should look something like this
-
-```JSON
-{
-    "relays": ["wss://relay.damus.io", "wss://nostr.fmt.wiz.biz", "wss://nos.lol"],
-    "privateKey": "", // your nostr private key (hex)
-    "gitSshBase": "root@localhost" // the docker containers expect this
-}
-```
-
-You need to publish your public ssh key to the nostr relays to be able to interact with the git-nostr-bridge docker container.
-You may need to replace id_rsa.pub with the correct public key file.
-
-```bash
-./bin/gn ssh-key add ~/.ssh/id_rsa.pub
-```
-
-Create repository and clone it. Replace `<publickey>` with the hex representation of your public key. If you are using a nip05 capable public key you can use the nip05 identifier instead.
-
-```bash
-$ ./bin/gn repo create <repo_name>
-$ ./bin/gn repo clone  <publickey>:<repo_name>
-```
-
-To be able to push to the repository you can set write permission with the following command.
-
-```bash
-# public key must be in the hex format
-$ ./bin/gn repo permission <repo_name> <publickey> WRITE
-```
-
-If you are using a nip05 capable public key you can use the nip05 identifier instead.
-
-```bash
-$ ./bin/gn repo permission username@relayaddr WRITE
-```
-
-# Development
-
-Fork the repo
-
-```bash
-# install yarn packages
-$ yarn
-# run in development mode (localhost:3000)
-$ yarn dev
-```
-
-# Questions or discussions
-
-Have a question or a proposal? Create a [new issue](https://github.com/NostrGit/NostrGit/issues/new).
-
-# Contributing
-
-The NostrGit project operates an open contributor model where anyone is welcome to contribute towards development in the form of peer review, documentation, testing and patches. Anyone is invited to contribute without regard to technical experience, "expertise", OSS experience, age, or other concern.
-
-If you are new to contributing to open source projects, please see the [Open Source Guides](https://opensource.guide/how-to-contribute/) on how to get started.
-
-See [contribution guidelines](https://github.com/NostrGit/NostrGit/blob/main/documentation/development/contributing.md).
-
-You may also want to check out the [bitcoin-development](https://github.com/jonatack/bitcoin-development/blob/master/how-to-review-bitcoin-core-prs.md) repository about the principles of Bitcoin development in general. Most of them apply also here. 
-
-## Contributors
-
-<img src="https://contrib.rocks/image?repo=nostrgit/nostrgit" alt="list of contributors" />
-
-# Roadmap
-
-Product
-
-We need to define the product roadmap. We need to figure out what features we want to implement. If you have any idea, please feel free to create a new issue.
-
-UI
-
-- [ ] Mobile Breakpoints
-- [ ] Code
-  - [ ] Clone with HTTPS
-  - [ ] Clone with SSH
-  - [ ] Download ZIP
-- [ ] Issues
-  - [ ] Issues list
-    - [ ] Filter by open / closed issues
-  - [ ] Single issue
-    - [ ] Show details about the issue
-    - [ ] Commenting / comment threads
-  - [ ] New issue page
-- [ ] Pull Requests
-  - [ ] Pull requests list
-  - [ ] Single pull request page
-  - [ ] New pull request page
-- [ ] Discussions
-- [ ] Insights
-  - [ ] Repo statistics
-    - Merged pull requests
-    - Open pull requests
-    - Closed issues
-    - New issues
-  - [ ] Tabs
-    - [ ] Contributors
-    - [ ] Commits
-    - [ ] Code frequency
-    - [ ] Dependency graph
-    - [ ] Forks
-- [ ] Settings
-  - [ ] Edit repository name
-  - [ ] Toggle features
-    - Wikis
-    - Issues
-    - Discussions
-    - Pull requests
-      - Allow merge commits
-      - Allow squash merging
-      - Allow rebase merging
-  - [ ] Danger zone
-    - Change repo visibility
-    - Transfer ownership
-    - Delete repo
-  - [ ] Settings tabs
-    - [ ] General
-    - [ ] Access (collaborators)
-      - [ ] View collaborators
-      - [ ] Add collaborators
-      - [ ] Remove collaborators
-    - [ ] Branches
-      - [ ] Branch protection rules
-    - [ ] Tags
-    - [ ] Actions
-    - [ ] Secrets and variables
-
-Nostr
-
-- [ ] Login
-- [ ] Figure out decentralised data storage
-  - [ ] New repository: serve created repository with [GitTorrent](https://github.com/cjb/GitTorrent)
-  - [ ] Repo has a public key
-    ```JSON
-    {
-        "pubkey": "abcd123...",
-        "nrepo": "nrepo1ris1683fw6n2mvhl5h6dhqd8mqfv3wmxnz4qph83ua4dk4006ezsrt5c24"
-    }
-    ```
-  - [ ] Zap a repo
-    - [ ] Zap PRs
-  - [ ] Rate a repo
-  - [ ] Follow a repo
-  - [ ] Comment on a repo
-  - [ ] Add bounties
-
-Special Thanks
-
-<a href="https://vercel.com?utm_source=nostrgit&utm_campaign=oss"><img src="https://images.ctfassets.net/e5382hct74si/78Olo8EZRdUlcDUFQvnzG7/fa4cdb6dc04c40fceac194134788a0e2/1618983297-powered-by-vercel.svg" />
+Sometimes simpler is better. This proves NostrGit's core functionality works without the complexity.

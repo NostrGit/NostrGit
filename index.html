@@ -1,0 +1,2411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NostrGit - Decentralized Git on Nostr</title>
+  <meta name="description" content="A truly censorship-resistant alternative to GitHub built on the Nostr protocol">
+  <meta name="theme-color" content="#9333ea">
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lightgray: "#383B42",
+            dark: "#22262C",
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in {
+      animation: fadeIn 0.3s ease-out both;
+    }
+    .animate-fadeIn {
+      animation: fadeIn 0.2s ease-out;
+    }
+    body {
+      background: #0E1116;
+      color: white;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script type="module">
+    import { html, render, Component } from 'https://esm.sh/htm/preact/standalone';
+
+    // Lucide icons as inline SVGs
+    const Icon = ({ name, className = "h-4 w-4" }) => {
+      const icons = {
+        zap: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>`,
+        calendar: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`,
+        users: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>`,
+        user: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>`,
+        externalLink: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`,
+        globe: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+        tag: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"/></svg>`,
+        terminal: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>`,
+        copy: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>`,
+        check: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>`,
+        trendingUp: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>`,
+        clock: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+        home: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>`,
+        info: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+        gitBranch: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 20h10m-5-4v4m-5.343-6.657l-4.95-4.95m0 0a3 3 0 104.243-4.242 3 3 0 00-4.242 4.242zM17 11a3 3 0 100-6 3 3 0 000 6zm0 0a3 3 0 100 6 3 3 0 000-6zm0 0v6"/></svg>`,
+        book: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg>`,
+        messageCircle: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>`,
+        arrowRight: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>`,
+        alertCircle: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+        checkCircle: html`<svg class="${className}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>`,
+      };
+      return icons[name] || html`<span>?</span>`;
+    };
+
+    // Navigation Component
+    const Navigation = ({ currentPage, nostrPubkey, nostrConnecting, onConnect, onDisconnect }) => {
+      const navItems = [
+        { name: 'Home', path: '', icon: 'home' },
+        { name: 'Explore', path: 'explore', icon: 'zap' },
+        { name: 'Issues', path: 'issues', icon: 'messageCircle' },
+        { name: 'About', path: 'about', icon: 'info' },
+        { name: 'Docs', path: 'docs', icon: 'book' },
+      ];
+
+      return html`
+        <nav class="border-b border-lightgray bg-dark/50 backdrop-blur-sm sticky top-0 z-50">
+          <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+              <div class="flex items-center gap-2">
+                <${Icon} name="gitBranch" className="h-8 w-8 text-purple-500" />
+                <span class="text-2xl font-bold bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
+                  NostrGit
+                </span>
+              </div>
+              <div class="flex items-center gap-4">
+                <div class="flex items-center gap-1">
+                  ${navItems.map(item => html`
+                    <a
+                      href=${`#${item.path}`}
+                      class="${currentPage === item.path ? 'bg-purple-600 text-white' : 'text-gray-400 hover:text-white hover:bg-dark'} px-4 py-2 rounded-lg transition-all duration-200 flex items-center gap-2"
+                    >
+                      <${Icon} name=${item.icon} className="h-4 w-4" />
+                      ${item.name}
+                    </a>
+                  `)}
+                </div>
+
+                ${nostrPubkey ? html`
+                  <div class="flex items-center gap-2 px-3 py-1.5 bg-green-500/10 border border-green-500/30 rounded-lg">
+                    <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                    <span class="text-sm text-green-300 font-mono">${nostrPubkey.substring(0, 8)}...</span>
+                    <button
+                      onClick=${onDisconnect}
+                      class="ml-2 text-xs text-gray-400 hover:text-white transition-colors"
+                      title="Disconnect"
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ` : html`
+                  <button
+                    onClick=${onConnect}
+                    disabled=${nostrConnecting}
+                    class="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-lg text-sm font-medium transition-colors flex items-center gap-2"
+                  >
+                    ${nostrConnecting ? html`
+                      <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Connecting...</span>
+                    ` : html`
+                      <${Icon} name="zap" className="h-4 w-4" />
+                      <span>Connect</span>
+                    `}
+                  </button>
+                `}
+              </div>
+            </div>
+          </div>
+        </nav>
+      `;
+    };
+
+    // Home Page Component
+    const HomePage = () => html`
+      <div class="min-h-screen">
+        <!-- Hero Section -->
+        <div class="relative overflow-hidden bg-gradient-to-br from-purple-900/30 via-dark to-dark border-b border-lightgray">
+          <div class="container mx-auto px-4 py-24 text-center">
+            <div class="flex justify-center mb-6">
+              <${Icon} name="gitBranch" className="h-20 w-20 text-purple-500" />
+            </div>
+            <h1 class="text-6xl font-bold mb-6 bg-gradient-to-r from-white via-purple-200 to-purple-500 bg-clip-text text-transparent">
+              Welcome to NostrGit
+            </h1>
+            <p class="text-2xl text-gray-400 max-w-3xl mx-auto mb-12">
+              A truly censorship-resistant alternative to GitHub that has a chance of working
+            </p>
+            <div class="flex justify-center gap-4">
+              <a
+                href="#explore"
+                class="px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-lg text-lg font-semibold transition-all duration-200 hover:scale-105"
+              >
+                Explore Repositories
+              </a>
+              <a
+                href="#about"
+                class="px-8 py-4 bg-dark border border-lightgray hover:border-purple-500 rounded-lg text-lg font-semibold transition-all duration-200"
+              >
+                Learn More
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Features Section -->
+        <div class="container mx-auto px-4 py-16">
+          <h2 class="text-4xl font-bold text-center mb-12">Why NostrGit?</h2>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div class="p-6 bg-dark border border-lightgray rounded-lg hover:border-purple-500 transition-all duration-200">
+              <div class="mb-4">
+                <${Icon} name="zap" className="h-12 w-12 text-purple-500" />
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Decentralized</h3>
+              <p class="text-gray-400">
+                Built on Nostr protocol. No single point of failure or control. Your code, your control.
+              </p>
+            </div>
+            <div class="p-6 bg-dark border border-lightgray rounded-lg hover:border-purple-500 transition-all duration-200">
+              <div class="mb-4">
+                <${Icon} name="globe" className="h-12 w-12 text-blue-500" />
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Censorship Resistant</h3>
+              <p class="text-gray-400">
+                No gatekeepers. No takedowns. Your repositories stay online as long as one relay exists.
+              </p>
+            </div>
+            <div class="p-6 bg-dark border border-lightgray rounded-lg hover:border-purple-500 transition-all duration-200">
+              <div class="mb-4">
+                <${Icon} name="users" className="h-12 w-12 text-green-500" />
+              </div>
+              <h3 class="text-xl font-semibold mb-3">Community Owned</h3>
+              <p class="text-gray-400">
+                Open source, community driven. No corporate overlords deciding what you can or cannot host.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="container mx-auto px-4 py-16">
+          <div class="bg-gradient-to-r from-purple-900/50 to-blue-900/50 rounded-lg p-12 text-center border border-purple-500/30">
+            <h2 class="text-3xl font-bold mb-4">Ready to get started?</h2>
+            <p class="text-gray-400 mb-8 text-lg">
+              Explore decentralized repositories on the Nostr network
+            </p>
+            <a
+              href="#explore"
+              class="inline-block px-8 py-4 bg-purple-600 hover:bg-purple-700 rounded-lg text-lg font-semibold transition-all duration-200 hover:scale-105"
+            >
+              Browse Repositories
+            </a>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // About Page Component
+    const AboutPage = () => html`
+      <div class="min-h-screen">
+        <div class="container mx-auto px-4 py-16 max-w-4xl">
+          <h1 class="text-5xl font-bold mb-8 bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
+            About NostrGit
+          </h1>
+
+          <div class="prose prose-invert max-w-none space-y-6 text-gray-300">
+            <p class="text-xl leading-relaxed">
+              NostrGit is a decentralized alternative to centralized code hosting platforms, built on the Nostr protocol.
+            </p>
+
+            <div class="bg-dark border border-lightgray rounded-lg p-6 my-8">
+              <h2 class="text-2xl font-bold mb-4 text-white">What is Nostr?</h2>
+              <p class="text-gray-400">
+                Nostr (Notes and Other Stuff Transmitted by Relays) is a simple, open protocol that enables truly censorship-resistant
+                global networks. It uses cryptographic keys and signatures to ensure authenticity and enables anyone to run a relay.
+              </p>
+            </div>
+
+            <h2 class="text-3xl font-bold mt-12 mb-4 text-white">The Problem</h2>
+            <p>
+              Traditional code hosting platforms are centralized, which means:
+            </p>
+            <ul class="list-disc list-inside space-y-2 ml-4">
+              <li>They can censor or remove repositories at will</li>
+              <li>They control who can access what</li>
+              <li>They can be subject to government takedown requests</li>
+              <li>If the platform shuts down, your code hosting is gone</li>
+            </ul>
+
+            <h2 class="text-3xl font-bold mt-12 mb-4 text-white">The Solution</h2>
+            <p>
+              NostrGit leverages the Nostr protocol to create a truly decentralized code hosting solution:
+            </p>
+            <ul class="list-disc list-inside space-y-2 ml-4">
+              <li>Repositories are announced as Nostr events (NIP-34)</li>
+              <li>Multiple relays host the same information</li>
+              <li>No single point of failure</li>
+              <li>Cryptographic verification ensures authenticity</li>
+              <li>Anyone can run a relay and participate</li>
+            </ul>
+
+            <div class="bg-purple-900/20 border border-purple-500/30 rounded-lg p-6 my-8">
+              <h2 class="text-2xl font-bold mb-4 text-white">NIP-34: Git Repository Announcements</h2>
+              <p class="text-gray-400">
+                NostrGit implements NIP-34, which defines how Git repositories are announced on Nostr using kind 30617 events.
+                These events contain repository metadata like name, description, clone URLs, maintainers, and more.
+              </p>
+            </div>
+
+            <h2 class="text-3xl font-bold mt-12 mb-4 text-white">Open Source</h2>
+            <p>
+              NostrGit is fully open source and community-driven. Check out the code on GitHub and contribute!
+            </p>
+
+            <div class="mt-12 pt-8 border-t border-lightgray">
+              <p class="text-sm text-gray-500">
+                Built with ❤️ by the Nostr community
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Docs Page Component (Stub)
+    const DocsPage = () => html`
+      <div class="min-h-screen">
+        <div class="container mx-auto px-4 py-16 max-w-4xl">
+          <h1 class="text-5xl font-bold mb-8 bg-gradient-to-r from-white to-purple-400 bg-clip-text text-transparent">
+            Documentation
+          </h1>
+
+          <div class="bg-yellow-900/20 border border-yellow-500/30 rounded-lg p-6 mb-8">
+            <div class="flex items-center gap-3 mb-2">
+              <${Icon} name="info" className="h-6 w-6 text-yellow-500" />
+              <h2 class="text-xl font-semibold text-yellow-400">Under Construction</h2>
+            </div>
+            <p class="text-gray-400">
+              Documentation is being written. Check back soon!
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-dark border border-lightgray rounded-lg p-6 hover:border-purple-500 transition-all">
+              <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                <${Icon} name="book" className="h-5 w-5 text-purple-500" />
+                Getting Started
+              </h3>
+              <p class="text-gray-400 mb-4">
+                Learn how to announce your repository on Nostr and get started with NostrGit.
+              </p>
+              <span class="text-sm text-purple-400">Coming soon...</span>
+            </div>
+
+            <div class="bg-dark border border-lightgray rounded-lg p-6 hover:border-purple-500 transition-all">
+              <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                <${Icon} name="terminal" className="h-5 w-5 text-green-500" />
+                CLI Tools
+              </h3>
+              <p class="text-gray-400 mb-4">
+                Command-line tools for working with NostrGit repositories.
+              </p>
+              <span class="text-sm text-purple-400">Coming soon...</span>
+            </div>
+
+            <div class="bg-dark border border-lightgray rounded-lg p-6 hover:border-purple-500 transition-all">
+              <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                <${Icon} name="gitBranch" className="h-5 w-5 text-blue-500" />
+                NIP-34 Spec
+              </h3>
+              <p class="text-gray-400 mb-4">
+                Technical specification for Git repository events on Nostr.
+              </p>
+              <a href="https://github.com/nostr-protocol/nips/blob/master/34.md" target="_blank" class="text-sm text-purple-400 hover:text-purple-300 flex items-center gap-1">
+                View on GitHub <${Icon} name="externalLink" className="h-3 w-3" />
+              </a>
+            </div>
+
+            <div class="bg-dark border border-lightgray rounded-lg p-6 hover:border-purple-500 transition-all">
+              <h3 class="text-xl font-semibold mb-3 flex items-center gap-2">
+                <${Icon} name="users" className="h-5 w-5 text-yellow-500" />
+                Contributing
+              </h3>
+              <p class="text-gray-400 mb-4">
+                How to contribute to NostrGit development.
+              </p>
+              <span class="text-sm text-purple-400">Coming soon...</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Repository Page Component with Tabs
+    class RepoPage extends Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          activeTab: 'overview',
+          copiedClone: false,
+          showNewIssue: false
+        };
+      }
+
+      handleCopyClone(cloneUrl) {
+        navigator.clipboard.writeText(`git clone ${cloneUrl}`).then(() => {
+          this.setState({ copiedClone: true });
+          setTimeout(() => this.setState({ copiedClone: false }), 2000);
+        });
+      }
+
+      formatDate(timestamp) {
+        const now = Date.now() / 1000;
+        const diff = now - timestamp;
+
+        if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+        if (diff < 2592000) return `${Math.floor(diff / 86400)}d ago`;
+
+        return new Date(timestamp * 1000).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      }
+
+      render() {
+        const { repo, allIssues = [] } = this.props;
+        const { activeTab, copiedClone } = this.state;
+
+        if (!repo) {
+          return html`
+            <div class="min-h-screen flex items-center justify-center">
+              <div class="text-center">
+                <${Icon} name="alertCircle" className="h-16 w-16 text-gray-500 mx-auto mb-4" />
+                <h2 class="text-2xl font-bold text-white mb-2">Repository not found</h2>
+                <p class="text-gray-400 mb-6">This repository could not be loaded</p>
+                <a href="#explore" class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors">
+                  Back to Explore
+                </a>
+              </div>
+            </div>
+          `;
+        }
+
+        // Filter issues for this repository
+        const repoIssues = allIssues.filter(issue => {
+          if (!issue.repository) return false;
+          // Match by identifier or name
+          const repoParts = issue.repository.split(':');
+          const repoId = repoParts[repoParts.length - 1];
+          return repoId === repo.identifier || repoId === repo.name;
+        });
+
+        return html`
+          <div class="min-h-screen">
+            <!-- Header -->
+            <div class="bg-gradient-to-br from-purple-900/20 via-dark to-dark border-b border-lightgray">
+              <div class="container mx-auto px-4 py-8">
+                <div class="flex items-center gap-2 text-sm text-gray-400 mb-4">
+                  <a href="#explore" class="hover:text-purple-400 transition-colors">Explore</a>
+                  <${Icon} name="arrowRight" className="h-3 w-3" />
+                  <span class="text-white">${repo.name}</span>
+                </div>
+
+                <div class="flex items-start justify-between gap-4 mb-6">
+                  <div class="flex-1">
+                    <h1 class="text-4xl font-bold text-white mb-3">${repo.name}</h1>
+                    ${repo.description ? html`
+                      <p class="text-xl text-gray-300 leading-relaxed">${repo.description}</p>
+                    ` : null}
+                  </div>
+                </div>
+
+                <!-- Tab Navigation -->
+                <div class="flex items-center gap-2 border-b border-lightgray -mb-px">
+                  <button
+                    onClick=${() => this.setState({ activeTab: 'overview' })}
+                    class="${activeTab === 'overview' ? 'border-purple-500 text-white' : 'border-transparent text-gray-400 hover:text-white'} px-4 py-3 border-b-2 font-medium transition-colors"
+                  >
+                    Overview
+                  </button>
+                  <button
+                    onClick=${() => this.setState({ activeTab: 'issues' })}
+                    class="${activeTab === 'issues' ? 'border-purple-500 text-white' : 'border-transparent text-gray-400 hover:text-white'} px-4 py-3 border-b-2 font-medium transition-colors flex items-center gap-2"
+                  >
+                    <${Icon} name="messageCircle" className="h-4 w-4" />
+                    Issues
+                    ${repoIssues.length > 0 ? html`
+                      <span class="px-2 py-0.5 bg-purple-500/20 border border-purple-500/30 rounded-full text-xs text-purple-300">
+                        ${repoIssues.length}
+                      </span>
+                    ` : null}
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="container mx-auto px-4 py-8">
+              ${activeTab === 'overview' ? html`
+                <div class="max-w-4xl space-y-6">
+                  <!-- Clone URL -->
+                  ${repo.clone ? html`
+                    <div class="bg-gradient-to-br from-[#0E1116] to-[#0A0C0F] border border-purple-500/20 rounded-lg p-6">
+                      <div class="flex items-center gap-2 mb-4">
+                        <${Icon} name="terminal" className="h-5 w-5 text-purple-400" />
+                        <h2 class="text-xl font-semibold text-white">Clone Repository</h2>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <code class="flex-1 px-4 py-3 bg-black/40 rounded font-mono text-sm border border-lightgray text-purple-300 break-all">
+                          git clone ${repo.clone}
+                        </code>
+                        <button
+                          onClick=${() => this.handleCopyClone(repo.clone)}
+                          class="p-3 bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/30 hover:border-purple-500/50 rounded transition-all"
+                          title="Copy to clipboard"
+                        >
+                          ${copiedClone
+                            ? html`<${Icon} name="check" className="h-5 w-5 text-green-400" />`
+                            : html`<${Icon} name="copy" className="h-5 w-5 text-purple-400" />`
+                          }
+                        </button>
+                      </div>
+                    </div>
+                  ` : null}
+
+                  <!-- Website -->
+                  ${repo.web ? html`
+                    <div class="bg-dark border border-lightgray rounded-lg p-6">
+                      <div class="flex items-center gap-2 mb-4">
+                        <${Icon} name="globe" className="h-5 w-5 text-blue-400" />
+                        <h2 class="text-xl font-semibold text-white">Website</h2>
+                      </div>
+                      <a
+                        href=${repo.web}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="inline-flex items-center gap-2 px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 hover:border-blue-500/50 rounded-lg text-blue-300 hover:text-blue-200 transition-all"
+                      >
+                        <span class="break-all">${repo.web}</span>
+                        <${Icon} name="externalLink" className="h-4 w-4 flex-shrink-0" />
+                      </a>
+                    </div>
+                  ` : null}
+
+                  <!-- Topics -->
+                  ${repo.topics && repo.topics.length > 0 ? html`
+                    <div class="bg-dark border border-lightgray rounded-lg p-6">
+                      <div class="flex items-center gap-2 mb-4">
+                        <${Icon} name="tag" className="h-5 w-5 text-purple-400" />
+                        <h2 class="text-xl font-semibold text-white">Topics</h2>
+                      </div>
+                      <div class="flex flex-wrap gap-2">
+                        ${repo.topics.map(topic => html`
+                          <span class="px-3 py-1.5 bg-purple-500/10 border border-purple-500/30 rounded-lg text-sm text-purple-300">
+                            ${topic}
+                          </span>
+                        `)}
+                      </div>
+                    </div>
+                  ` : null}
+
+                  <!-- Maintainers -->
+                  ${repo.maintainers && repo.maintainers.length > 0 ? html`
+                    <div class="bg-dark border border-lightgray rounded-lg p-6">
+                      <div class="flex items-center gap-2 mb-4">
+                        <${Icon} name="users" className="h-5 w-5 text-green-400" />
+                        <h2 class="text-xl font-semibold text-white">Maintainers</h2>
+                      </div>
+                      <div class="space-y-2">
+                        ${repo.maintainers.map(maintainer => html`
+                          <a
+                            href=${`https://nostr.eu/${maintainer}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center gap-3 px-3 py-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 hover:border-blue-500/40 rounded-lg transition-all group"
+                          >
+                            <${Icon} name="user" className="h-4 w-4 text-blue-400" />
+                            <code class="flex-1 font-mono text-sm text-blue-300 break-all">${maintainer}</code>
+                            <${Icon} name="externalLink" className="h-4 w-4 text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity" />
+                          </a>
+                        `)}
+                      </div>
+                    </div>
+                  ` : null}
+
+                  <!-- Metadata -->
+                  <div class="bg-dark border border-lightgray rounded-lg p-6">
+                    <div class="flex items-center gap-2 mb-4">
+                      <${Icon} name="info" className="h-5 w-5 text-gray-400" />
+                      <h2 class="text-xl font-semibold text-white">Metadata</h2>
+                    </div>
+                    <div class="space-y-3">
+                      <div class="flex items-center gap-3">
+                        <${Icon} name="calendar" className="h-4 w-4 text-gray-400" />
+                        <span class="text-sm text-gray-400">Created:</span>
+                        <span class="text-sm text-white font-mono">
+                          ${new Date(repo.created_at * 1000).toLocaleString()}
+                        </span>
+                      </div>
+                      <div class="flex items-start gap-3">
+                        <${Icon} name="user" className="h-4 w-4 text-gray-400 mt-0.5" />
+                        <span class="text-sm text-gray-400">Owner:</span>
+                        <a
+                          href=${`https://nostr.eu/${repo.pubkey}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="flex-1 font-mono text-sm text-purple-300 hover:text-purple-200 break-all transition-colors"
+                        >
+                          ${repo.pubkey}
+                        </a>
+                      </div>
+                      ${repo.identifier ? html`
+                        <div class="flex items-center gap-3">
+                          <${Icon} name="tag" className="h-4 w-4 text-gray-400" />
+                          <span class="text-sm text-gray-400">Identifier:</span>
+                          <code class="text-sm text-white font-mono">${repo.identifier}</code>
+                        </div>
+                      ` : null}
+                      <div class="flex items-center gap-3">
+                        <${Icon} name="zap" className="h-4 w-4 text-gray-400" />
+                        <span class="text-sm text-gray-400">Event ID:</span>
+                        <code class="flex-1 text-sm text-gray-300 font-mono break-all">${repo.id}</code>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ` : activeTab === 'issues' ? html`
+                <div class="max-w-6xl">
+                  <!-- New Issue Button -->
+                  ${this.props.nostrPubkey ? html`
+                    <div class="mb-6">
+                      <button
+                        onClick=${() => this.setState({ showNewIssue: true })}
+                        class="px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg font-medium transition-colors flex items-center gap-2"
+                      >
+                        <${Icon} name="messageCircle" className="h-4 w-4" />
+                        New Issue
+                      </button>
+                    </div>
+                  ` : html`
+                    <div class="mb-6 p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg text-yellow-300 text-sm">
+                      <${Icon} name="info" className="h-4 w-4 inline mr-2" />
+                      Connect your Nostr extension to create issues
+                    </div>
+                  `}
+
+                  ${repoIssues.length > 0 ? html`
+                    <div class="space-y-4">
+                      ${repoIssues.sort((a, b) => b.created_at - a.created_at).map(issue => html`
+                        <a
+                          href=${'#issues'}
+                          class="block group p-6 bg-dark border-lightgray hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10 rounded-lg border"
+                        >
+                          <div class="flex items-start gap-4">
+                            <${Icon} name=${issue.status === 'closed' ? 'checkCircle' : 'alertCircle'}
+                              className=${`h-6 w-6 flex-shrink-0 mt-1 ${issue.status === 'closed' ? 'text-purple-500' : 'text-green-500'}`}
+                            />
+
+                            <div class="flex-1 min-w-0">
+                              <div class="flex items-start justify-between gap-4 mb-2">
+                                <h3 class="text-lg font-semibold text-white group-hover:text-purple-400 transition-colors">
+                                  ${issue.title}
+                                </h3>
+                                <${Icon} name="arrowRight" className="h-5 w-5 text-gray-500 group-hover:text-purple-400 transition-colors flex-shrink-0" />
+                              </div>
+
+                              ${issue.content ? html`
+                                <p class="text-gray-400 text-sm line-clamp-2 leading-relaxed mb-3">
+                                  ${issue.content}
+                                </p>
+                              ` : null}
+
+                              <div class="flex items-center gap-4 text-sm text-gray-500">
+                                <span class="flex items-center gap-1">
+                                  <${Icon} name="calendar" className="h-3 w-3" />
+                                  ${this.formatDate(issue.created_at)}
+                                </span>
+
+                                ${issue.replies && issue.replies.length > 0 ? html`
+                                  <span class="flex items-center gap-1 text-purple-400">
+                                    <${Icon} name="messageCircle" className="h-3 w-3" />
+                                    ${issue.replies.length}
+                                  </span>
+                                ` : null}
+                              </div>
+                            </div>
+                          </div>
+                        </a>
+                      `)}
+                    </div>
+                  ` : html`
+                    <div class="text-center py-16 bg-dark/50 border border-lightgray rounded-lg">
+                      <${Icon} name="messageCircle" className="h-16 w-16 text-gray-600 mx-auto mb-4" />
+                      <h3 class="text-xl font-semibold text-white mb-2">No issues yet</h3>
+                      <p class="text-gray-400">
+                        This repository doesn't have any issues announced on Nostr
+                      </p>
+                    </div>
+                  `}
+                </div>
+              ` : null}
+            </div>
+
+            <!-- New Issue Form Modal -->
+            ${this.state.showNewIssue ? html`
+              <${NewIssueForm}
+                repo=${repo}
+                nostrPubkey=${this.props.nostrPubkey}
+                publishEvent=${this.props.publishEvent}
+                onSuccess=${this.props.onNewIssue}
+                onClose=${() => this.setState({ showNewIssue: false })}
+              />
+            ` : null}
+          </div>
+        `;
+      }
+    }
+
+    // New Issue Form Component
+    class NewIssueForm extends Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          title: '',
+          description: '',
+          submitting: false,
+          error: null
+        };
+      }
+
+      async handleSubmit(e) {
+        e.preventDefault();
+        const { title, description } = this.state;
+        const { repo, nostrPubkey, publishEvent, onSuccess, onClose } = this.props;
+
+        if (!title.trim()) {
+          this.setState({ error: 'Title is required' });
+          return;
+        }
+
+        this.setState({ submitting: true, error: null });
+
+        try {
+          // Create NIP-34 issue event (kind 30618)
+          const event = {
+            kind: 30618,
+            created_at: Math.floor(Date.now() / 1000),
+            tags: [
+              ['d', `${Date.now()}`], // unique identifier
+              ['title', title],
+              ['a', `30617:${repo.pubkey}:${repo.identifier || repo.name}`], // repository reference
+              ['status', 'open']
+            ],
+            content: description
+          };
+
+          const result = await publishEvent(event);
+
+          if (result.successful > 0) {
+            this.setState({ title: '', description: '', submitting: false });
+            if (onSuccess) onSuccess(result.signedEvent);
+            if (onClose) onClose();
+            alert(`Issue created successfully! Published to ${result.successful}/${result.total} relays.`);
+          } else {
+            throw new Error('Failed to publish to any relay');
+          }
+        } catch (error) {
+          console.error('Failed to create issue:', error);
+          this.setState({
+            error: error.message || 'Failed to create issue',
+            submitting: false
+          });
+        }
+      }
+
+      render() {
+        const { onClose } = this.props;
+        const { title, description, submitting, error } = this.state;
+
+        return html`
+          <div class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn"
+               onClick=${(e) => e.target === e.currentTarget && onClose()}>
+            <div class="bg-dark border border-purple-500/30 rounded-lg max-w-2xl w-full shadow-2xl shadow-purple-500/20">
+              <!-- Header -->
+              <div class="bg-gradient-to-r from-purple-900/50 to-dark border-b border-purple-500/30 p-6">
+                <div class="flex items-center justify-between">
+                  <h2 class="text-2xl font-bold text-white">New Issue</h2>
+                  <button
+                    onClick=${onClose}
+                    class="p-2 hover:bg-purple-500/20 rounded-lg transition-colors"
+                    title="Close"
+                  >
+                    <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Form -->
+              <form onSubmit=${(e) => this.handleSubmit(e)} class="p-6 space-y-4">
+                ${error ? html`
+                  <div class="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-300">
+                    ${error}
+                  </div>
+                ` : null}
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-300 mb-2">
+                    Title *
+                  </label>
+                  <input
+                    type="text"
+                    value=${title}
+                    onInput=${(e) => this.setState({ title: e.target.value })}
+                    disabled=${submitting}
+                    placeholder="Brief description of the issue"
+                    class="w-full px-4 py-2 bg-black/40 border border-lightgray rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 disabled:opacity-50"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label class="block text-sm font-medium text-gray-300 mb-2">
+                    Description
+                  </label>
+                  <textarea
+                    value=${description}
+                    onInput=${(e) => this.setState({ description: e.target.value })}
+                    disabled=${submitting}
+                    placeholder="Detailed description of the issue..."
+                    rows="8"
+                    class="w-full px-4 py-2 bg-black/40 border border-lightgray rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 disabled:opacity-50 resize-none"
+                  ></textarea>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 pt-4">
+                  <button
+                    type="button"
+                    onClick=${onClose}
+                    disabled=${submitting}
+                    class="px-4 py-2 text-gray-400 hover:text-white transition-colors disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled=${submitting || !title.trim()}
+                    class="px-6 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-600 disabled:cursor-not-allowed rounded-lg font-medium transition-colors flex items-center gap-2"
+                  >
+                    ${submitting ? html`
+                      <div class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      <span>Creating...</span>
+                    ` : 'Create Issue'}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Issue Detail Modal with Thread View
+    class IssueDetailModal extends Component {
+      constructor(props) {
+        super(props);
+        this.state = {
+          replyText: '',
+          submitting: false,
+          error: null
+        };
+      }
+
+      async handleReplySubmit(e) {
+        e.preventDefault();
+        const { replyText } = this.state;
+        const { issue, nostrPubkey, publishEvent } = this.props;
+
+        if (!replyText.trim()) {
+          this.setState({ error: 'Reply cannot be empty' });
+          return;
+        }
+
+        if (!nostrPubkey) {
+          this.setState({ error: 'Please connect your Nostr extension first' });
+          return;
+        }
+
+        this.setState({ submitting: true, error: null });
+
+        try {
+          // Create NIP-34 reply event (kind 1621)
+          const event = {
+            kind: 1621,
+            created_at: Math.floor(Date.now() / 1000),
+            tags: [
+              ['e', issue.id, '', 'reply'], // Event being replied to
+              ['p', issue.pubkey] // Notify issue author
+            ],
+            content: replyText
+          };
+
+          const result = await publishEvent(event);
+
+          if (result.successful > 0) {
+            this.setState({ replyText: '', submitting: false });
+            alert(`Reply posted successfully! Published to ${result.successful}/${result.total} relays.`);
+          } else {
+            throw new Error('Failed to publish to any relay');
+          }
+        } catch (error) {
+          console.error('Failed to post reply:', error);
+          this.setState({
+            error: error.message || 'Failed to post reply',
+            submitting: false
+          });
+        }
+      }
+
+      render() {
+        const { issue, onClose, nostrPubkey } = this.props;
+        const { replyText, submitting, error } = this.state;
+
+        if (!issue) return null;
+
+        const handleBackdropClick = (e) => {
+          if (e.target === e.currentTarget) {
+            onClose();
+          }
+        };
+
+        return html`
+        <div
+          class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 animate-fadeIn"
+          onClick=${handleBackdropClick}
+        >
+          <div class="bg-dark border border-purple-500/30 rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl shadow-purple-500/20">
+            <!-- Header -->
+            <div class="sticky top-0 bg-gradient-to-r from-purple-900/50 to-dark border-b border-purple-500/30 p-6 backdrop-blur-sm">
+              <div class="flex items-start justify-between gap-4">
+                <div class="flex-1">
+                  <div class="flex items-center gap-3 mb-2">
+                    <${Icon} name=${issue.status === 'closed' ? 'checkCircle' : 'alertCircle'}
+                      className=${`h-6 w-6 ${issue.status === 'closed' ? 'text-purple-500' : 'text-green-500'}`}
+                    />
+                    <h2 class="text-2xl font-bold text-white">${issue.title}</h2>
+                  </div>
+                  <div class="flex items-center gap-4 text-sm text-gray-400">
+                    <span class="${issue.status === 'closed' ? 'text-purple-400' : 'text-green-400'} font-semibold">
+                      ${issue.status === 'closed' ? 'Closed' : 'Open'}
+                    </span>
+                    <span class="flex items-center gap-1">
+                      <${Icon} name="calendar" className="h-3 w-3" />
+                      ${new Date(issue.created_at * 1000).toLocaleDateString()}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick=${onClose}
+                  class="p-2 hover:bg-purple-500/20 rounded-lg transition-colors flex-shrink-0"
+                  title="Close"
+                >
+                  <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Content -->
+            <div class="p-6">
+              <!-- Issue Body -->
+              <div class="bg-gradient-to-br from-[#0E1116] to-[#0A0C0F] border border-lightgray rounded-lg p-6 mb-6">
+                <div class="flex items-center gap-3 mb-4">
+                  <a
+                    href=${`https://nostr.eu/${issue.pubkey}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="flex items-center gap-2 text-sm text-gray-400 hover:text-purple-400 transition-colors"
+                  >
+                    <${Icon} name="user" className="h-4 w-4" />
+                    <span class="font-mono">${issue.pubkey.substring(0, 16)}...</span>
+                  </a>
+                  <span class="text-gray-600">•</span>
+                  <span class="text-sm text-gray-500">
+                    ${new Date(issue.created_at * 1000).toLocaleString()}
+                  </span>
+                </div>
+                ${issue.content ? html`
+                  <div class="prose prose-invert max-w-none">
+                    <p class="text-gray-300 whitespace-pre-wrap leading-relaxed">${issue.content}</p>
+                  </div>
+                ` : html`<p class="text-gray-500 italic">No description provided</p>`}
+              </div>
+
+              <!-- Replies Section -->
+              <div class="space-y-4">
+                <h3 class="text-lg font-semibold text-white flex items-center gap-2">
+                  <${Icon} name="messageCircle" className="h-5 w-5 text-purple-400" />
+                  Replies (${issue.replies ? issue.replies.length : 0})
+                </h3>
+
+                ${issue.replies && issue.replies.length > 0 ? html`
+                  <div class="space-y-3">
+                    ${issue.replies.sort((a, b) => a.created_at - b.created_at).map(reply => html`
+                      <div class="bg-dark border border-lightgray rounded-lg p-4 hover:border-purple-500/30 transition-all">
+                        <div class="flex items-center gap-3 mb-3">
+                          <a
+                            href=${`https://nostr.eu/${reply.pubkey}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="flex items-center gap-2 text-sm text-gray-400 hover:text-purple-400 transition-colors"
+                          >
+                            <${Icon} name="user" className="h-3 w-3" />
+                            <span class="font-mono">${reply.pubkey.substring(0, 12)}...</span>
+                          </a>
+                          <span class="text-gray-600">•</span>
+                          <span class="text-xs text-gray-500">
+                            ${new Date(reply.created_at * 1000).toLocaleString()}
+                          </span>
+                        </div>
+                        <p class="text-gray-300 text-sm whitespace-pre-wrap leading-relaxed">${reply.content}</p>
+                      </div>
+                    `)}
+                  </div>
+                ` : html`
+                  <div class="text-center py-8 bg-dark/50 border border-lightgray rounded-lg">
+                    <${Icon} name="messageCircle" className="h-12 w-12 text-gray-600 mx-auto mb-3" />
+                    <p class="text-gray-500">No replies yet</p>
+                  </div>
+                `}
+              </div>
+
+              <!-- Reply Form -->
+              ${nostrPubkey ? html`
+                <div class="mt-6 pt-6 border-t border-lightgray">
+                  <h4 class="text-md font-semibold text-white mb-4">Add a Reply</h4>
+
+                  ${error ? html`
+                    <div class="mb-4 p-3 bg-red-900/20 border border-red-500/30 rounded-lg">
+                      <p class="text-sm text-red-400">${error}</p>
+                    </div>
+                  ` : null}
+
+                  <form onSubmit=${(e) => this.handleReplySubmit(e)} class="space-y-3">
+                    <textarea
+                      class="w-full h-24 bg-dark border border-lightgray rounded-lg px-4 py-3 text-gray-300 placeholder-gray-500 focus:outline-none focus:border-purple-500 transition-colors resize-none"
+                      placeholder="Write your reply..."
+                      value=${replyText}
+                      onInput=${(e) => this.setState({ replyText: e.target.value })}
+                      disabled=${submitting}
+                    ></textarea>
+
+                    <div class="flex justify-end">
+                      <button
+                        type="submit"
+                        disabled=${submitting || !replyText.trim()}
+                        class="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-gray-700 disabled:cursor-not-allowed rounded-lg font-medium transition-colors flex items-center gap-2"
+                      >
+                        ${submitting ? html`
+                          <svg class="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          <span>Posting...</span>
+                        ` : html`
+                          <${Icon} name="send" className="h-4 w-4" />
+                          <span>Post Reply</span>
+                        `}
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              ` : html`
+                <div class="mt-6 pt-6 border-t border-lightgray">
+                  <div class="p-4 bg-yellow-900/20 border border-yellow-500/30 rounded-lg text-center">
+                    <p class="text-yellow-400">Connect your Nostr extension to reply to this issue</p>
+                  </div>
+                </div>
+              `}
+
+              <!-- Metadata -->
+              ${issue.repository ? html`
+                <div class="mt-6 pt-6 border-t border-lightgray">
+                  <div class="flex items-center gap-2 text-sm text-gray-400">
+                    <${Icon} name="gitBranch" className="h-4 w-4" />
+                    <span>Repository:</span>
+                    <code class="text-purple-400">${issue.repository}</code>
+                  </div>
+                </div>
+              ` : null}
+            </div>
+          </div>
+        </div>
+      `;
+      }
+    }
+
+    // Issues Page Component
+    class IssuesPage extends Component {
+      constructor() {
+        super();
+        this.state = {
+          issues: [],
+          loading: true,
+          connectedRelays: 0,
+          eventCount: 0,
+          selectedIssue: null,
+          searchQuery: '',
+          statusFilter: 'all'
+        };
+        this.websockets = [];
+        this.seenEvents = new Set();
+        this.connectedRelayUrls = new Set();
+        this.issueReplies = new Map(); // Map issue IDs to their replies
+      }
+
+      componentDidMount() {
+        const relays = [
+          'wss://relay.nostr.net/',
+          'wss://nos.lol/',
+          'wss://relay.damus.io/',
+          'wss://nostr.wine/',
+          'wss://relay.snort.social/',
+          'wss://nostr.mom/',
+          'wss://relay.nostr.band/',
+          'wss://purplepag.es/',
+          'wss://offchain.pub/',
+        ];
+
+        relays.forEach((relayUrl, index) => {
+          try {
+            const ws = new WebSocket(relayUrl);
+
+            ws.onopen = () => {
+              if (!this.connectedRelayUrls.has(relayUrl)) {
+                this.connectedRelayUrls.add(relayUrl);
+                this.setState({ connectedRelays: this.connectedRelayUrls.size });
+              }
+
+              // Subscribe to issues (kind 30618)
+              const issueSubscription = JSON.stringify([
+                'REQ',
+                `issues-${index}`,
+                {
+                  kinds: [30618],
+                  limit: 50,
+                },
+              ]);
+              ws.send(issueSubscription);
+
+              // Subscribe to issue replies (kind 1621)
+              const repliesSubscription = JSON.stringify([
+                'REQ',
+                `replies-${index}`,
+                {
+                  kinds: [1621],
+                  limit: 200,
+                },
+              ]);
+              ws.send(repliesSubscription);
+            };
+
+            ws.onmessage = (event) => {
+              try {
+                const message = JSON.parse(event.data);
+
+                if (message[0] === 'EVENT' && message[2]) {
+                  const nostrEvent = message[2];
+
+                  if (this.seenEvents.has(nostrEvent.id)) {
+                    return;
+                  }
+                  this.seenEvents.add(nostrEvent.id);
+
+                  // Handle issue events (kind 30618)
+                  if (nostrEvent.kind === 30618) {
+                    const issueInfo = this.parseIssueInfo(nostrEvent);
+
+                    this.setState(prevState => {
+                      const exists = prevState.issues.some(i => i.id === issueInfo.id);
+                      if (exists) return prevState;
+
+                      const updated = [...prevState.issues, issueInfo];
+                      const sortedIssues = updated.sort((a, b) => b.created_at - a.created_at);
+
+                      // Notify parent of issues update
+                      if (this.props.onIssuesUpdate) {
+                        this.props.onIssuesUpdate(sortedIssues);
+                      }
+
+                      return {
+                        issues: sortedIssues,
+                        eventCount: prevState.eventCount + 1,
+                        loading: false
+                      };
+                    });
+                  }
+
+                  // Handle reply events (kind 1621)
+                  if (nostrEvent.kind === 1621) {
+                    const replyInfo = this.parseReplyInfo(nostrEvent);
+                    if (replyInfo.issueId) {
+                      // Store reply in map
+                      if (!this.issueReplies.has(replyInfo.issueId)) {
+                        this.issueReplies.set(replyInfo.issueId, []);
+                      }
+                      const replies = this.issueReplies.get(replyInfo.issueId);
+                      if (!replies.some(r => r.id === replyInfo.id)) {
+                        replies.push(replyInfo);
+
+                        // Update the corresponding issue with replies
+                        this.setState(prevState => {
+                          const updatedIssues = prevState.issues.map(issue => {
+                            if (issue.id === replyInfo.issueId || issue.identifier === replyInfo.issueId) {
+                              return { ...issue, replies: this.issueReplies.get(replyInfo.issueId) };
+                            }
+                            return issue;
+                          });
+
+                          // Notify parent of issues update
+                          if (this.props.onIssuesUpdate) {
+                            this.props.onIssuesUpdate(updatedIssues);
+                          }
+
+                          return { issues: updatedIssues };
+                        });
+                      }
+                    }
+                  }
+                } else if (message[0] === 'EOSE') {
+                  this.setState({ loading: false });
+                }
+              } catch (err) {
+                console.error('Error parsing message:', err);
+              }
+            };
+
+            ws.onerror = () => {
+              console.error(`Failed to connect to ${relayUrl}`);
+            };
+
+            ws.onclose = () => {
+              if (this.connectedRelayUrls.has(relayUrl)) {
+                this.connectedRelayUrls.delete(relayUrl);
+                this.setState({ connectedRelays: this.connectedRelayUrls.size });
+              }
+            };
+
+            this.websockets.push(ws);
+          } catch (err) {
+            console.error(`Error connecting to ${relayUrl}:`, err);
+          }
+        });
+      }
+
+      componentWillUnmount() {
+        this.connectedRelayUrls.clear();
+        this.websockets.forEach(ws => {
+          if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+            ws.close();
+          }
+        });
+      }
+
+      parseIssueInfo(event) {
+        const tags = event.tags || [];
+        const info = {
+          id: event.id,
+          title: '',
+          content: event.content || '',
+          status: 'open',
+          repository: undefined,
+          created_at: event.created_at,
+          pubkey: event.pubkey,
+          identifier: undefined,
+          replies: []
+        };
+
+        tags.forEach(tag => {
+          const [key, value] = tag;
+
+          switch (key) {
+            case 'subject':
+            case 'title':
+              info.title = value || '';
+              break;
+            case 'd':
+              info.identifier = value || '';
+              break;
+            case 'a':
+              info.repository = value;
+              break;
+            case 'status':
+              info.status = value === 'closed' ? 'closed' : 'open';
+              break;
+          }
+        });
+
+        if (!info.title) {
+          info.title = `Issue #${event.id.substring(0, 8)}`;
+        }
+
+        return info;
+      }
+
+      parseReplyInfo(event) {
+        const tags = event.tags || [];
+        const info = {
+          id: event.id,
+          content: event.content || '',
+          created_at: event.created_at,
+          pubkey: event.pubkey,
+          issueId: undefined
+        };
+
+        // Find the issue this reply is for
+        tags.forEach(tag => {
+          const [key, value] = tag;
+          if (key === 'e') {
+            info.issueId = value; // Event ID being replied to
+          }
+        });
+
+        return info;
+      }
+
+      formatDate(timestamp) {
+        const now = Date.now() / 1000;
+        const diff = now - timestamp;
+
+        if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+        if (diff < 2592000) return `${Math.floor(diff / 86400)}d ago`;
+
+        return new Date(timestamp * 1000).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      }
+
+      render() {
+        const { issues, loading, connectedRelays, eventCount, selectedIssue, searchQuery, statusFilter } = this.state;
+
+        // Filter issues
+        const filteredIssues = issues.filter(issue => {
+          // Status filter
+          if (statusFilter !== 'all' && issue.status !== statusFilter) return false;
+
+          // Search filter
+          if (!searchQuery) return true;
+          const query = searchQuery.toLowerCase();
+          return (
+            issue.title.toLowerCase().includes(query) ||
+            issue.content.toLowerCase().includes(query) ||
+            (issue.repository && issue.repository.toLowerCase().includes(query))
+          );
+        });
+
+        return html`
+          <div class="min-h-screen">
+            <!-- Hero Section -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-purple-900/20 via-dark to-dark border-b border-lightgray">
+              <div class="container mx-auto px-4 py-16 relative">
+                <div class="flex items-center gap-3 mb-4">
+                  <${Icon} name="messageCircle" className="h-8 w-8 text-purple-500" />
+                  <h1 class="text-5xl font-bold bg-gradient-to-r from-white via-purple-200 to-purple-500 bg-clip-text text-transparent">
+                    Issues
+                  </h1>
+                </div>
+                <p class="text-xl text-gray-400 max-w-2xl">
+                  Browse repository issues announced on the Nostr network
+                </p>
+
+                <!-- Stats Bar -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="bg-dark/50 backdrop-blur-sm border border-lightgray rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm text-gray-400">Connected Relays</p>
+                        <p class="text-2xl font-bold text-white">${connectedRelays}/9</p>
+                      </div>
+                      <div class="${connectedRelays > 0 ? 'bg-green-500 animate-pulse' : 'bg-gray-500'} w-3 h-3 rounded-full"></div>
+                    </div>
+                  </div>
+
+                  <div class="bg-dark/50 backdrop-blur-sm border border-lightgray rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm text-gray-400">Total Issues</p>
+                        <p class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
+                          ${issues.length}
+                        </p>
+                      </div>
+                      <${Icon} name="alertCircle" className="h-6 w-6 text-purple-500" />
+                    </div>
+                  </div>
+
+                  <div class="bg-dark/50 backdrop-blur-sm border border-lightgray rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm text-gray-400">Events Received</p>
+                        <p class="text-2xl font-bold text-white">${eventCount}</p>
+                      </div>
+                      <${Icon} name="clock" className="h-6 w-6 text-blue-500" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container mx-auto px-4 py-8">
+              <!-- Search Bar -->
+              <div class="mb-6">
+                <div class="relative max-w-2xl">
+                  <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search issues by title, description, or repository..."
+                    value=${searchQuery}
+                    onInput=${(e) => this.setState({ searchQuery: e.target.value })}
+                    class="w-full pl-12 pr-4 py-3 bg-dark border border-lightgray rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+                  />
+                  ${searchQuery ? html`
+                    <button
+                      onClick=${() => this.setState({ searchQuery: '' })}
+                      class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-white transition-colors"
+                    >
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                      </svg>
+                    </button>
+                  ` : null}
+                </div>
+              </div>
+
+              <!-- Status Filter Tabs -->
+              <div class="mb-6 flex items-center gap-2">
+                <button
+                  onClick=${() => this.setState({ statusFilter: 'all' })}
+                  class="${statusFilter === 'all' ? 'bg-purple-600 hover:bg-purple-700' : 'border-lightgray bg-dark hover:bg-[#171B21]'} inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-9 px-2 border"
+                >
+                  All
+                </button>
+                <button
+                  onClick=${() => this.setState({ statusFilter: 'open' })}
+                  class="${statusFilter === 'open' ? 'bg-purple-600 hover:bg-purple-700' : 'border-lightgray bg-dark hover:bg-[#171B21]'} inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-9 px-2 border"
+                >
+                  <${Icon} name="alertCircle" className="h-4 w-4 mr-1 text-green-500" />
+                  Open
+                </button>
+                <button
+                  onClick=${() => this.setState({ statusFilter: 'closed' })}
+                  class="${statusFilter === 'closed' ? 'bg-purple-600 hover:bg-purple-700' : 'border-lightgray bg-dark hover:bg-[#171B21]'} inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-9 px-2 border"
+                >
+                  <${Icon} name="checkCircle" className="h-4 w-4 mr-1 text-purple-500" />
+                  Closed
+                </button>
+              </div>
+
+              <!-- Loading State -->
+              ${loading && issues.length === 0 ? html`
+                <div class="space-y-4">
+                  ${[1, 2, 3, 4].map(i => html`
+                    <div key=${i} class="bg-dark border border-lightgray rounded-lg p-6 animate-pulse">
+                      <div class="h-6 bg-lightgray rounded w-3/4 mb-4"></div>
+                      <div class="h-4 bg-lightgray rounded w-full mb-2"></div>
+                      <div class="h-4 bg-lightgray rounded w-2/3"></div>
+                    </div>
+                  `)}
+                </div>
+              ` : null}
+
+              <!-- Issues List -->
+              <div class="space-y-4">
+                ${filteredIssues.map((issue, index) => html`
+                  <div
+                    key=${issue.id}
+                    onClick=${() => this.setState({ selectedIssue: issue })}
+                    class="group p-6 bg-dark border-lightgray hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10 rounded-lg border cursor-pointer fade-in"
+                    style="animation-delay: ${index * 0.05}s"
+                  >
+                    <div class="flex items-start gap-4">
+                      <${Icon} name=${issue.status === 'closed' ? 'checkCircle' : 'alertCircle'}
+                        className=${`h-6 w-6 flex-shrink-0 mt-1 ${issue.status === 'closed' ? 'text-purple-500' : 'text-green-500'}`}
+                      />
+
+                      <div class="flex-1 min-w-0">
+                        <div class="flex items-start justify-between gap-4 mb-2">
+                          <h3 class="text-lg font-semibold text-white group-hover:text-purple-400 transition-colors">
+                            ${issue.title}
+                          </h3>
+                          <${Icon} name="arrowRight" className="h-5 w-5 text-gray-500 group-hover:text-purple-400 transition-colors flex-shrink-0" />
+                        </div>
+
+                        ${issue.content ? html`
+                          <p class="text-gray-400 text-sm line-clamp-2 leading-relaxed mb-3">
+                            ${issue.content}
+                          </p>
+                        ` : null}
+
+                        <div class="flex items-center gap-4 text-sm text-gray-500">
+                          ${issue.repository ? html`
+                            <span class="flex items-center gap-1">
+                              <${Icon} name="gitBranch" className="h-3 w-3" />
+                              <code class="text-xs font-mono text-purple-400">${issue.repository.split(':').pop()}</code>
+                            </span>
+                          ` : null}
+
+                          <span class="flex items-center gap-1">
+                            <${Icon} name="calendar" className="h-3 w-3" />
+                            ${this.formatDate(issue.created_at)}
+                          </span>
+
+                          ${issue.replies && issue.replies.length > 0 ? html`
+                            <span class="flex items-center gap-1 text-purple-400">
+                              <${Icon} name="messageCircle" className="h-3 w-3" />
+                              ${issue.replies.length}
+                            </span>
+                          ` : null}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                `)}
+              </div>
+
+              <!-- Empty State -->
+              ${!loading && issues.length === 0 ? html`
+                <div class="text-center py-16 bg-dark/50 border border-lightgray rounded-lg backdrop-blur-sm">
+                  <${Icon} name="messageCircle" className="h-16 w-16 text-purple-500 mx-auto mb-4 opacity-50" />
+                  <h3 class="text-xl font-semibold mb-2 text-white">
+                    No issues found yet
+                  </h3>
+                  <p class="text-gray-400">
+                    Listening for issue announcements on the Nostr network...
+                  </p>
+                  <div class="mt-4">
+                    <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-purple-500 border-r-transparent"></div>
+                  </div>
+                </div>
+              ` : null}
+
+              <!-- No Search Results -->
+              ${!loading && issues.length > 0 && filteredIssues.length === 0 ? html`
+                <div class="text-center py-16 bg-dark/50 border border-lightgray rounded-lg backdrop-blur-sm">
+                  <svg class="h-16 w-16 text-gray-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                  </svg>
+                  <h3 class="text-xl font-semibold mb-2 text-white">
+                    No issues match your search
+                  </h3>
+                  <p class="text-gray-400">
+                    Try adjusting your search query or filters
+                  </p>
+                  <button
+                    onClick=${() => this.setState({ searchQuery: '', statusFilter: 'all' })}
+                    class="mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
+                  >
+                    Clear Filters
+                  </button>
+                </div>
+              ` : null}
+            </div>
+
+            <!-- Issue Detail Modal -->
+            ${selectedIssue ? html`
+              <${IssueDetailModal}
+                issue=${selectedIssue}
+                onClose=${() => this.setState({ selectedIssue: null })}
+                nostrPubkey=${this.props.nostrPubkey}
+                publishEvent=${this.props.publishEvent}
+              />
+            ` : null}
+          </div>
+        `;
+      }
+    }
+
+    // [PREVIOUS EXPLORE PAGE CODE GOES HERE - keeping it exactly as before]
+    class ExplorePage extends Component {
+      constructor() {
+        super();
+        this.state = {
+          repos: [],
+          loading: true,
+          connectedRelays: 0,
+          eventCount: 0,
+          activeFilter: 'all',
+          copiedId: null,
+          searchQuery: ''
+        };
+        this.websockets = [];
+        this.seenEvents = new Set();
+        this.connectedRelayUrls = new Set();
+      }
+
+      componentDidMount() {
+        const relays = [
+          'wss://relay.nostr.net/',
+          'wss://nos.lol/',
+          'wss://relay.damus.io/',
+          'wss://nostr.wine/',
+          'wss://relay.snort.social/',
+          'wss://nostr.mom/',
+          'wss://relay.nostr.band/',
+          'wss://purplepag.es/',
+          'wss://offchain.pub/',
+        ];
+
+        relays.forEach((relayUrl, index) => {
+          try {
+            const ws = new WebSocket(relayUrl);
+
+            ws.onopen = () => {
+              if (!this.connectedRelayUrls.has(relayUrl)) {
+                this.connectedRelayUrls.add(relayUrl);
+                this.setState({ connectedRelays: this.connectedRelayUrls.size });
+              }
+
+              const subscription = JSON.stringify([
+                'REQ',
+                `explore-${index}`,
+                {
+                  kinds: [30617],
+                  limit: 50,
+                },
+              ]);
+              ws.send(subscription);
+            };
+
+            ws.onmessage = (event) => {
+              try {
+                const message = JSON.parse(event.data);
+
+                if (message[0] === 'EVENT' && message[2]) {
+                  const nostrEvent = message[2];
+
+                  if (this.seenEvents.has(nostrEvent.id)) {
+                    return;
+                  }
+                  this.seenEvents.add(nostrEvent.id);
+
+                  if (nostrEvent.kind === 30617) {
+                    const repoInfo = this.parseRepoInfo(nostrEvent);
+
+                    this.setState(prevState => {
+                      const exists = prevState.repos.some(
+                        r => r.pubkey === repoInfo.pubkey && r.name === repoInfo.name
+                      );
+
+                      if (exists) return prevState;
+
+                      const updated = [...prevState.repos, repoInfo];
+                      const sortedRepos = updated.sort((a, b) => b.created_at - a.created_at);
+
+                      // Notify parent of repos update
+                      if (this.props.onReposUpdate) {
+                        this.props.onReposUpdate(sortedRepos);
+                      }
+
+                      return {
+                        repos: sortedRepos,
+                        eventCount: prevState.eventCount + 1,
+                        loading: false
+                      };
+                    });
+                  }
+                } else if (message[0] === 'EOSE') {
+                  this.setState({ loading: false });
+                }
+              } catch (err) {
+                console.error('Error parsing message:', err);
+              }
+            };
+
+            ws.onerror = () => {
+              console.error(`Failed to connect to ${relayUrl}`);
+            };
+
+            ws.onclose = () => {
+              if (this.connectedRelayUrls.has(relayUrl)) {
+                this.connectedRelayUrls.delete(relayUrl);
+                this.setState({ connectedRelays: this.connectedRelayUrls.size });
+              }
+            };
+
+            this.websockets.push(ws);
+          } catch (err) {
+            console.error(`Error connecting to ${relayUrl}:`, err);
+          }
+        });
+      }
+
+      componentWillUnmount() {
+        this.connectedRelayUrls.clear();
+        this.websockets.forEach(ws => {
+          if (ws.readyState === WebSocket.OPEN || ws.readyState === WebSocket.CONNECTING) {
+            ws.close();
+          }
+        });
+      }
+
+      parseRepoInfo(event) {
+        const tags = event.tags || [];
+        const info = {
+          id: event.id,
+          name: '',
+          description: '',
+          web: undefined,
+          clone: undefined,
+          maintainers: [],
+          created_at: event.created_at,
+          pubkey: event.pubkey,
+          topics: [],
+          identifier: undefined,
+        };
+
+        tags.forEach(tag => {
+          const [key, value] = tag;
+
+          switch (key) {
+            case 'name':
+              info.name = value || '';
+              break;
+            case 'd':
+              info.identifier = value || '';
+              if (!info.name) info.name = value || '';
+              break;
+            case 'description':
+              info.description = value || '';
+              break;
+            case 'web':
+              info.web = value;
+              break;
+            case 'clone':
+              info.clone = value;
+              break;
+            case 'p':
+              if (value) info.maintainers.push(value);
+              break;
+            case 't':
+              if (value) info.topics.push(value);
+              break;
+          }
+        });
+
+        if (!info.description && event.content) {
+          info.description = event.content;
+        }
+
+        if (!info.name) {
+          info.name = `Repo by ${event.pubkey.substring(0, 8)}`;
+        }
+
+        return info;
+      }
+
+      formatDate(timestamp) {
+        const now = Date.now() / 1000;
+        const diff = now - timestamp;
+
+        if (diff < 3600) return `${Math.floor(diff / 60)}m ago`;
+        if (diff < 86400) return `${Math.floor(diff / 3600)}h ago`;
+        if (diff < 2592000) return `${Math.floor(diff / 86400)}d ago`;
+
+        return new Date(timestamp * 1000).toLocaleDateString('en-US', {
+          month: 'short',
+          day: 'numeric',
+          year: 'numeric',
+        });
+      }
+
+      handleCopyClone(cloneUrl, repoId) {
+        navigator.clipboard.writeText(`git clone ${cloneUrl}`).then(() => {
+          this.setState({ copiedId: repoId });
+          setTimeout(() => this.setState({ copiedId: null }), 2000);
+        }).catch(err => {
+          console.error('Failed to copy:', err);
+        });
+      }
+
+      render() {
+        const { repos, loading, connectedRelays, eventCount, activeFilter, copiedId, searchQuery } = this.state;
+
+        // Filter repos based on search query
+        const filteredRepos = repos.filter(repo => {
+          if (!searchQuery) return true;
+          const query = searchQuery.toLowerCase();
+          return (
+            repo.name.toLowerCase().includes(query) ||
+            repo.description.toLowerCase().includes(query) ||
+            (repo.topics && repo.topics.some(topic => topic.toLowerCase().includes(query)))
+          );
+        });
+
+        return html`
+          <div class="min-h-screen">
+            <!-- Hero Section -->
+            <div class="relative overflow-hidden bg-gradient-to-br from-purple-900/20 via-dark to-dark border-b border-lightgray">
+              <div class="container mx-auto px-4 py-16 relative">
+                <div class="flex items-center gap-3 mb-4">
+                  <${Icon} name="zap" className="h-8 w-8 text-purple-500" />
+                  <h1 class="text-5xl font-bold bg-gradient-to-r from-white via-purple-200 to-purple-500 bg-clip-text text-transparent">
+                    Explore Projects
+                  </h1>
+                </div>
+                <p class="text-xl text-gray-400 max-w-2xl">
+                  Discover decentralized repositories announced on the Nostr network
+                </p>
+
+                <!-- Stats Bar -->
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="bg-dark/50 backdrop-blur-sm border border-lightgray rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm text-gray-400">Connected Relays</p>
+                        <p class="text-2xl font-bold text-white">${connectedRelays}/9</p>
+                      </div>
+                      <div class="${connectedRelays > 0 ? 'bg-green-500 animate-pulse' : 'bg-gray-500'} w-3 h-3 rounded-full"></div>
+                    </div>
+                  </div>
+
+                  <div class="bg-dark/50 backdrop-blur-sm border border-lightgray rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm text-gray-400">Repositories</p>
+                        <p class="text-2xl font-bold bg-gradient-to-r from-purple-400 to-purple-600 bg-clip-text text-transparent">
+                          ${repos.length}
+                        </p>
+                      </div>
+                      <${Icon} name="trendingUp" className="h-6 w-6 text-purple-500" />
+                    </div>
+                  </div>
+
+                  <div class="bg-dark/50 backdrop-blur-sm border border-lightgray rounded-lg p-4">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <p class="text-sm text-gray-400">Events Received</p>
+                        <p class="text-2xl font-bold text-white">${eventCount}</p>
+                      </div>
+                      <${Icon} name="clock" className="h-6 w-6 text-blue-500" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="container mx-auto px-4 py-8">
+              <!-- Search Bar -->
+              <div class="mb-6">
+                <div class="relative max-w-2xl">
+                  <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                    </svg>
+                  </div>
+                  <input
+                    type="text"
+                    placeholder="Search repositories by name, description, or topic..."
+                    value=${this.state.searchQuery}
+                    onInput=${(e) => this.setState({ searchQuery: e.target.value })}
+                    class="w-full pl-12 pr-4 py-3 bg-dark border border-lightgray rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500 transition-all"
+                  />
+                  ${this.state.searchQuery ? html`
+                    <button
+                      onClick=${() => this.setState({ searchQuery: '' })}
+                      class="absolute inset-y-0 right-0 pr-4 flex items-center text-gray-400 hover:text-white transition-colors"
+                    >
+                      <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                      </svg>
+                    </button>
+                  ` : null}
+                </div>
+              </div>
+
+              <!-- Filter Tabs -->
+              <div class="mb-6 flex items-center gap-2">
+                <button
+                  onClick=${() => this.setState({ activeFilter: 'all' })}
+                  class="${activeFilter === 'all' ? 'bg-purple-600 hover:bg-purple-700' : 'border-lightgray bg-dark hover:bg-[#171B21]'} inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-9 px-2 border"
+                >
+                  All
+                </button>
+                <button
+                  onClick=${() => this.setState({ activeFilter: 'trending' })}
+                  class="${activeFilter === 'trending' ? 'bg-purple-600 hover:bg-purple-700' : 'border-lightgray bg-dark hover:bg-[#171B21]'} inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-9 px-2 border"
+                >
+                  <${Icon} name="trendingUp" className="h-4 w-4 mr-1" />
+                  Trending
+                </button>
+                <button
+                  onClick=${() => this.setState({ activeFilter: 'new' })}
+                  class="${activeFilter === 'new' ? 'bg-purple-600 hover:bg-purple-700' : 'border-lightgray bg-dark hover:bg-[#171B21]'} inline-flex items-center justify-center rounded-md text-sm font-medium transition-colors h-9 px-2 border"
+                >
+                  <${Icon} name="zap" className="h-4 w-4 mr-1" />
+                  New
+                </button>
+              </div>
+
+              <!-- Loading State -->
+              ${loading && repos.length === 0 ? html`
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  ${[1, 2, 3, 4].map(i => html`
+                    <div key=${i} class="bg-dark border border-lightgray rounded-lg p-6 animate-pulse">
+                      <div class="h-6 bg-lightgray rounded w-3/4 mb-4"></div>
+                      <div class="h-4 bg-lightgray rounded w-full mb-2"></div>
+                      <div class="h-4 bg-lightgray rounded w-2/3"></div>
+                    </div>
+                  `)}
+                </div>
+              ` : null}
+
+              <!-- Repository Grid -->
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                ${filteredRepos.map((repo, index) => html`
+                  <a
+                    key=${repo.id}
+                    href=${`#repo/${repo.identifier || repo.name}`}
+                    class="block group p-6 bg-dark border-lightgray hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10 hover:scale-[1.02] rounded-lg border shadow-sm fade-in"
+                    style="animation-delay: ${index * 0.05}s"
+                  >
+                    <!-- Repo Header -->
+                    <div class="mb-4">
+                      <div class="flex items-start justify-between gap-2 mb-2">
+                        <h3 class="text-xl font-semibold text-white group-hover:text-purple-400 transition-colors line-clamp-1 flex-1">
+                          ${repo.name}
+                        </h3>
+                      </div>
+
+                      ${repo.description ? html`
+                        <p class="text-gray-400 text-sm line-clamp-2 leading-relaxed mb-3">
+                          ${repo.description}
+                        </p>
+                      ` : null}
+
+                      <!-- Topics -->
+                      ${repo.topics && repo.topics.length > 0 ? html`
+                        <div class="flex flex-wrap gap-1.5 mb-3">
+                          ${repo.topics.slice(0, 5).map(topic => html`
+                            <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-purple-500/10 border border-purple-500/20 rounded-md text-xs text-purple-300 hover:bg-purple-500/20 hover:border-purple-500/40 transition-colors cursor-default">
+                              <${Icon} name="tag" className="h-3 w-3" />
+                              ${topic}
+                            </span>
+                          `)}
+                        </div>
+                      ` : null}
+
+                      <!-- Website Button -->
+                      ${repo.web ? html`
+                        <a
+                          href=${repo.web}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="inline-flex items-center gap-2 px-3 py-1.5 bg-gradient-to-r from-purple-500/10 to-blue-500/10 border border-purple-500/30 hover:border-purple-500/50 rounded-lg text-sm text-purple-300 hover:text-purple-200 transition-all duration-200 hover:scale-[1.02] group/web"
+                        >
+                          <${Icon} name="globe" className="h-3.5 w-3.5" />
+                          <span>Visit Website</span>
+                          <${Icon} name="externalLink" className="h-3 w-3 opacity-50" />
+                        </a>
+                      ` : null}
+                    </div>
+
+                    <!-- Repo Metadata -->
+                    <div class="space-y-3 text-sm">
+                      <div class="flex items-center gap-4 text-gray-500">
+                        <div class="flex items-center gap-1">
+                          <${Icon} name="calendar" className="h-4 w-4" />
+                          <span>${this.formatDate(repo.created_at)}</span>
+                        </div>
+
+                        ${repo.maintainers.length > 0 ? html`
+                          <div class="flex items-center gap-1.5">
+                            <${Icon} name="users" className="h-4 w-4" />
+                            <div class="flex items-center gap-1">
+                              ${repo.maintainers.slice(0, 3).map(maintainer => html`
+                                <a
+                                  href=${`https://nostr.eu/${maintainer}`}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  class="inline-flex items-center gap-1 px-1.5 py-0.5 bg-blue-500/10 border border-blue-500/20 rounded hover:bg-blue-500/20 hover:border-blue-500/40 transition-colors group/maintainer"
+                                  title=${`Maintainer: ${maintainer.substring(0, 16)}...`}
+                                >
+                                  <${Icon} name="user" className="h-3 w-3 text-blue-400 group-hover/maintainer:text-blue-300" />
+                                  <span class="text-xs text-blue-300 font-mono">${maintainer.substring(0, 8)}</span>
+                                </a>
+                              `)}
+                              ${repo.maintainers.length > 3 ? html`
+                                <span class="text-xs text-gray-500">+${repo.maintainers.length - 3}</span>
+                              ` : null}
+                            </div>
+                          </div>
+                        ` : null}
+                      </div>
+
+                      ${repo.clone ? html`
+                        <div class="group/clone relative">
+                          <div class="p-3 bg-gradient-to-br from-[#0E1116] to-[#0A0C0F] rounded-lg border border-lightgray hover:border-purple-500/30 transition-all duration-300">
+                            <div class="flex items-start justify-between gap-2">
+                              <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 mb-1.5">
+                                  <${Icon} name="terminal" className="h-3.5 w-3.5 text-purple-500 flex-shrink-0" />
+                                  <span class="text-[10px] font-semibold text-purple-400 uppercase tracking-wider">
+                                    Clone Repository
+                                  </span>
+                                </div>
+                                <div class="text-xs font-mono break-all leading-relaxed">
+                                  <span class="text-gray-500 select-none">$</span>
+                                  <span class="text-green-400">git</span>
+                                  <span class="text-blue-400">clone</span>
+                                  <span class="text-purple-300">${repo.clone}</span>
+                                </div>
+                              </div>
+                              <button
+                                onClick=${() => this.handleCopyClone(repo.clone, repo.id)}
+                                class="flex-shrink-0 p-2 rounded-md bg-purple-500/10 hover:bg-purple-500/20 border border-purple-500/20 hover:border-purple-500/40 transition-all duration-200 group/btn"
+                                title="Copy clone command"
+                              >
+                                ${copiedId === repo.id
+                                  ? html`<${Icon} name="check" className="h-3.5 w-3.5 text-green-400" />`
+                                  : html`<${Icon} name="copy" className="h-3.5 w-3.5 text-purple-400 group-hover/btn:text-purple-300" />`
+                                }
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ` : null}
+                    </div>
+
+                    <!-- Footer -->
+                    <div class="mt-4 pt-4 border-t border-lightgray">
+                      <a
+                        href=${`https://nostr.eu/${repo.pubkey}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="text-xs text-gray-500 hover:text-purple-400 font-mono flex items-center gap-2 transition-colors group/owner"
+                        title=${`Repository owner: ${repo.pubkey}`}
+                      >
+                        <div class="w-2 h-2 rounded-full bg-purple-500/50 group-hover/owner:bg-purple-500 transition-colors"></div>
+                        <span class="flex items-center gap-1">
+                          <${Icon} name="user" className="h-3 w-3" />
+                          <span>Owner:</span>
+                        </span>
+                        <span class="text-purple-400 group-hover/owner:text-purple-300">${repo.pubkey.substring(0, 16)}...</span>
+                        <${Icon} name="externalLink" className="h-2.5 w-2.5 opacity-0 group-hover/owner:opacity-50 transition-opacity" />
+                      </a>
+                    </div>
+                  </a>
+                `)}
+              </div>
+
+              <!-- Empty State -->
+              ${!loading && repos.length === 0 ? html`
+                <div class="text-center py-16 bg-dark/50 border border-lightgray rounded-lg backdrop-blur-sm">
+                  <${Icon} name="zap" className="h-16 w-16 text-purple-500 mx-auto mb-4 opacity-50" />
+                  <h3 class="text-xl font-semibold mb-2 text-white">
+                    No repositories found yet
+                  </h3>
+                  <p class="text-gray-400">
+                    Listening for repository announcements on the Nostr network...
+                  </p>
+                  <div class="mt-4">
+                    <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-purple-500 border-r-transparent"></div>
+                  </div>
+                </div>
+              ` : null}
+
+              <!-- No Search Results -->
+              ${!loading && repos.length > 0 && filteredRepos.length === 0 ? html`
+                <div class="text-center py-16 bg-dark/50 border border-lightgray rounded-lg backdrop-blur-sm">
+                  <svg class="h-16 w-16 text-gray-500 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                  </svg>
+                  <h3 class="text-xl font-semibold mb-2 text-white">
+                    No repositories match your search
+                  </h3>
+                  <p class="text-gray-400">
+                    Try adjusting your search query
+                  </p>
+                  <button
+                    onClick=${() => this.setState({ searchQuery: '' })}
+                    class="mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 rounded-lg transition-colors"
+                  >
+                    Clear Search
+                  </button>
+                </div>
+              ` : null}
+            </div>
+          </div>
+        `;
+      }
+    }
+
+    // Main App Component with Routing
+    class App extends Component {
+      constructor() {
+        super();
+        this.state = {
+          currentPage: window.location.hash.slice(1) || '',
+          repos: [],
+          issues: [],
+          nostrPubkey: null,
+          nostrConnecting: false
+        };
+        this.handleReposUpdate = this.handleReposUpdate.bind(this);
+        this.handleIssuesUpdate = this.handleIssuesUpdate.bind(this);
+        this.addNewIssue = this.addNewIssue.bind(this);
+        this.connectNostr = this.connectNostr.bind(this);
+        this.disconnectNostr = this.disconnectNostr.bind(this);
+        this.publishEvent = this.publishEvent.bind(this);
+      }
+
+      componentDidMount() {
+        window.addEventListener('hashchange', () => {
+          this.setState({ currentPage: window.location.hash.slice(1) || '' });
+        });
+
+        // Check if already connected
+        const savedPubkey = localStorage.getItem('nostr_pubkey');
+        if (savedPubkey && window.nostr) {
+          this.setState({ nostrPubkey: savedPubkey });
+        }
+
+        // Fetch issues from Nostr relays
+        this.fetchIssues();
+      }
+
+      fetchIssues() {
+        const relays = [
+          'wss://relay.nostr.net/',
+          'wss://nos.lol/',
+          'wss://relay.damus.io/',
+          'wss://nostr.wine/',
+          'wss://relay.snort.social/',
+        ];
+
+        const seenEvents = new Set();
+        const issueReplies = new Map();
+
+        relays.forEach((relayUrl, index) => {
+          try {
+            const ws = new WebSocket(relayUrl);
+
+            ws.onopen = () => {
+              // Subscribe to issues (kind 30618)
+              ws.send(JSON.stringify([
+                'REQ',
+                `app-issues-${index}`,
+                { kinds: [30618], limit: 100 }
+              ]));
+
+              // Subscribe to replies (kind 1621)
+              ws.send(JSON.stringify([
+                'REQ',
+                `app-replies-${index}`,
+                { kinds: [1621], limit: 200 }
+              ]));
+            };
+
+            ws.onmessage = (event) => {
+              try {
+                const message = JSON.parse(event.data);
+
+                if (message[0] === 'EVENT') {
+                  const nostrEvent = message[2];
+
+                  if (seenEvents.has(nostrEvent.id)) return;
+                  seenEvents.add(nostrEvent.id);
+
+                  if (nostrEvent.kind === 30618) {
+                    // Issue event
+                    const titleTag = nostrEvent.tags.find(t => t[0] === 'title');
+                    const statusTag = nostrEvent.tags.find(t => t[0] === 'status');
+                    const aTag = nostrEvent.tags.find(t => t[0] === 'a');
+                    const dTag = nostrEvent.tags.find(t => t[0] === 'd');
+
+                    const issue = {
+                      id: nostrEvent.id,
+                      pubkey: nostrEvent.pubkey,
+                      created_at: nostrEvent.created_at,
+                      title: titleTag ? titleTag[1] : 'Untitled',
+                      content: nostrEvent.content,
+                      status: statusTag ? statusTag[1] : 'open',
+                      repository: aTag ? aTag[1] : null,
+                      identifier: dTag ? dTag[1] : nostrEvent.id,
+                      replies: []
+                    };
+
+                    this.setState(prevState => {
+                      const exists = prevState.issues.some(i => i.id === issue.id);
+                      if (exists) return {};
+                      return { issues: [...prevState.issues, issue] };
+                    });
+                  } else if (nostrEvent.kind === 1621) {
+                    // Reply event
+                    const eTag = nostrEvent.tags.find(t => t[0] === 'e');
+                    if (eTag) {
+                      const issueId = eTag[1];
+                      const reply = {
+                        id: nostrEvent.id,
+                        pubkey: nostrEvent.pubkey,
+                        created_at: nostrEvent.created_at,
+                        content: nostrEvent.content
+                      };
+
+                      if (!issueReplies.has(issueId)) {
+                        issueReplies.set(issueId, []);
+                      }
+                      issueReplies.get(issueId).push(reply);
+
+                      // Update issues with replies
+                      this.setState(prevState => ({
+                        issues: prevState.issues.map(issue => {
+                          if (issue.id === issueId || issue.identifier === issueId) {
+                            return { ...issue, replies: issueReplies.get(issueId) };
+                          }
+                          return issue;
+                        })
+                      }));
+                    }
+                  }
+                }
+              } catch (err) {
+                console.error('Error parsing message:', err);
+              }
+            };
+
+            ws.onerror = () => console.error(`Failed to connect to ${relayUrl}`);
+          } catch (err) {
+            console.error(`Error connecting to ${relayUrl}:`, err);
+          }
+        });
+      }
+
+      async connectNostr() {
+        this.setState({ nostrConnecting: true });
+
+        try {
+          if (!window.nostr) {
+            alert('No Nostr extension found! Please install nos2x, Alby, or another NIP-07 compatible extension.');
+            this.setState({ nostrConnecting: false });
+            return;
+          }
+
+          const pubkey = await window.nostr.getPublicKey();
+          this.setState({ nostrPubkey: pubkey, nostrConnecting: false });
+          localStorage.setItem('nostr_pubkey', pubkey);
+        } catch (error) {
+          console.error('Failed to connect to Nostr extension:', error);
+          alert('Failed to connect. Please make sure you have approved the connection request.');
+          this.setState({ nostrConnecting: false });
+        }
+      }
+
+      disconnectNostr() {
+        this.setState({ nostrPubkey: null });
+        localStorage.removeItem('nostr_pubkey');
+      }
+
+      async publishEvent(event) {
+        if (!window.nostr) {
+          throw new Error('No Nostr extension found');
+        }
+
+        try {
+          // Sign the event with the extension
+          const signedEvent = await window.nostr.signEvent(event);
+
+          // Publish to all relays
+          const relays = [
+            'wss://relay.nostr.net/',
+            'wss://nos.lol/',
+            'wss://relay.damus.io/',
+            'wss://nostr.wine/',
+            'wss://relay.snort.social/',
+            'wss://nostr.mom/',
+            'wss://relay.nostr.band/',
+            'wss://purplepag.es/',
+            'wss://offchain.pub/',
+          ];
+
+          const promises = relays.map(relayUrl => {
+            return new Promise((resolve, reject) => {
+              const ws = new WebSocket(relayUrl);
+              ws.onopen = () => {
+                ws.send(JSON.stringify(['EVENT', signedEvent]));
+              };
+              ws.onmessage = (msg) => {
+                const response = JSON.parse(msg.data);
+                if (response[0] === 'OK' && response[1] === signedEvent.id) {
+                  ws.close();
+                  resolve(relayUrl);
+                } else if (response[0] === 'OK' && !response[2]) {
+                  ws.close();
+                  reject(new Error(`Relay rejected: ${response[3]}`));
+                }
+              };
+              ws.onerror = () => {
+                ws.close();
+                reject(new Error(`Failed to connect to ${relayUrl}`));
+              };
+              setTimeout(() => {
+                ws.close();
+                reject(new Error('Timeout'));
+              }, 5000);
+            });
+          });
+
+          const results = await Promise.allSettled(promises);
+          const successful = results.filter(r => r.status === 'fulfilled').length;
+
+          return { signedEvent, successful, total: relays.length };
+        } catch (error) {
+          console.error('Failed to publish event:', error);
+          throw error;
+        }
+      }
+
+      handleReposUpdate(repos) {
+        this.setState({ repos });
+      }
+
+      handleIssuesUpdate(issues) {
+        this.setState({ issues });
+      }
+
+      addNewIssue(signedEvent) {
+        // Parse the event to create an issue object
+        const titleTag = signedEvent.tags.find(t => t[0] === 'title');
+        const statusTag = signedEvent.tags.find(t => t[0] === 'status');
+        const aTag = signedEvent.tags.find(t => t[0] === 'a');
+        const dTag = signedEvent.tags.find(t => t[0] === 'd');
+
+        const newIssue = {
+          id: signedEvent.id,
+          pubkey: signedEvent.pubkey,
+          created_at: signedEvent.created_at,
+          title: titleTag ? titleTag[1] : 'Untitled',
+          content: signedEvent.content,
+          status: statusTag ? statusTag[1] : 'open',
+          repository: aTag ? aTag[1] : null,
+          identifier: dTag ? dTag[1] : signedEvent.id,
+          replies: []
+        };
+
+        // Add to issues array
+        this.setState(prevState => ({
+          issues: [newIssue, ...prevState.issues]
+        }));
+      }
+
+      render() {
+        const { currentPage, repos, issues, nostrPubkey, nostrConnecting } = this.state;
+
+        // Parse the route
+        const parts = currentPage.split('/');
+        const mainRoute = parts[0];
+        const subRoute = parts[1];
+
+        let content;
+
+        if (mainRoute === 'repo' && subRoute) {
+          // Repository page route: #repo/{identifier}
+          const repo = repos.find(r => r.identifier === subRoute || r.name === subRoute);
+          content = html`<${RepoPage}
+            repo=${repo}
+            allIssues=${issues}
+            nostrPubkey=${nostrPubkey}
+            publishEvent=${this.publishEvent}
+            onNewIssue=${this.addNewIssue}
+          />`;
+        } else {
+          // Standard routes
+          switch (mainRoute) {
+            case 'explore':
+              content = html`<${ExplorePage} onReposUpdate=${this.handleReposUpdate} />`;
+              break;
+            case 'issues':
+              content = html`<${IssuesPage}
+                onIssuesUpdate=${this.handleIssuesUpdate}
+                nostrPubkey=${nostrPubkey}
+                publishEvent=${this.publishEvent}
+              />`;
+              break;
+            case 'about':
+              content = html`<${AboutPage} />`;
+              break;
+            case 'docs':
+              content = html`<${DocsPage} />`;
+              break;
+            default:
+              content = html`<${HomePage} />`;
+          }
+        }
+
+        return html`
+          <div>
+            <${Navigation}
+              currentPage=${mainRoute}
+              nostrPubkey=${nostrPubkey}
+              nostrConnecting=${nostrConnecting}
+              onConnect=${this.connectNostr}
+              onDisconnect=${this.disconnectNostr}
+            />
+            ${content}
+          </div>
+        `;
+      }
+    }
+
+    render(html`<${App} />`, document.getElementById('app'));
+  </script>
+
+  <!-- Service Worker Registration for PWA -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js')
+          .then(registration => {
+            console.log('ServiceWorker registration successful:', registration.scope);
+          })
+          .catch(err => {
+            console.log('ServiceWorker registration failed:', err);
+          });
+      });
+    }
+  </script>
+</body>
+</html>
