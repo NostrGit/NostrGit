@@ -7,8 +7,7 @@ export const Card = ({
 }: {
   children: React.ReactNode;
   className?: string;
-  [key: string]: any;
-}) => (
+} & React.HTMLAttributes<HTMLDivElement>) => (
   <div
     className={cn(
       "rounded-lg border bg-card text-card-foreground shadow-sm",
