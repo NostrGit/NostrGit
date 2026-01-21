@@ -25,9 +25,36 @@ These instructions assume you are not running openSSH Server on port 22 on your 
 $ git clone https://github.com/NostrGit/NostrGit.git
 ```
 
-Edit the `gitnostr/Dockerfile`
-  - replace the public key (hex) with your public key (hex) in the "gitRepoOwners" section of the JSON
-  - optional: add/remove some relays in the "relays" section of the JSON
+**Configure Git Repository Owners (required):**
+
+Set your public key to control who can create repositories:
+
+```bash
+# Replace with your actual public key (hex format)
+$ export GIT_NOSTR_REPO_OWNERS=your-public-key-hex-here
+```
+
+**Configure Nostr Relays (optional):**
+
+You can now configure the Nostr relays for both frontend and backend via environment variables:
+
+```bash
+# Configure relays for both frontend (web UI) and backend (git-nostr-bridge)
+$ export NEXT_PUBLIC_NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol,wss://relay.snort.social
+$ export GIT_NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol,wss://relay.snort.social
+
+# Or use a .env file
+$ cat > .env << EOF
+NEXT_PUBLIC_NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol
+GIT_NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol
+GIT_NOSTR_REPO_OWNERS=your-public-key-hex-here
+EOF
+
+# Or pass directly to docker compose
+$ GIT_NOSTR_REPO_OWNERS=your-key-here GIT_NOSTR_RELAYS=wss://your.relay.com docker compose up
+```
+
+If no environment variables are set, the application will use default relays: `wss://relay.damus.io` and `wss://nos.lol`.
 
 ```bash
 # change the directory to NostrGit
@@ -35,6 +62,68 @@ $ cd NostrGit
 # run the git-nostr-bridge container
 $ docker compose up > /dev/null 2>&1 &
 ```
+
+## Nostr Relay Configuration
+
+The application now supports flexible relay configuration for both frontend and backend via environment variables instead of hardcoded values.
+
+### Environment Variables
+
+| Variable | Component | Purpose | Default |
+|----------|-----------|---------|---------|
+| `NEXT_PUBLIC_NOSTR_RELAYS` | Frontend (Web UI) | Browsing repos, user interface | `wss://relay.damus.io,wss://nos.lol` |
+| `GIT_NOSTR_RELAYS` | Backend (git-nostr-bridge) | Repository management, SSH access | `wss://relay.damus.io,wss://nos.lol` |
+| `GIT_NOSTR_REPO_OWNERS` | Backend (git-nostr-bridge) | Who can create repositories | `d7a2565a...` (example key) |
+
+### Configuration Methods
+
+1. **System Environment Variables:**
+   ```bash
+   export NEXT_PUBLIC_NOSTR_RELAYS=wss://relay1.com,wss://relay2.io
+   export GIT_NOSTR_RELAYS=wss://relay1.com,wss://relay2.io
+   export GIT_NOSTR_REPO_OWNERS=your-public-key-hex
+   ```
+
+2. **Create .env file:**
+   ```bash
+   cat > .env << EOF
+   NEXT_PUBLIC_NOSTR_RELAYS=wss://relay1.com,wss://relay2.io
+   GIT_NOSTR_RELAYS=wss://relay1.com,wss://relay2.io
+   GIT_NOSTR_REPO_OWNERS=your-public-key-hex
+   EOF
+   ```
+
+3. **Docker Compose Override:**
+   ```bash
+   GIT_NOSTR_REPO_OWNERS=your-key GIT_NOSTR_RELAYS=wss://relay1.com docker compose up
+   ```
+
+4. **Using .env.example as template:**
+   ```bash
+   cp .env.example .env
+   # Edit .env file with your preferred relays and public key
+   ```
+
+### Important Notes
+
+- **Both services should use the same relays** for proper communication
+- **Replace the public key** in `GIT_NOSTR_REPO_OWNERS` with your actual hex public key
+- **Frontend and backend** configurations are now independent but should match
+
+### Default Configuration
+
+If no environment variables are set:
+- **Relays**: `wss://relay.damus.io`, `wss://nos.lol`
+- **Repo Owner**: Example key (must be changed for production)
+
+### Troubleshooting
+
+If you're experiencing connection issues:
+1. Check if the relay URLs are correct and accessible
+2. Verify your network allows WebSocket connections
+3. Ensure both frontend and backend use the same relays
+4. Verify your public key is correctly set in `GIT_NOSTR_REPO_OWNERS`
+5. Try using different relays from the [Nostr relay list](https://nostr.info/relays/)
 
 ## git-nostr-cli
 
@@ -66,11 +155,13 @@ Edit the config file at `~/.config/git-nostr/git-nostr-cli.json`. The file shoul
 
 ```JSON
 {
-    "relays": ["wss://relay.damus.io", "wss://nostr.fmt.wiz.biz", "wss://nos.lol"],
+    "relays": ["wss://relay.damus.io", "wss://nos.lol"],
     "privateKey": "", // your nostr private key (hex)
     "gitSshBase": "root@localhost" // the docker containers expect this
 }
 ```
+
+**Note:** The web interface now supports environment-based relay configuration (see the [Nostr Relay Configuration](#nostr-relay-configuration) section above), but the CLI tool still uses the JSON configuration file.
 
 You need to publish your public ssh key to the nostr relays to be able to interact with the git-nostr-bridge docker container.
 You may need to replace id_rsa.pub with the correct public key file.

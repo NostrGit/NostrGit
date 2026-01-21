@@ -3,6 +3,9 @@ import { z } from "zod";
 /**
  * Specify your server-side environment variables schema here. This way you can ensure the app isn't
  * built with invalid env vars.
+ *
+ * Note: Backend git-nostr-bridge environment variables (GIT_NOSTR_*) are handled directly
+ * by the Docker container and don't need to be included in this Next.js schema.
  */
 const server = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]),
@@ -14,6 +17,7 @@ const server = z.object({
  */
 const client = z.object({
   // NEXT_PUBLIC_CLIENTVAR: z.string().min(1),
+  NEXT_PUBLIC_NOSTR_RELAYS: z.string().optional(),
 });
 
 /**
@@ -25,6 +29,7 @@ const client = z.object({
 const processEnv = {
   NODE_ENV: process.env.NODE_ENV,
   // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
+  NEXT_PUBLIC_NOSTR_RELAYS: process.env.NEXT_PUBLIC_NOSTR_RELAYS,
 };
 
 // Don't touch the part below

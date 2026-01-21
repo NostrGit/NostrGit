@@ -11,4 +11,20 @@ services:
     ]
     volumes:
       - ./gitnostr/:/home/git-nostr
+    environment:
+      # Frontend (Web UI) relay configuration - comma-separated list of Nostr relay URLs
+      # Example: NEXT_PUBLIC_NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol
+      - NEXT_PUBLIC_NOSTR_RELAYS=${NEXT_PUBLIC_NOSTR_RELAYS:-wss://relay.damus.io,wss://nos.lol}
+
+      # Backend (git-nostr-bridge) configuration
+      # Relay configuration for the backend service
+      - GIT_NOSTR_RELAYS=${GIT_NOSTR_RELAYS:-wss://relay.damus.io,wss://nos.lol}
+
+      # Git repository owners (comma-separated list of public keys in hex format)
+      # Replace with your public key(s) - this controls who can create repositories
+      - GIT_NOSTR_REPO_OWNERS=${GIT_NOSTR_REPO_OWNERS:-d7a2565a3d29c05a72c315c9117594bb0c76eda7ebfdda3441d0eb6ba326c5e1}
+
+      # Optional: Override default paths (usually not needed)
+      # - GIT_NOSTR_REPOSITORY_DIR=/root/git-nostr-repositories
+      # - GIT_NOSTR_DB_FILE=/root/.config/git-nostr/git-nostr-db.sqlite
     container_name: git-nostr-bridge

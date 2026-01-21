@@ -101,6 +101,15 @@ Edit the config file at `~/.config/git-nostr/git-nostr-bridge.json`. The default
 Add your relay of relays to the list of relays. **You should use a local relay for testing until the implementation is finalized.**
 Add your public key to the list of gitRepoOwners. **It is recommended to generate a new nostr private/public key pair for testing**
 
+**Note:** This manual JSON configuration is still supported, but the git-nostr-bridge now also supports environment-based configuration via Docker. For production deployments, consider using environment variables instead:
+
+- `GIT_NOSTR_RELAYS` - comma-separated list of relay URLs
+- `GIT_NOSTR_REPO_OWNERS` - comma-separated list of public keys (hex)
+- `GIT_NOSTR_REPOSITORY_DIR` - repository storage directory (optional)
+- `GIT_NOSTR_DB_FILE` - database file path (optional)
+
+Environment variables take precedence and will dynamically generate the configuration file. See the main README.md for full configuration details.
+
 git-nostr-bridge will follow events published by gitRepoOwners and create git repositories for them.
 
 My local testing config looks like this
@@ -111,6 +120,16 @@ My local testing config looks like this
     "DbFile": "~/.config/git-nostr/git-nostr-db.sqlite",
     "relays": ["ws://localhost:8080"],
     "gitRepoOwners": ["e0e7807d354ea7662412d99856335e1923b0b57b6668575bf320837f6b1816e3"]
+}
+```
+
+For production deployments, you might use public relays like:
+```
+{
+    "repositoryDir": "~/git-nostr-repositories",
+    "DbFile": "~/.config/git-nostr/git-nostr-db.sqlite",
+    "relays": ["wss://relay.damus.io", "wss://nos.lol"],
+    "gitRepoOwners": ["your-public-key-hex"]
 }
 ```
 
@@ -164,7 +183,16 @@ My local testing config looks like this
 {
     "relays": ["ws://localhost:8080"],
     "privateKey": "...",
-    "gitSshBase": "git-str@localhost"
+    "gitSshBase": "git-nostr@localhost"
+}
+```
+
+For production deployments, you might use public relays like:
+```
+{
+    "relays": ["wss://relay.damus.io", "wss://nos.lol"],
+    "privateKey": "your-private-key-hex",
+    "gitSshBase": "git-nostr@your-server.com"
 }
 ```
 
