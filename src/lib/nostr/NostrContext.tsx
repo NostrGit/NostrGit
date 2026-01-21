@@ -10,6 +10,7 @@ import { type Filter } from "nostr-tools";
 import { nip19 } from "nostr-tools";
 
 import useLocalStorage from "../hooks/useLocalStorage";
+import { env } from "../../env.mjs";
 
 import { WEB_STORAGE_KEYS } from "./localStorage";
 
@@ -27,12 +28,23 @@ declare global {
   }
 }
 
-const defaultRelays = [
-  "wss://relay.damus.io",
-  "wss://nostr.fmt.wiz.biz",
-  // "wss://nostr.bongbong.com", // relay is down
-  "wss://nos.lol",
-];
+// Parse relays from environment variable with fallback to default values
+const getDefaultRelays = (): string[] => {
+  const envRelays = env.NEXT_PUBLIC_NOSTR_RELAYS;
+
+  if (envRelays && envRelays.trim().length > 0) {
+    // Split by comma and trim whitespace from each relay URL
+    return envRelays.split(',').map(relay => relay.trim()).filter(relay => relay.length > 0);
+  }
+
+  // Fallback to hardcoded defaults if env var is not set or empty
+  return [
+    "wss://relay.damus.io",
+    "wss://nos.lol",
+  ];
+};
+
+const defaultRelays = getDefaultRelays();
 const relayPool = new RelayPool(defaultRelays);
 
 const NostrContext = createContext<{

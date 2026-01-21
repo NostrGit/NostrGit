@@ -61,6 +61,21 @@ $ yarn
 $ yarn dev
 ```
 
+### Environment Configuration
+
+For development, you can configure Nostr relays using environment variables:
+
+```bash
+# Create .env file from example
+$ cp .env.example .env
+
+# Or set environment variable directly
+$ export NEXT_PUBLIC_NOSTR_RELAYS=wss://relay.damus.io,wss://nos.lol
+
+# Start development server
+$ yarn dev
+```
+
 If you use npm instead of yarn, make sure not to include package-lock.json in the commits.
 
 ## Tooling
